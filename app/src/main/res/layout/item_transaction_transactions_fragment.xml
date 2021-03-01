@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<ImageView
+		android:id="@+id/icon_transaction"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:contentDescription="TODO"
+		android:src="@mipmap/ic_launcher_round"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/name_and_purse_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/icon_transaction"
+		app:layout_constraintTop_toTopOf="parent"
+		android:layout_marginStart="@dimen/transaction_details_elements_separation"
+		android:layout_marginLeft="@dimen/transaction_details_elements_separation">
+
+		<TextView
+			android:id="@+id/text_transaction_description"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/raleway_semi_bold"
+			android:textColor="@color/black"
+			android:textSize="6pt"
+			tools:text="Mcdonalds"/>
+
+		<TextView
+			android:id="@+id/text_transaction_purse"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/raleway_regular"
+			android:textSize="5pt"
+			tools:text="MasterCard" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+	<TextView
+		android:id="@+id/text_transaction_income"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/raleway_regular"
+		android:textColor="@color/black"
+		android:textSize="5pt"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/text_transaction_consumption"
+		app:layout_constraintStart_toEndOf="@+id/name_and_purse_ll"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="+400$" />
+
+	<TextView
+		android:id="@+id/text_transaction_consumption"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/raleway_regular"
+		android:textColor="@color/black"
+		android:textSize="5pt"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/transaction_all_time_ll"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_income"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="-400$" />
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/transaction_all_time_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:id="@+id/text_transaction_time_hours"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="@font/raleway_semi_bold"
+			android:textColor="@color/black"
+			android:textSize="7pt"
+			tools:text="20:" />
+
+		<androidx.appcompat.widget.LinearLayoutCompat
+			android:id="@+id/transaction_min_sec_time_ll"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginEnd="@dimen/all_elements_separation"
+			android:layout_marginRight="@dimen/all_elements_separation">
+
+			<TextView
+				android:id="@+id/text_transaction_time_minutes"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/raleway_semi_bold"
+				android:textColor="@color/black"
+				android:textSize="6pt"
+				tools:text="59"
+				android:layout_marginEnd="2dp"
+				android:layout_marginRight="2dp" />
+
+			<TextView
+				android:id="@+id/text_transaction_time_seconds"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/raleway_regular"
+				android:textSize="4pt"
+				tools:text="47" />
+
+		</androidx.appcompat.widget.LinearLayoutCompat>
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

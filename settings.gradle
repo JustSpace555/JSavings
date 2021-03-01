@@ -1,0 +1,3 @@
+include ':Model'
+include ':app'
+rootProject.name = "JSavings"

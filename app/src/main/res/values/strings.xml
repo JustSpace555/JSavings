@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">JSavings</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    
+    <!--  Transaction fragment  -->
+        <!--  End of day  -->
+        <string name="income_text">Income:</string>
+        <string name="consumption_text">Consumption:</string>
+        <string name="profit_text">Total:</string>
+    
+</resources>
