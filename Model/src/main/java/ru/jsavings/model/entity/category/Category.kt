@@ -1,6 +1,7 @@
-package ru.jsavings.model.entity
+package ru.jsavings.model.entity.category
 
 import androidx.room.*
+import ru.jsavings.model.converter.CategoryTypeConverter
 
 @Entity
 data class Category (
@@ -23,21 +24,4 @@ data class Category (
 	//Path to icon
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
-) {
-	companion object {
-		enum class CategoryType {
-			INCOME,
-			CONSUMPTION,
-			TRANSFER
-		}
-
-		class CategoryTypeConverter {
-
-			@TypeConverter
-			fun categoryToString(inputCategory: CategoryType): String = inputCategory.toString()
-
-			@TypeConverter
-			fun stringToCategory(inputString: String): CategoryType = CategoryType.valueOf(inputString)
-		}
-	}
-}
+)

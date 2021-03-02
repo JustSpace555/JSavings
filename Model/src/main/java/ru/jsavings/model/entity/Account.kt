@@ -1,6 +1,7 @@
 package ru.jsavings.model.entity
 
 import androidx.room.*
+import ru.jsavings.model.converter.IdListConverter
 
 @Entity
 data class Account (
@@ -15,23 +16,6 @@ data class Account (
 
 	//All purses on account
 	@ColumnInfo(name = "purses")
-	@TypeConverters(PursesIdListConverter::class)
+	@TypeConverters(IdListConverter::class)
 	val pursesIdList: List<Int>
-) {
-	companion object {
-
-		class PursesIdListConverter {
-
-			companion object {
-				private const val PURSES_ID_SEPARATOR = ","
-			}
-
-			@TypeConverter
-			fun pursesIdListToString(inputList: List<Int>): String = inputList.joinToString(PURSES_ID_SEPARATOR)
-
-			@TypeConverter
-			fun stringToPursesIdList(inputString: String): List<Int> =
-				inputString.split(PURSES_ID_SEPARATOR).map { it.toInt() }
-		}
-	}
-}
+)
