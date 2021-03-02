@@ -9,8 +9,8 @@ interface PurseDao {
 	@Query("SELECT * FROM purse WHERE purse.purse_id = :id")
 	fun getPurseById(id: Int): Purse
 
-	@Query("SELECT * FROM purse WHERE purse.purse_id IN (:idList)")
-	fun getPursesByIdList(idList: List<Int>): List<Purse>
+	@Query("SELECT * FROM purse WHERE purse.purse_id IN (:listIds)")
+	fun getPursesByIdList(listIds: List<Int>): List<Purse>
 
 	@Insert
 	fun addNewPurse(purse: Purse)
