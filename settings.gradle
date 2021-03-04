@@ -1,4 +1,3 @@
 rootProject.name = "JSavings"
-include ':View'
-include ':Model'
-include ':Repository'
+include ':Presentation'
+include ':Data'

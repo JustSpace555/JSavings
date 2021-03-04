@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_intro">
+
+    <fragment
+        android:id="@+id/navigation_intro"
+        android:name="ru.jsavings.presentation.ui.fragments.intro.IntroFragment"
+        android:label="IntroFragment"
+        tools:layout="@layout/fragment_intro">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_transactions"
+        android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
+        android:label="@string/title_transactions"
+        tools:layout="@layout/fragment_transactions" />
+
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="ru.jsavings.presentation.ui.fragments.graph.GraphFragment"
+        android:label="@string/title_graph"
+        tools:layout="@layout/fragment_graph" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="ru.jsavings.presentation.ui.fragments.purses.PurseFragment"
+        android:label="@string/title_purses"
+        tools:layout="@layout/fragment_calendar" />
+
+</navigation>
