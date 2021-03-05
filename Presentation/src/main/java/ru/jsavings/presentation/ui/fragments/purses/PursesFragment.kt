@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ru.jsavings.R
 
-class PurseFragment : Fragment() {
+class PursesFragment : Fragment() {
 
-    private lateinit var purseViewModel: PurseViewModel
+    private lateinit var pursesViewModel: PursesViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        purseViewModel =
-                ViewModelProvider(this).get(PurseViewModel::class.java)
+        pursesViewModel =
+                ViewModelProvider(this).get(PursesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_calendar, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        purseViewModel.text.observe(viewLifecycleOwner, Observer {
+        pursesViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

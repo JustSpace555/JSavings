@@ -3,31 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_intro">
+    app:startDestination="@+id/intro_fragment">
 
     <fragment
-        android:id="@+id/navigation_intro"
+        android:id="@+id/intro_fragment"
         android:name="ru.jsavings.presentation.ui.fragments.intro.IntroFragment"
         android:label="IntroFragment"
         tools:layout="@layout/fragment_intro">
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_transactions"
+        android:id="@+id/transactions_fragment"
         android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
         android:label="@string/title_transactions"
         tools:layout="@layout/fragment_transactions" />
 
     <fragment
-        android:id="@+id/navigation_calendar"
-        android:name="ru.jsavings.presentation.ui.fragments.graph.GraphFragment"
-        android:label="@string/title_graph"
-        tools:layout="@layout/fragment_graph" />
+        android:id="@+id/calendar_fragment"
+        android:name="ru.jsavings.presentation.ui.fragments.calendar.CalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ru.jsavings.presentation.ui.fragments.purses.PurseFragment"
+        android:id="@+id/graph_fragment"
+        android:name="ru.jsavings.presentation.ui.fragments.graph.GraphFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_graph" />
+
+
+    <fragment
+        android:id="@+id/purses_fragment"
+        android:name="ru.jsavings.presentation.ui.fragments.purses.PursesFragment"
         android:label="@string/title_purses"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_purses" />
 
 </navigation>

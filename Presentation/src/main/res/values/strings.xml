@@ -7,14 +7,19 @@
     <string name="title_graph">Graph</string>
     <string name="title_purses">Purses</string>
     <string name="title_intro">Intro</string>
+    <!--    -->
 
     <!--  Intro fragment  -->
     <string name="jsavings_intro">JSavings</string>
+    <!--    -->
 
     <!--  Transaction fragment  -->
         <!--  End of day  -->
         <string name="income_text">Income:</string>
         <string name="consumption_text">Consumption:</string>
         <string name="profit_text">Total:</string>
-    
+        <!--    -->
+	<string name="text_description_fab">Add transaction</string>
+	<!--	-->
+
 </resources>

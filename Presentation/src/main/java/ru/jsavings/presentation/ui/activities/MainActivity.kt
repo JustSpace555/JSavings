@@ -1,11 +1,6 @@
 package ru.jsavings.presentation.ui.activities
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 		// menu should be considered as top level destinations.
 		val appBarConfiguration = AppBarConfiguration(
 			setOf(
-				R.id.navigation_transactions, R.id.navigation_dashboard, R.id.navigation_notifications
+				R.id.transactions_fragment, R.id.calendar_fragment, R.id.graph_fragment, R.id.purses_fragment
 			)
 		)
 		setupActionBarWithNavController(navController, appBarConfiguration)
