@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TextView
+		android:id="@+id/text_starting_balance"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:fontFamily="@font/raleway_semi_bold"
+		android:text="@string/starting_balance_new_account"
+		android:textColor="@color/black"
+		android:textSize="12pt"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/text_how_much_money"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:fontFamily="@font/raleway_regular"
+		android:text="@string/how_much_money_new_account"
+		android:textColor="@color/black"
+		android:textSize="6pt"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_starting_balance" />
+
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:drawableEnd="@drawable/ic_delete_symbol"
+		android:fontFamily="@font/raleway_regular"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_how_much_money"
+		android:importantForAutofill="no"
+		android:inputType="numberDecimal" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

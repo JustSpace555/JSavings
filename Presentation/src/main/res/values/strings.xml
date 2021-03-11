@@ -9,10 +9,14 @@
     <string name="title_intro">Intro</string>
     <!--    -->
 
+
+
     <!--  Intro fragment  -->
     <string name="jsavings_intro">JSavings</string>
     <!--    -->
 
+    
+    
     <!--  Transaction fragment  -->
         <!--  End of day  -->
         <string name="income_text">Income:</string>
@@ -20,6 +24,50 @@
         <string name="profit_text">Total:</string>
         <!--    -->
 	<string name="text_description_fab">Add transaction</string>
+	<!--	-->
+
+    
+    
+    <!--  Account  -->
+    <!--  Add new account name fragment  -->
+        <string name="add_new_account">Add new account</string>
+        <string name="choose_name_for_new_account">Choose a name for your new account</string>
+        <string name="hint_input_new_account_name">Name</string>
+    <!--    -->
+	<!--  Choose currency for new account fragment  -->
+		<string name="choose_preferred_currency_new_account">Choose currency</string>
+		<string name="what_currency_prefer_new_account">What currency do you prefer the most?</string>
+		<string name="regular_currency">Regular currency</string>
+		<string name="cryptocurrency">Cryptocurrency</string>
+	<!--	-->
+	<!--  Starting balance new account  -->
+		<string name="starting_balance_new_account">Starting balance</string>
+		<string name="how_much_money_new_account">How much money do you have?</string>
+	<!--	-->
+
+
+
+	<!--  Purse  -->
+	<!--  Add new purse  -->
+		<string name="new_purse_name">Name</string>
+		<string name="new_purse_name_hint">New purse name</string>
+		<string name="new_purse_type">Type</string>
+		<string name="new_purse_starting_balance">Starting balance</string>
+		<string name="new_purse_color">Color</string>
+		<string name="new_purse_icon">Icon</string>
+		<string name="new_purse_currency">Currency</string>
+		<string name="new_purse_choose_color">Choose color</string>
+
+		<string-array name="array_new_purse_types_en">
+			<item>Main purse</item>
+			<item>Cryptocurrency purse</item>
+			<item>Credit purse</item>
+		</string-array>
+		<string-array name="array_new_purse_types_ru">
+			<item>Основной кошелек</item>
+			<item>Криптовалютный кошелек</item>
+			<item>Кредитный кошелек</item>
+		</string-array>
 	<!--	-->
 
 </resources>

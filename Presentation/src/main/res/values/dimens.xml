@@ -3,6 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     
+	<!--  Global  -->
+		<dimen name="global_heading_text_size">12pt</dimen>
+		<dimen name="global_plain_text_size">6pt</dimen>
+
+
+
     <!--  Transaction fragment  -->
         <!--  Items  -->
         <dimen name="all_elements_separation">12dp</dimen>
@@ -13,5 +19,15 @@
 
             <!--  Transaction item  -->
             <dimen name="transaction_details_elements_separation">@dimen/date_elements_separation</dimen>
+    
+	
+	
+    <!--  Account  -->
+    <dimen name="add_new_account_elements_margin">12dp</dimen>
+    
+	
+	
+    <!--  Purse  -->
+	<dimen name="add_new_purse_elements_margin">12dp</dimen>
     
 </resources>

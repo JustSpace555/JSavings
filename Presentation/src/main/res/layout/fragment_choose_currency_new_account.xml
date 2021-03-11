@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TextView
+		android:id="@+id/text_choose_preferred_currency"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:fontFamily="@font/raleway_semi_bold"
+		android:text="@string/choose_preferred_currency_new_account"
+		android:textColor="@color/black"
+		android:textSize="12pt"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/text_what_currency_preferred"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_choose_preferred_currency"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:fontFamily="@font/raleway_regular"
+		android:text="@string/what_currency_prefer_new_account"
+		android:textColor="@color/black"
+		android:textSize="6pt" />
+
+	<RadioGroup
+		android:id="@+id/rg_choose_currency"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:checkedButton="@id/rb_regular_currency"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_what_currency_preferred">
+
+		<RadioButton
+			android:id="@+id/rb_regular_currency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:buttonTint="@color/primary"
+			android:fontFamily="@font/raleway_regular"
+			android:text="@string/regular_currency"
+			android:textColor="@color/black"
+			android:textSize="6pt"
+			android:layout_weight="1" />
+
+		<RadioButton
+			android:id="@+id/rb_cryptocurrency"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:buttonTint="@color/primary"
+			android:fontFamily="@font/raleway_regular"
+			android:text="@string/cryptocurrency"
+			android:textColor="@color/black"
+			android:textSize="6pt"
+			android:layout_weight="1"/>
+
+	</RadioGroup>
+
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:fontFamily="@font/raleway_regular"
+		android:textColor="@color/black"
+		android:textSize="6pt"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/rg_choose_currency"
+		android:importantForAutofill="no"
+		android:backgroundTint="@color/primary"
+		android:inputType="text"
+		android:focusable="false"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
