@@ -11,11 +11,10 @@
 
 	<TextView
 		android:id="@+id/text_purse_name"
+		style="@style/StandartTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:fontFamily="@font/raleway_regular"
-		android:textColor="@color/black"
-		android:textSize="8pt"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:text="MasterCard" />
@@ -24,9 +23,7 @@
 		android:id="@+id/text_purse_balance"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:fontFamily="@font/raleway_regular"
-		android:textColor="@color/black"
-		android:textSize="6pt"
+		style="@style/StandartTextStyle"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

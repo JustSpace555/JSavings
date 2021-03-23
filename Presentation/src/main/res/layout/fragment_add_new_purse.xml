@@ -6,126 +6,135 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<LinearLayout
-		android:id="@+id/ll_new_purse_name"
-		android:layout_width="match_parent"
+	<TextView
+		android:id="@+id/text_new_purse_name"
+		style="@style/StandartTextStyle.Bold"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_purse_elements_margin"
-		android:orientation="vertical"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:text="@string/new_purse_name"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
+		app:layout_constraintTop_toTopOf="parent" />
 
-		<TextView
-			android:id="@+id/text_purse_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_semi_bold"
-			android:text="@string/new_purse_name"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
-
-		<EditText
-			android:id="@+id/etext_new_purse_name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:hint="@string/new_purse_name_hint"
-			android:importantForAutofill="no"
-			android:inputType="text"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
-
-	</LinearLayout>
-
-	<LinearLayout
-		android:id="@+id/ll_new_purse_type"
+	<EditText
+		android:id="@+id/et_new_purse_name"
+		style="@style/StandartTextStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_purse_elements_margin"
-		android:orientation="vertical"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/ll_new_purse_name">
-
-		<TextView
-			android:id="@+id/text_new_purse_type"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_semi_bold"
-			android:text="@string/new_purse_type"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
-
-		<Spinner
-			android:id="@+id/spinner_new_purse_type"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:entries="@array/array_new_purse_types_en"
-			app:layout_constraintStart_toStartOf="parent" />
-
-	</LinearLayout>
-
-	<LinearLayout
-		android:id="@+id/ll_new_purse_starting_balance"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_purse_elements_margin"
-		android:orientation="vertical"
+		android:hint="@string/new_purse_name_hint"
+		android:inputType="text"
+		android:importantForAutofill="no"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/ll_new_purse_type">
+		app:layout_constraintTop_toBottomOf="@+id/text_new_purse_name" />
 
-		<TextView
-			android:id="@+id/text_new_purse_starting_balance"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_semi_bold"
-			android:text="@string/new_purse_starting_balance"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
+	<TextView
+		android:id="@+id/text_new_purse_type"
+		style="@style/StandartTextStyle.Bold"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/new_purse_type"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/et_new_purse_name"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"/>
 
-		<EditText
-			android:id="@+id/etext_new_purse_starting_balance"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:importantForAutofill="no"
-			android:inputType="numberDecimal"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
+	<EditText
+		android:id="@+id/et_new_purse_type"
+		style="@style/StandartTextStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_new_purse_type"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		android:inputType="numberDecimal"
+		android:focusable="false"
+		android:importantForAutofill="no"
+		tools:ignore="LabelFor" />
 
-	</LinearLayout>
+	<!--TODO Переделать на спиннеры-->
 
-	<LinearLayout
+	<TextView
+		android:id="@+id/text_new_purse_start_balance"
+		style="@style/StandartTextStyle.Bold"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/new_purse_starting_balance"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/et_new_purse_type" />
+
+	<EditText
+		android:id="@+id/et_new_purse_start_balance"
+		style="@style/StandartTextStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:drawableEnd="@drawable/ic_delete_symbol"
+		android:importantForAutofill="no"
+		android:inputType="numberDecimal"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_new_purse_start_balance"
+		tools:ignore="LabelFor" />
+
+	<androidx.appcompat.widget.LinearLayoutCompat
 		android:id="@+id/ll_new_purse_color_icon"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
 		android:orientation="horizontal"
-		android:layout_margin="@dimen/add_new_purse_elements_margin">
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/et_new_purse_start_balance">
 
 		<Button
 			android:id="@+id/button_new_purse_choose_color"
+			style="@style/ButtonTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/new_purse_choose_color"
-			android:fontFamily="@font/raleway_semi_bold"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size"
-			android:backgroundTint="@color/primary" />
+			android:text="@string/new_purse_choose_color" />
 
-		<TextView
-			android:id="@+id/text_new_purse_choose_icon"
+		<ImageView
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/new_purse_icon"
-			android:fontFamily="@font/raleway_regular"
-			android:textColor="@color/black"
-			android:textSize="@dimen/global_plain_text_size" />
+			android:layout_height="match_parent"
+			android:adjustViewBounds="true"
+			android:contentDescription="@string/new_purse_icon"
+			android:scaleType="fitCenter"
+			android:src="@drawable/cash" />
 
-		<ImageButton
-			android:id="@+id/ib_new_purse_icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+	</androidx.appcompat.widget.LinearLayoutCompat>
 
-	</LinearLayout>
+	<TextView
+		android:id="@+id/text_new_purse_currency"
+		style="@style/StandartTextStyle.Bold"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/new_purse_currency"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/ll_new_purse_color_icon"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"/>
+
+	<androidx.appcompat.widget.AppCompatSpinner
+		android:id="@+id/spinner_new_purse_currency"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		style="@style/Widget.AppCompat.Spinner.Underlined"
+		app:layout_constraintTop_toBottomOf="@+id/text_new_purse_currency"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

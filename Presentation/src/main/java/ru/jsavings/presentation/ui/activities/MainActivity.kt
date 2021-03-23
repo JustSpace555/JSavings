@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 	override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
 		val view = super.onCreateView(name, context, attrs)
 
-		listOf(bottom_app_bar, nav_view, add_transaction_floating_button).onEach {
-			it.visibility = View.INVISIBLE
-		}
+//		listOf(bottom_app_bar, nav_view, add_transaction_floating_button).onEach {
+//			it.visibility = View.INVISIBLE
+//		}
 
 		return view
 	}

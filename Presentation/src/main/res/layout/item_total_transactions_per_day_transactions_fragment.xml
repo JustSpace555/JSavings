@@ -11,11 +11,9 @@
 		android:id="@+id/text_month_day"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/date_elements_separation"
-		android:layout_marginLeft="@dimen/date_elements_separation"
+		android:layout_marginStart="@dimen/all_elements_separation"
 		android:layout_marginBottom="@dimen/elements_margin_top"
-		android:fontFamily="@font/raleway_semi_bold"
-		android:textColor="@color/black"
+		style="@style/HeaderTextStyle"
 		android:textSize="16pt"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -30,24 +28,20 @@
 		app:layout_constraintStart_toEndOf="@+id/text_month_day"
 		app:layout_constraintTop_toTopOf="parent"
 		android:layout_marginStart="@dimen/date_elements_separation"
-		android:layout_marginLeft="@dimen/date_elements_separation"
 		android:orientation="vertical">
 
 		<TextView
 			android:id="@+id/text_week_day"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:textColor="@color/black"
-			android:textSize="5pt"
+			style="@style/StandartTextStyle"
 			tools:text="Воскресенье" />
 
 		<TextView
 			android:id="@+id/text_month_and_year"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:textSize="5pt"
+			style="@style/StandartTextStyle"
 			tools:text="Февраль 2021" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -62,7 +56,6 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintEnd_toStartOf="@+id/consumption_ll"
 		android:layout_marginStart="@dimen/all_elements_separation"
-		android:layout_marginLeft="@dimen/all_elements_separation"
 		android:textAlignment="center"
 		android:gravity="center_horizontal">
 
@@ -70,18 +63,14 @@
 			android:id="@+id/income"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
 			android:text="@string/income_text"
-			android:textColor="@color/black"
-			android:textSize="5pt" />
+			style="@style/StandartTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_income"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:textColor="@color/black"
-			android:textSize="5pt"
+			style="@style/StandartTextStyle"
 			tools:text="+0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -91,7 +80,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_marginStart="@dimen/all_elements_separation"
-		android:layout_marginLeft="@dimen/all_elements_separation"
 		android:gravity="center_horizontal"
 		android:orientation="vertical"
 		android:textAlignment="center"
@@ -104,18 +92,14 @@
 			android:id="@+id/consumption"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
 			android:text="@string/consumption_text"
-			android:textColor="@color/black"
-			android:textSize="5pt" />
+			style="@style/StandartTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_consumption"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:textColor="@color/black"
-			android:textSize="5pt"
+			style="@style/StandartTextStyle"
 			tools:text="-0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -127,8 +111,7 @@
 		android:gravity="center_horizontal"
 		android:orientation="vertical"
 		android:textAlignment="center"
-		android:layout_marginEnd="@dimen/date_elements_separation"
-		android:layout_marginRight="@dimen/date_elements_separation"
+		android:layout_marginEnd="@dimen/all_elements_separation"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
@@ -137,18 +120,14 @@
 			android:id="@+id/profit"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
 			android:text="@string/profit_text"
-			android:textColor="@color/black"
-			android:textSize="5pt" />
+			style="@style/StandartTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_profit"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:fontFamily="@font/raleway_regular"
-			android:textColor="@color/black"
-			android:textSize="5pt"
+			style="@style/StandartTextStyle"
 			tools:text="-0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>

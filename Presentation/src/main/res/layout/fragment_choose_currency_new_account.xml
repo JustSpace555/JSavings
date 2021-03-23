@@ -11,10 +11,8 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:fontFamily="@font/raleway_semi_bold"
+		style="@style/HeaderTextStyle"
 		android:text="@string/choose_preferred_currency_new_account"
-		android:textColor="@color/black"
-		android:textSize="12pt"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
@@ -27,10 +25,8 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:fontFamily="@font/raleway_regular"
 		android:text="@string/what_currency_prefer_new_account"
-		android:textColor="@color/black"
-		android:textSize="6pt" />
+		style="@style/StandartTextStyle"/>
 
 	<RadioGroup
 		android:id="@+id/rg_choose_currency"
@@ -47,22 +43,16 @@
 			android:id="@+id/rb_regular_currency"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:buttonTint="@color/primary"
-			android:fontFamily="@font/raleway_regular"
 			android:text="@string/regular_currency"
-			android:textColor="@color/black"
-			android:textSize="6pt"
+			style="@style/StandartTextStyle"
 			android:layout_weight="1" />
 
 		<RadioButton
 			android:id="@+id/rb_cryptocurrency"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:buttonTint="@color/primary"
-			android:fontFamily="@font/raleway_regular"
 			android:text="@string/cryptocurrency"
-			android:textColor="@color/black"
-			android:textSize="6pt"
+			style="@style/StandartTextStyle"
 			android:layout_weight="1"/>
 
 	</RadioGroup>
@@ -71,14 +61,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:fontFamily="@font/raleway_regular"
-		android:textColor="@color/black"
-		android:textSize="6pt"
+		style="@style/StandartTextStyle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/rg_choose_currency"
 		android:importantForAutofill="no"
-		android:backgroundTint="@color/primary"
 		android:inputType="text"
 		android:focusable="false"/>
 

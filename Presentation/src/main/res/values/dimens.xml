@@ -28,6 +28,7 @@
 	
 	
     <!--  Purse  -->
-	<dimen name="add_new_purse_elements_margin">12dp</dimen>
+	<dimen name="add_new_purse_elements_margin">48dp</dimen>
+	<dimen name="add_new_purse_elements_side_margin">12dp</dimen>
     
 </resources>
