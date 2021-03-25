@@ -6,29 +6,41 @@
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:id="@+id/purse_information_cl"
-	android:layout_marginHorizontal="@dimen/all_elements_separation"
-	android:layout_marginTop="@dimen/date_elements_separation">
+	android:padding="2dp">
+
+	<ImageView
+		android:id="@+id/icon_purse"
+		android:layout_width="22dp"
+		android:layout_height="22dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:src="@drawable/new_purse_cash"/>
 
 	<TextView
 		android:id="@+id/text_purse_name"
 		style="@style/StandartTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:text="MasterCard" />
-
-	<TextView
-		android:id="@+id/text_purse_balance"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		style="@style/StandartTextStyle"
+		android:layout_marginStart="6dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_purse_name"
-		tools:text="Balance: $4,500" />
+		app:layout_constraintStart_toEndOf="@+id/icon_purse"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="MasterCard: $4,500" />
+
+<!--	<TextView-->
+<!--		android:id="@+id/text_purse_balance"-->
+<!--		style="@style/StandartTextStyle"-->
+<!--		android:layout_width="wrap_content"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		android:layout_marginStart="6dp"-->
+<!--		app:layout_constraintBottom_toBottomOf="parent"-->
+<!--		app:layout_constraintEnd_toEndOf="parent"-->
+<!--		app:layout_constraintStart_toEndOf="@+id/icon_purse"-->
+<!--		app:layout_constraintTop_toBottomOf="@+id/text_purse_name"-->
+<!--		tools:text="Balance: $4,500"-->
+<!--		android:textColor="@color/white"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

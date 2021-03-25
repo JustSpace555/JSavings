@@ -6,14 +6,19 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
+	<!--  TODO подумать еще над иконками  -->
 	<ImageView
-		android:id="@+id/icon_transaction"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:contentDescription="TODO"
-		android:src="@mipmap/ic_launcher_round"
+		android:id="@+id/iv_transaction_icon"
+		android:layout_width="33dp"
+		android:layout_height="33dp"
+		tools:background="@drawable/shape_rounded_square_transaction_info"
+		android:padding="4dp"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		tools:src="@drawable/new_purse_cash"
+		app:tint="@color/white" />
 
 
 	<androidx.appcompat.widget.LinearLayoutCompat
@@ -22,7 +27,7 @@
 		android:layout_height="match_parent"
 		android:orientation="vertical"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toEndOf="@+id/icon_transaction"
+		app:layout_constraintStart_toEndOf="@+id/iv_transaction_icon"
 		app:layout_constraintTop_toTopOf="parent"
 		android:layout_marginStart="@dimen/transaction_details_elements_separation">
 
@@ -30,7 +35,7 @@
 			android:id="@+id/text_transaction_description"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandartTextStyle.Bold"
 			tools:text="Mcdonalds"/>
 
 		<TextView
@@ -69,41 +74,26 @@
 		android:id="@+id/transaction_all_time_ll"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:orientation="vertical"
+		android:orientation="horizontal"
+		android:layout_marginEnd="@dimen/all_elements_separation"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 
 		<TextView
-			android:id="@+id/text_transaction_time_hours"
+			android:id="@+id/text_transaction_time_hours_minutes"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
-			tools:text="20:"/>
+			style="@style/StandartTextStyle.Bold"
+			tools:text="20 : 59"/>
 
-		<androidx.appcompat.widget.LinearLayoutCompat
-			android:id="@+id/transaction_min_sec_time_ll"
+		<TextView
+			android:id="@+id/text_transaction_time_seconds"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:layout_marginEnd="@dimen/all_elements_separation">
-
-			<TextView
-				android:id="@+id/text_transaction_time_minutes"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				style="@style/StandartTextStyle"
-				tools:text="59"
-				android:layout_marginEnd="2dp" />
-
-			<TextView
-				android:id="@+id/text_transaction_time_seconds"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				style="@style/AdditionalTextStyle"
-				tools:text="47" />
-
-		</androidx.appcompat.widget.LinearLayoutCompat>
+			style="@style/AdditionalTextStyle"
+			android:layout_marginStart="2dp"
+			tools:text="47" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -7,6 +7,8 @@
 		<item name="android:background">@android:color/transparent</item>
 	</style>
 
+
+
 	<style name="StandartTextStyle">
 		<item name="android:textSize">6pt</item>
 		<item name="fontFamily">@font/raleway_regular</item>
@@ -25,6 +27,8 @@
 	<style name="StandartTextStyle.Bold">
 		<item name="fontFamily">@font/raleway_semi_bold</item>
 	</style>
+
+
 
 	<style name="ButtonTextStyle">
 		<item name="android:textSize">6pt</item>

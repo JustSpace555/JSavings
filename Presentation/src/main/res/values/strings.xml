@@ -12,7 +12,8 @@
 
 
     <!--  Intro fragment  -->
-    <string name="jsavings_intro">JSavings</string>
+    <string name="intro_jsavings">JSavings</string>
+	<string name="intro_ready_to_start">Now everything is ready and you can start using JSavings</string>
     <!--    -->
 
     

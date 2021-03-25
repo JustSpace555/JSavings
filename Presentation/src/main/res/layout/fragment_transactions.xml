@@ -7,39 +7,57 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.transactions.TransactionsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/accounts_rw"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_account"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="@dimen/all_elements_separation"
+        android:layout_marginTop="@dimen/all_elements_separation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="2dp"
-        tools:listitem="@layout/item_account_transactions_fragment" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_account_name"
+            style="@style/StandartTextStyle.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Account" />
+
+        <ImageView
+            android:id="@+id/image_down_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            android:layout_marginStart="@dimen/transaction_details_elements_separation"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/purses_info_rw"
+        android:id="@+id/rw_purses_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accounts_rw"
-        android:layout_margin="2dp"
-        tools:listitem="@layout/item_purse_info_fragment" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_account"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_purse_info_fragment"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactions_rw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/purses_info_rw"
-        tools:listitem="@layout/item_total_transactions_per_day_transactions_fragment" />
+        app:layout_constraintTop_toBottomOf="@+id/rw_purses_info"
+        tools:listitem="@layout/item_total_transactions_per_day_transactions_fragment"
+        tools:itemCount="3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

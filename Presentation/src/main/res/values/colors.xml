@@ -9,4 +9,6 @@
 
     <color name="background_light">#c5c6fa</color>
     <color name="background_dark">#e8e8fd</color>
+
+    <color name="red">#B00020</color>
 </resources>

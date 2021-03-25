@@ -10,7 +10,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/raleway_semi_bold"
-		android:text="@string/jsavings_intro"
+		android:text="@string/intro_jsavings"
 		android:textSize="24pt"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

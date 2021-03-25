@@ -85,45 +85,16 @@
 		app:layout_constraintTop_toBottomOf="@+id/text_new_purse_start_balance"
 		tools:ignore="LabelFor" />
 
-	<androidx.appcompat.widget.LinearLayoutCompat
-		android:id="@+id/ll_new_purse_color_icon"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
-		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
-		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
-		android:orientation="horizontal"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/et_new_purse_start_balance">
-
-		<Button
-			android:id="@+id/button_new_purse_choose_color"
-			style="@style/ButtonTextStyle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/new_purse_choose_color" />
-
-		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:adjustViewBounds="true"
-			android:contentDescription="@string/new_purse_icon"
-			android:scaleType="fitCenter"
-			android:src="@drawable/cash" />
-
-	</androidx.appcompat.widget.LinearLayoutCompat>
-
 	<TextView
 		android:id="@+id/text_new_purse_currency"
 		style="@style/StandartTextStyle.Bold"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
 		android:text="@string/new_purse_currency"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/ll_new_purse_color_icon"
-		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
-		android:layout_marginTop="@dimen/add_new_purse_elements_margin"/>
+		app:layout_constraintTop_toBottomOf="@+id/et_new_purse_start_balance" />
 
 	<androidx.appcompat.widget.AppCompatSpinner
 		android:id="@+id/spinner_new_purse_currency"
@@ -136,5 +107,44 @@
 		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
 		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
 		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"/>
+
+	<Button
+		android:id="@+id/button_new_purse_choose_color"
+		style="@style/ButtonTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/new_purse_choose_color"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/spinner_new_purse_currency"
+		app:layout_constraintEnd_toStartOf="@+id/ll_new_purse_color_icon"/>
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/ll_new_purse_color_icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/button_new_purse_choose_color"
+		app:layout_constraintTop_toBottomOf="@+id/spinner_new_purse_currency">
+
+		<TextView
+			android:id="@+id/text_new_purse_icon"
+			style="@style/StandartTextStyle.Bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/new_purse_icon" />
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:adjustViewBounds="true"
+			android:contentDescription="@string/new_purse_icon"
+			android:src="@drawable/ic_cash"
+			android:background="@color/black"/>
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
