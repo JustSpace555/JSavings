@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_purse_name"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/StandartTextStyle"
+			android:hint="@string/new_purse_name"/>
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_purse_type"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_name"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+		<AutoCompleteTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="none"
+			style="@style/StandartTextStyle"
+			android:hint="@string/new_purse_type"/>
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_purse_starting_balance"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		app:endIconDrawable="@drawable/ic_delete_symbol"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_type"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			style="@style/StandartTextStyle"
+			android:hint="@string/new_purse_starting_balance"
+			android:inputType="numberDecimal" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_purse_currency"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_starting_balance"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin">
+
+		<AutoCompleteTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/new_purse_currency"
+			style="@style/StandartTextStyle"
+			android:inputType="none" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/ll_choose_color_icon"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_currency"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin">
+
+		<Button
+			android:id="@+id/button_new_purse_choose_color"
+			style="@style/ButtonTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/new_purse_choose_color"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/ll_choose_new_purse_icon"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<androidx.appcompat.widget.LinearLayoutCompat
+			android:id="@+id/ll_choose_new_purse_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/button_new_purse_choose_color"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<TextView
+				android:id="@+id/text_new_purse_choose_icon"
+				style="@style/StandartTextStyle.Bold"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/new_purse_icon" />
+
+			<ImageView
+				android:id="@+id/image_new_purse_icon"
+				android:layout_width="33dp"
+				android:layout_height="33dp"
+				android:contentDescription="@string/new_purse_icon"
+				android:src="@drawable/new_purse_cash" />
+
+		</androidx.appcompat.widget.LinearLayoutCompat>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<Button
+		android:id="@+id/button_new_purse_save"
+		style="@style/ButtonTextStyle.Outlined"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/save"
+		android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+		android:layout_marginBottom="@dimen/add_new_purse_elements_margin"
+		android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+		android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/ll_choose_color_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

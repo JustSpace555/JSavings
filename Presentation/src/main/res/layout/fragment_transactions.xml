@@ -38,25 +38,45 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rw_purses_info"
+    <HorizontalScrollView
+        android:id="@+id/hsw_purses_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_account"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_purse_info_fragment"/>
+        android:layout_marginTop="@dimen/all_elements_separation"
+        android:layout_marginStart="@dimen/all_elements_separation"
+        android:layout_marginEnd="@dimen/all_elements_separation">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_purses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_total_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/total_balance"
+                app:chipIcon="@drawable/new_purse_money_bag" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactions_rw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/all_elements_separation"
+        android:layout_marginStart="@dimen/all_elements_separation"
+        android:layout_marginTop="@dimen/all_elements_separation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rw_purses_info"
+        app:layout_constraintTop_toBottomOf="@+id/hsw_purses_info"
         tools:listitem="@layout/item_total_transactions_per_day_transactions_fragment"
         tools:itemCount="3"/>
 

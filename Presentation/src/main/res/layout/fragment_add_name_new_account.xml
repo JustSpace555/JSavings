@@ -17,41 +17,35 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
-	<TextView
-		android:id="@+id/text_choose_name_for_new_account"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:text="@string/choose_name_for_new_account"
-		style="@style/StandartTextStyle"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_add_new_account" />
-
-	<EditText
-		android:id="@+id/etext_name_for_new_account"
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_account_name"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:hint="@string/hint_input_new_account_name"
-		android:importantForAutofill="no"
-		android:inputType="text"
-		style="@style/StandartTextStyle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_choose_name_for_new_account" />
+		app:layout_constraintTop_toBottomOf="@+id/text_add_new_account">
+
+		<com.google.android.material.textfield.TextInputEditText
+			style="@style/StandartTextStyle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/choose_name_for_new_account"/>
+
+	</com.google.android.material.textfield.TextInputLayout>
 
 	<Button
-		android:id="@+id/ok_button"
+		android:id="@+id/next_button"
+		style="@style/ButtonTextStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		style="@style/ButtonTextStyle"
 		android:fontFamily="@font/raleway_semi_bold"
-		tools:text="OK"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/etext_name_for_new_account" />
+		app:layout_constraintTop_toBottomOf="@+id/til_new_account_name"
+		android:text="@string/next"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

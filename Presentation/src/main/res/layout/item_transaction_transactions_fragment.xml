@@ -57,6 +57,7 @@
 		app:layout_constraintEnd_toStartOf="@+id/text_transaction_consumption"
 		app:layout_constraintStart_toEndOf="@+id/name_and_purse_ll"
 		app:layout_constraintTop_toTopOf="parent"
+		android:textColor="?colorPrimary"
 		tools:text="+400$" />
 
 	<TextView
@@ -68,6 +69,7 @@
 		app:layout_constraintEnd_toStartOf="@+id/transaction_all_time_ll"
 		app:layout_constraintStart_toEndOf="@+id/text_transaction_income"
 		app:layout_constraintTop_toTopOf="parent"
+		android:textColor="@color/red"
 		tools:text="-400$" />
 
 	<androidx.appcompat.widget.LinearLayoutCompat

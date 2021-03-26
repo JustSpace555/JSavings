@@ -7,8 +7,8 @@
     <color name="primary_light">#768fff</color>
     <color name="primary_dark">#0039cb</color>
 
-    <color name="background_light">#c5c6fa</color>
-    <color name="background_dark">#e8e8fd</color>
+    <color name="background_light">#9E9E9E</color>
+    <color name="background_dark">#E0E0E0</color>
 
     <color name="red">#B00020</color>
 </resources>

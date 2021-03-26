@@ -57,16 +57,34 @@
 
 	</RadioGroup>
 
-	<EditText
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_purse_type"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		style="@style/StandartTextStyle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/rg_choose_currency"
-		android:importantForAutofill="no"
-		android:inputType="text"
-		android:focusable="false"/>
+		app:layout_constraintTop_toBottomOf="@+id/rg_choose_currency">
+
+		<AutoCompleteTextView
+			style="@style/StandartTextStyle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:focusable="false"
+			android:inputType="none" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<Button
+		android:id="@+id/button_new_account_next"
+		style="@style/ButtonTextStyle.Outlined"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:text="@string/next"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_type" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

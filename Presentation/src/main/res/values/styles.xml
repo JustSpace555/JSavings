@@ -8,31 +8,44 @@
 	</style>
 
 
-
+	<!--  Text styles  -->
 	<style name="StandartTextStyle">
 		<item name="android:textSize">6pt</item>
-		<item name="fontFamily">@font/raleway_regular</item>
+		<item name="fontFamily">@font/rubik_regular</item>
 	</style>
 
 	<style name="HeaderTextStyle">
 		<item name="android:textSize">12pt</item>
-		<item name="fontFamily">@font/raleway_semi_bold</item>
+		<item name="fontFamily">@font/rubik_semi_bold</item>
 	</style>
 
 	<style name="AdditionalTextStyle">
 		<item name="android:textSize">4pt</item>
-		<item name="fontFamily">@font/raleway_light</item>
+		<item name="fontFamily">@font/rubik_light</item>
 	</style>
 
 	<style name="StandartTextStyle.Bold">
-		<item name="fontFamily">@font/raleway_semi_bold</item>
+		<item name="fontFamily">@font/rubik_semi_bold</item>
 	</style>
+	<!--    -->
 
 
 
+	<!--  Button styles  -->
 	<style name="ButtonTextStyle">
 		<item name="android:textSize">6pt</item>
-		<item name="fontFamily">@font/raleway_semi_bold</item>
+		<item name="fontFamily">@font/rubik_semi_bold</item>
 	</style>
-	
+
+	<style name="ButtonTextStyle.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+		<item name="android:textSize">6pt</item>
+		<item name="fontFamily">@font/rubik_semi_bold</item>
+	</style>
+
+	<style name="ButtonTextStyle.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+		<item name="android:textSize">6pt</item>
+		<item name="fontFamily">@font/rubik_semi_bold</item>
+	</style>
+	<!--	-->
+
 </resources>

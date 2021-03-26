@@ -17,28 +17,45 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
-	<TextView
-		android:id="@+id/text_how_much_money"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:text="@string/how_much_money_new_account"
-		style="@style/StandartTextStyle"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_starting_balance" />
-
-	<EditText
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/til_new_account_name"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/add_new_account_elements_margin"
-		android:drawableEnd="@drawable/ic_delete_symbol"
-		style="@style/StandartTextStyle"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_how_much_money"
-		android:importantForAutofill="no"
-		android:inputType="numberDecimal" />
+		app:layout_constraintTop_toBottomOf="@+id/text_starting_balance"
+		android:layout_margin="@dimen/add_new_account_elements_margin">
 
+		<com.google.android.material.textfield.TextInputEditText
+			style="@style/StandartTextStyle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="numberDecimal"
+			android:hint="@string/how_much_money_new_account" />
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<Button
+		android:id="@+id/button_new_account_skip"
+		style="@style/ButtonTextStyle.Outlined"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/skip"
+		app:layout_constraintEnd_toStartOf="@+id/button_new_account_next"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_account_name"
+		android:layout_margin="@dimen/add_new_account_elements_margin"/>
+
+	<Button
+		android:id="@+id/button_new_account_next"
+		style="@style/ButtonTextStyle.Outlined"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/next"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/til_new_account_name"
+		app:layout_constraintStart_toEndOf="@+id/button_new_account_skip"
+		android:layout_margin="@dimen/add_new_account_elements_margin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
