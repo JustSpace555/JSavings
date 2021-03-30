@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/new_account_navigation"
+	xmlns:tools="http://schemas.android.com/tools"
+	app:startDestination="@id/addNewAccountName">
+
+	<fragment
+		android:id="@+id/addNewAccountName"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountName"
+		android:label="AddNewAccountName"
+		tools:layout="@layout/new_account_fragment_add_name">
+		<action
+			android:id="@+id/action_addNewAccountName_to_chooseCurrencyNewAccountFragment"
+			app:destination="@id/chooseCurrencyNewAccountFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/chooseCurrencyNewAccountFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.currency.`ChooseCurrency\Fragment`"
+		android:label="ChooseCurrencyNewAccountFragment"
+		tools:layout="@layout/new_account_fragment_choose_currency">
+		<action
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_startingBalanceNewAccountFragment"
+			app:destination="@id/startingBalanceNewAccountFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/startingBalanceNewAccountFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.balance.StartingBalanceFragment"
+		android:label="StartingBalanceNewAccountFragment"
+		tools:layout="@layout/new_account_fragment_starting_balance">
+		<action
+			android:id="@+id/action_startingBalanceNewAccountFragment_to_createFirstPurseFragment"
+			app:destination="@id/createFirstPurseFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/createFirstPurseFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.firstpurse.CreateFirstPurseFragment"
+		android:label="CreateFirstPurseFragment"
+		tools:layout="@layout/new_account_fragment_create_purse">
+		<action
+			android:id="@+id/action_createFirstPurseFragment_to_newPurseFragment"
+			app:destination="@id/newPurseFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/newPurseFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseFragment"
+		android:label="NewPurseFragment"
+		tools:layout="@layout/purse_fragment_new_purse">
+		<action
+			android:id="@+id/action_newPurseFragment_to_readyFragment"
+			app:destination="@id/readyFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/readyFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.ready.ReadyFragment"
+		android:label="ReadyFragment"
+		tools:layout="@layout/new_account_fragment_ready_to_start"/>
+
+</navigation>

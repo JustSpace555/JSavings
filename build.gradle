@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = "1.4.31"
+        kotlin_version = "1.4.32"
         jUnit_version = "4.13.2"
 	    koin_version = '2.2.2'
 	    rxjava3_version = '3.0.0'

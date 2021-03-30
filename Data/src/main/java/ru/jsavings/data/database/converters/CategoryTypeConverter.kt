@@ -1,7 +1,7 @@
 package ru.jsavings.data.database.converters
 
 import androidx.room.TypeConverter
-import ru.jsavings.data.entities.category.CategoryType
+import ru.jsavings.data.entity.category.CategoryType
 
 class CategoryTypeConverter {
 

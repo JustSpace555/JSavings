@@ -1,14 +1,14 @@
 package ru.jsavings.data.di
 
 import org.koin.dsl.module
-import ru.jsavings.data.model.AccountRepository
-import ru.jsavings.data.implementations.AccountRepositoryImpl
-import ru.jsavings.data.model.CategoryRepository
-import ru.jsavings.data.implementations.CategoryRepositoryImpl
-import ru.jsavings.data.model.PurseRepository
-import ru.jsavings.data.implementations.PurseRepositoryImpl
-import ru.jsavings.data.model.TransactionRepository
-import ru.jsavings.data.implementations.TransactionRepositoryImpl
+import ru.jsavings.data.repository.account.AccountRepository
+import ru.jsavings.data.repository.account.AccountRepositoryImpl
+import ru.jsavings.data.repository.category.CategoryRepository
+import ru.jsavings.data.repository.category.CategoryRepositoryImpl
+import ru.jsavings.data.repository.purse.PurseRepository
+import ru.jsavings.data.repository.purse.PurseRepositoryImpl
+import ru.jsavings.data.repository.transaction.TransactionRepository
+import ru.jsavings.data.repository.transaction.TransactionRepositoryImpl
 
 val repositoryModule = module {
 

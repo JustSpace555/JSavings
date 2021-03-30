@@ -1,4 +1,4 @@
-package ru.jsavings.presentation.ui.fragments.intro
+package ru.jsavings.presentation.ui.fragments.account.newaccount.ready
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.databinding.IntroFragmentBinding
+import ru.jsavings.databinding.NewAccountFragmentReadyToStartBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
-class IntroFragment : BaseFragment() {
+class ReadyFragment : BaseFragment() {
 
-	override val viewModel by viewModel<IntroViewModel>()
+	override val viewModel by viewModel<ReadyViewModel>()
 
-	override val bindingUtil by lazy { IntroFragmentBinding.inflate(layoutInflater) }
+	override val bindingUtil by lazy { NewAccountFragmentReadyToStartBinding.inflate(layoutInflater) }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		return inflater.inflate(R.layout.intro_fragment, container, false)
+		return inflater.inflate(R.layout.new_account_fragment_ready_to_start, container, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
 		val appearanceAnimation = AnimationUtils.loadAnimation(context, R.anim.text_appearance)
-		bindingUtil.textIntro.startAnimation(appearanceAnimation)
+		bindingUtil.textIntroReadyToStart.startAnimation(appearanceAnimation)
 	}
 }

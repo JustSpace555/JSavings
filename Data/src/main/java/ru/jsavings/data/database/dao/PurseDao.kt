@@ -1,7 +1,7 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entities.Purse
+import ru.jsavings.data.entity.Purse
 
 @Dao
 interface PurseDao {

@@ -20,7 +20,6 @@
 
     <!--  Intro fragment  -->
     <string name="intro_jsavings">JSavings</string>
-	<string name="intro_ready_to_start">Now everything is ready and you can start using JSavings</string>
     <!--    -->
 
     
@@ -53,6 +52,12 @@
 		<string name="starting_balance_new_account">Starting balance</string>
 		<string name="how_much_money_new_account">How much money do you have?</string>
 		<string name="skip">Skip</string>
+	<!--	-->
+	<!--  Create new purse  -->
+	<string name="new_account_create_new_purse">Now create your first purse</string>
+	<!--    -->
+	<!--  Ready  -->
+	<string name="new_account_ready_to_start">Now everything is ready and you can start using JSavings</string>
 	<!--	-->
 
 

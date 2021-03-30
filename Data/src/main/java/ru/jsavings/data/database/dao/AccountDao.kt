@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Update
-import ru.jsavings.data.entities.Account
+import ru.jsavings.data.entity.Account
 
 @Dao
 interface AccountDao {

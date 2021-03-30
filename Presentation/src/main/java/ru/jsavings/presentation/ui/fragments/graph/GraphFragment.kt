@@ -4,27 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
+import ru.jsavings.databinding.MainFragmentGraphBinding
+import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
-class GraphFragment : Fragment() {
+class GraphFragment : BaseFragment() {
 
-    private lateinit var graphViewModel: GraphViewModel
+    override val viewModel by viewModel<GraphViewModel>()
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        graphViewModel = ViewModelProvider(this).get(GraphViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_graph, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        graphViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override val bindingUtil by lazy { MainFragmentGraphBinding.inflate(layoutInflater) }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.main_fragment_graph, container, false)
     }
 }

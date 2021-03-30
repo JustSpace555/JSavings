@@ -11,10 +11,10 @@ import ru.jsavings.data.database.converters.CategoryTypeConverter
 import ru.jsavings.data.database.converters.CurrencyConverter
 import ru.jsavings.data.database.converters.DateConverter
 import ru.jsavings.data.database.converters.IdListConverter
-import ru.jsavings.data.entities.Account
-import ru.jsavings.data.entities.Purse
-import ru.jsavings.data.entities.Transaction
-import ru.jsavings.data.entities.category.Category
+import ru.jsavings.data.entity.Account
+import ru.jsavings.data.entity.Purse
+import ru.jsavings.data.entity.Transaction
+import ru.jsavings.data.entity.category.Category
 
 @Database(entities = [Account::class, Purse::class, Transaction::class, Category::class], version = 1)
 @TypeConverters(

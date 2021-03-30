@@ -1,7 +1,7 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entities.category.Category
+import ru.jsavings.data.entity.category.Category
 
 @Dao
 interface CategoryDao {
