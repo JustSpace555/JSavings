@@ -1,23 +1,20 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entity.Purse
+import ru.jsavings.data.entity.PurseEntity
 
 @Dao
-interface PurseDao {
+interface PurseDao : BaseDao {
 
-	@Query("SELECT * FROM purse WHERE purse.purse_id = :id")
-	fun getPurseById(id: Int): Purse
-
-	@Query("SELECT * FROM purse WHERE purse.purse_id IN (:listIds)")
-	fun getPursesByIdList(listIds: List<Int>): List<Purse>
+	@Query("SELECT * FROM purse_table WHERE purse_id = :inputId")
+	fun getPurseById(inputId: Int): PurseEntity
 
 	@Insert
-	fun addNewPurse(purse: Purse)
+	fun addNewPurse(purseEntity: PurseEntity): Int
 
 	@Update
-	fun updatePurse(purse: Purse)
+	fun updatePurse(purseEntity: PurseEntity)
 
 	@Delete
-	fun deletePurse(purse: Purse)
+	fun deletePurse(purseEntity: PurseEntity)
 }

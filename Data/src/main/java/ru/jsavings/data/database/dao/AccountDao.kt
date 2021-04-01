@@ -1,23 +1,20 @@
 package ru.jsavings.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Query
-import androidx.room.Update
-import ru.jsavings.data.entity.Account
+import androidx.room.*
+import ru.jsavings.data.entity.AccountEntity
 
 @Dao
-interface AccountDao {
+interface AccountDao : BaseDao {
 
-	@Query("SELECT * FROM account")
-	fun getAllAccounts(): List<Account>
+	@Query("SELECT * FROM account_table")
+	fun getAllAccounts(): List<AccountEntity>
 
-	@Query("SELECT * FROM account WHERE account.account_id = :id")
-	fun getAccountById(id: Int): Account
+	@Insert
+	fun createNewAccount(accountEntity: AccountEntity): Int
 
 	@Update
-	fun updateAccount(account: Account)
+	fun updateAccount(accountEntity: AccountEntity)
 
 	@Delete
-	fun deleteAccount(account: Account)
+	fun deleteAccount(accountEntity: AccountEntity)
 }

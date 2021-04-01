@@ -2,28 +2,25 @@ package ru.jsavings.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import ru.jsavings.data.database.dao.AccountDao
-import ru.jsavings.data.database.dao.CategoryDao
+import ru.jsavings.data.database.dao.TransactionCategoryDao
 import ru.jsavings.data.database.dao.PurseDao
 import ru.jsavings.data.database.dao.TransactionDao
-import ru.jsavings.data.database.converters.CategoryTypeConverter
-import ru.jsavings.data.database.converters.CurrencyConverter
-import ru.jsavings.data.database.converters.DateConverter
-import ru.jsavings.data.database.converters.IdListConverter
-import ru.jsavings.data.entity.Account
-import ru.jsavings.data.entity.Purse
-import ru.jsavings.data.entity.Transaction
-import ru.jsavings.data.entity.category.Category
+import ru.jsavings.data.entity.AccountEntity
+import ru.jsavings.data.entity.PurseEntity
+import ru.jsavings.data.entity.transaction.TransactionEntity
+import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 
-@Database(entities = [Account::class, Purse::class, Transaction::class, Category::class], version = 1)
-@TypeConverters(
-	CategoryTypeConverter::class, CurrencyConverter::class, DateConverter::class, IdListConverter::class
+@Database (
+	entities = [
+		AccountEntity::class, PurseEntity::class, TransactionEntity::class, TransactionCategoryEntity::class
+	],
+	version = 1
 )
 abstract class JSavingsDataBase : RoomDatabase() {
 	abstract fun accountDao(): AccountDao
 
-	abstract fun categoryDao(): CategoryDao
+	abstract fun categoryDao(): TransactionCategoryDao
 
 	abstract fun purseDao(): PurseDao
 

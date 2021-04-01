@@ -1,23 +1,20 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entity.Transaction
+import ru.jsavings.data.entity.transaction.TransactionEntity
 
 @Dao
-interface TransactionDao {
+interface TransactionDao : BaseDao {
 
-	@Query("SELECT * FROM `transaction` WHERE `transaction`.transaction_id = :id")
-	fun getTransactionById(id: Int): Transaction
-
-	@Query("SELECT * FROM `transaction` WHERE `transaction`.transaction_id IN (:listIds)")
-	fun getTransactionsByIdList(listIds: List<Int>): List<Transaction>
+	@Query("SELECT * FROM transaction_table WHERE transaction_id = :inputId")
+	fun getTransactionById(inputId: Int): TransactionEntity
 
 	@Insert
-	fun addNewTransaction(transaction: Transaction)
+	fun addNewTransaction(transactionEntity: TransactionEntity): Int
 
 	@Update
-	fun updateTransaction(transaction: Transaction)
+	fun updateTransaction(transactionEntity: TransactionEntity)
 
 	@Delete
-	fun deleteTransaction(transaction: Transaction)
+	fun deleteTransaction(transactionEntity: TransactionEntity)
 }
