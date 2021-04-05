@@ -6,11 +6,13 @@ import ru.jsavings.data.entity.PurseEntity
 import ru.jsavings.data.model.purse.Purse
 import ru.jsavings.data.repository.BaseRepository
 
-interface PurseRepository : BaseRepository<PurseEntity, Purse> {
+interface PurseRepository : BaseRepository {
 
 	fun getPurseById(id: Int): Single<Purse>
 
-	fun addNewPurse(purse: Purse): Single<Int>
+	fun getPursesByAccountId(id: Int): Single<List<Purse>>
+
+	fun addNewPurse(purse: Purse): Completable
 
 	fun updatePurse(purse: Purse): Completable
 

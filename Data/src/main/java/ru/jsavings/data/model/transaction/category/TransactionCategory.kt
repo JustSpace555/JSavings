@@ -4,6 +4,7 @@ import ru.jsavings.data.model.BaseModel
 
 data class TransactionCategory (
 	val name: String,
+	val accountId: Int,
 	val type: TransactionCategoryType,
 	val color: String,
 	val iconPath: String

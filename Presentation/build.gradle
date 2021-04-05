@@ -80,4 +80,7 @@ dependencies {
 
     // ColorPicker
     implementation 'com.github.QuadFlask:colorpicker:0.0.15'
+
+    implementation project (":Data")
+    implementation project (":Domain")
 }

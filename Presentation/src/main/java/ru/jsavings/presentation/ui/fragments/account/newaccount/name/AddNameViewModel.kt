@@ -1,10 +1,10 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import ru.jsavings.presentation.extensions.default
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class AddNameViewModel : ViewModel() {
+class AddNameViewModel : BaseViewModel() {
 
 	val newAccountName = MutableLiveData<String>().default("")
 

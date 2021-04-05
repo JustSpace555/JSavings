@@ -7,12 +7,13 @@ import ru.jsavings.data.model.transaction.Transaction
 import ru.jsavings.data.model.transaction.category.TransactionCategory
 import java.util.*
 
-class TransactionMapper : BaseMapper<TransactionEntity, Transaction> {
+internal class TransactionMapper : BaseMapper<TransactionEntity, Transaction> {
 
 	// additionElements must contain TransactionCategory
 	override fun mapEntityToModel(input: TransactionEntity, vararg additionalElements: BaseModel): Transaction =
 		Transaction(
-			purseId = input.purseId,
+			purseId = input.purseFkId,
+			categoryId = input.categoryFkId,
 			transactionCategory = additionalElements.filterIsInstance<TransactionCategory>().first(),
 			totalSum = input.totalSum,
 			date = Date(input.date),
@@ -24,7 +25,8 @@ class TransactionMapper : BaseMapper<TransactionEntity, Transaction> {
 	override fun mapModelToEntity(input: Transaction, vararg additionalElementIds: Int): TransactionEntity =
 		TransactionEntity(
 			transactionId = 0,
-			purseId = input.purseId,
+			purseFkId = input.purseId,
+			categoryFkId = input.categoryId,
 			transactionCategoryId = additionalElementIds.first(),
 			totalSum = input.totalSum,
 			date = input.date.time,

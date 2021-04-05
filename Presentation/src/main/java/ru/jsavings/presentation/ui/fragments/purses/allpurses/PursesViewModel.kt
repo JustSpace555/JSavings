@@ -1,7 +1,5 @@
 package ru.jsavings.presentation.ui.fragments.purses.allpurses
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class PursesViewModel : ViewModel()
+class PursesViewModel : BaseViewModel()

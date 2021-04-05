@@ -10,7 +10,7 @@ import ru.jsavings.data.mappers.transaction.TransactionMapper
 import ru.jsavings.data.model.transaction.Transaction
 import java.lang.Exception
 
-class TransactionRepositoryImpl(
+internal class TransactionRepositoryImpl(
 	override val dao: TransactionDao,
 	override val mapper: TransactionMapper
 ) : TransactionRepository {
@@ -25,12 +25,11 @@ class TransactionRepositoryImpl(
 		}
 	}
 
-	override fun addNewTransaction(transaction: Transaction): Single<Int> =
-		Single.create { subscriber ->
+	override fun addNewTransaction(transaction: Transaction): Completable =
+		Completable.create { subscriber ->
 			try {
-				subscriber.onSuccess(
-					dao.addNewTransaction(mapper.mapModelToEntity(transaction))
-				)
+				dao.addNewTransaction(mapper.mapModelToEntity(transaction))
+				subscriber.onComplete()
 			} catch (e: Exception) {
 				subscriber.onError(e)
 			}

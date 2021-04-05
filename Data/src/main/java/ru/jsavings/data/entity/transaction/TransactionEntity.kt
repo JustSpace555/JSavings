@@ -7,10 +7,15 @@ import ru.jsavings.data.entity.PurseEntity
 @Entity (
 	tableName = "transaction_table",
 	foreignKeys = [
-		ForeignKey(entity = PurseEntity::class, parentColumns = ["transaction_id"], childColumns = ["purse_id"])
+		ForeignKey(entity = PurseEntity::class, childColumns = ["purse_fk_id"], parentColumns = ["purse_id"]),
+		ForeignKey(
+			entity = TransactionCategoryEntity::class,
+			childColumns = ["category_fk_id"],
+			parentColumns = ["category_id"]
+		)
 	]
 )
-data class TransactionEntity (
+internal data class TransactionEntity (
 
 	//Transaction id
 	@PrimaryKey(autoGenerate = true)
@@ -18,8 +23,11 @@ data class TransactionEntity (
 	val transactionId: Long,
 
 	//Purse id which this transaction belongs to
-	@ColumnInfo(name = "purse_id")
-	val purseId: Int,
+	@ColumnInfo(name = "purse_fk_id")
+	val purseFkId: Int,
+
+	@ColumnInfo(name = "category_fk_id")
+	val categoryFkId: Int,
 
 	//Category id (food, entertainment, ...)
 	@ColumnInfo(name = "transaction_category_id")

@@ -6,6 +6,7 @@ import java.util.*
 
 data class Transaction (
 	val purseId: Int,
+	val categoryId: Int,
 	val transactionCategory: TransactionCategory,
 	val totalSum: Double,
 	val date: Date,

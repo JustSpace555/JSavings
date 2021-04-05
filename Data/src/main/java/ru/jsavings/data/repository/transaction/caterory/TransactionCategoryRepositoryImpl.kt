@@ -7,7 +7,7 @@ import ru.jsavings.data.mappers.transaction.TransactionCategoryMapper
 import ru.jsavings.data.model.transaction.category.TransactionCategory
 import java.lang.Exception
 
-class TransactionCategoryRepositoryImpl (
+internal class TransactionCategoryRepositoryImpl (
 	override val dao: TransactionCategoryDao,
 	override val mapper: TransactionCategoryMapper
 ) : TransactionCategoryRepository {
@@ -22,12 +22,11 @@ class TransactionCategoryRepositoryImpl (
 		}
 	}
 
-	override fun addNewCategory(transactionCategory: TransactionCategory): Single<Int> =
-		Single.create { subscriber ->
+	override fun addNewCategory(transactionCategory: TransactionCategory): Completable =
+		Completable.create { subscriber ->
 			try {
-				subscriber.onSuccess(
-					dao.addNewCategory(mapper.mapModelToEntity(transactionCategory))
-				)
+				dao.addNewCategory(mapper.mapModelToEntity(transactionCategory))
+				subscriber.onComplete()
 			} catch (e: Exception) {
 				subscriber.onError(e)
 			}

@@ -1,3 +1,4 @@
 rootProject.name = "JSavings"
 include ':Presentation'
 include ':Data'
+include ':Domain'

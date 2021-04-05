@@ -5,11 +5,11 @@ import ru.jsavings.data.model.BaseModel
 import ru.jsavings.data.model.purse.Purse
 import ru.jsavings.data.model.purse.PurseCategoryType
 
-class PurseMapper : BaseMapper<PurseEntity, Purse> {
+internal class PurseMapper : BaseMapper<PurseEntity, Purse> {
 
 	override fun mapEntityToModel(input: PurseEntity, vararg additionalElements: BaseModel): Purse =
 		Purse(
-			accountId = input.accountId,
+			accountId = input.accountFkId,
 			name = input.name,
 			balance = input.balance,
 			currency = input.currency,
@@ -21,7 +21,7 @@ class PurseMapper : BaseMapper<PurseEntity, Purse> {
 	override fun mapModelToEntity(input: Purse, vararg additionalElementIds: Int): PurseEntity =
 		PurseEntity(
 			purseId = 0,
-			accountId = input.accountId,
+			accountFkId = input.accountId,
 			name = input.name,
 			balance = input.balance,
 			currency = input.currency,

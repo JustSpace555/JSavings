@@ -6,11 +6,11 @@ import ru.jsavings.data.entity.AccountEntity
 import ru.jsavings.data.model.Account
 import ru.jsavings.data.repository.BaseRepository
 
-interface AccountRepository : BaseRepository<AccountEntity, Account> {
+interface AccountRepository : BaseRepository {
 
 	fun getAllAccounts(): Single<List<Account>>
 
-	fun createNewAccount(account: Account): Single<Int>
+	fun createNewAccount(account: Account): Completable
 
 	fun updateAccount(account: Account): Completable
 

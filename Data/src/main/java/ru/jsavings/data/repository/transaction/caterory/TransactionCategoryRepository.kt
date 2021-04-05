@@ -6,11 +6,11 @@ import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 import ru.jsavings.data.model.transaction.category.TransactionCategory
 import ru.jsavings.data.repository.BaseRepository
 
-interface TransactionCategoryRepository : BaseRepository<TransactionCategoryEntity, TransactionCategory> {
+interface TransactionCategoryRepository : BaseRepository {
 
 	fun getCategoryById(id: Int): Single<TransactionCategory>
 
-	fun addNewCategory(transactionCategory: TransactionCategory): Single<Int>
+	fun addNewCategory(transactionCategory: TransactionCategory): Completable
 
 	fun updateCategory(transactionCategory: TransactionCategory): Completable
 

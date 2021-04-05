@@ -4,13 +4,13 @@ import androidx.room.*
 import ru.jsavings.data.entity.transaction.TransactionEntity
 
 @Dao
-interface TransactionDao : BaseDao {
+internal interface TransactionDao : BaseDao {
 
 	@Query("SELECT * FROM transaction_table WHERE transaction_id = :inputId")
 	fun getTransactionById(inputId: Int): TransactionEntity
 
 	@Insert
-	fun addNewTransaction(transactionEntity: TransactionEntity): Int
+	fun addNewTransaction(transactionEntity: TransactionEntity)
 
 	@Update
 	fun updateTransaction(transactionEntity: TransactionEntity)

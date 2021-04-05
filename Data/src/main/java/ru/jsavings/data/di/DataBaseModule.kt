@@ -5,7 +5,7 @@ import androidx.room.Room
 import org.koin.dsl.module
 import ru.jsavings.data.database.JSavingsDataBase
 
-val dataBaseModule = module {
+internal val dataBaseModule = module {
 	single { Room.databaseBuilder(Application(), JSavingsDataBase::class.java, "JSavingsDB").build() }
 
 	single { get<JSavingsDataBase>().accountDao() }

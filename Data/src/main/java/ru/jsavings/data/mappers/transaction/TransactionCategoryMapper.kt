@@ -6,7 +6,7 @@ import ru.jsavings.data.model.BaseModel
 import ru.jsavings.data.model.transaction.category.TransactionCategory
 import ru.jsavings.data.model.transaction.category.TransactionCategoryType
 
-class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity, TransactionCategory> {
+internal class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity, TransactionCategory> {
 
 	override fun mapEntityToModel(
 		input: TransactionCategoryEntity,
@@ -14,6 +14,7 @@ class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity, Transact
 	): TransactionCategory =
 		TransactionCategory(
 			name = input.name,
+			accountId = input.accountFkId,
 			type = TransactionCategoryType.valueOf(input.type),
 			color = input.color,
 			iconPath = input.iconPath
@@ -25,6 +26,7 @@ class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity, Transact
 	): TransactionCategoryEntity =
 		TransactionCategoryEntity(
 			categoryId = 0,
+			accountFkId = input.accountId,
 			name = input.name,
 			type = input.type.toString(),
 			color = input.color,

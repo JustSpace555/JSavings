@@ -6,11 +6,11 @@ import ru.jsavings.data.entity.transaction.TransactionEntity
 import ru.jsavings.data.model.transaction.Transaction
 import ru.jsavings.data.repository.BaseRepository
 
-interface TransactionRepository : BaseRepository<TransactionEntity, Transaction> {
+interface TransactionRepository : BaseRepository {
 
 	fun getTransactionById(id: Int): Single<Transaction>
 
-	fun addNewTransaction(transaction: Transaction): Single<Int>
+	fun addNewTransaction(transaction: Transaction): Completable
 
 	fun updateTransaction(transaction: Transaction): Completable
 

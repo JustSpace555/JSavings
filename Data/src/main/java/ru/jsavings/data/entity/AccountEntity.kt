@@ -3,7 +3,7 @@ package ru.jsavings.data.entity
 import androidx.room.*
 
 @Entity (tableName = "account_table")
-data class AccountEntity (
+internal data class AccountEntity (
 
 	//Account id
 	@PrimaryKey(autoGenerate = true)
@@ -15,5 +15,10 @@ data class AccountEntity (
 
 	//Main currency of this account
 	@ColumnInfo(name = "main_currency")
-	val mainCurrency: String
+	val mainCurrency: String,
+
+	//
+	@ColumnInfo(name = "balance_in_main_currency")
+	val balanceInMainCurrency: Double
+
 ) : BaseEntity

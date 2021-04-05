@@ -1,6 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.ready
 
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class ReadyViewModel : ViewModel() {
+class ReadyViewModel : BaseViewModel() {
 }

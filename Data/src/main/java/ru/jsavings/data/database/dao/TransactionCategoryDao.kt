@@ -4,7 +4,7 @@ import androidx.room.*
 import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 
 @Dao
-interface TransactionCategoryDao : BaseDao {
+internal interface TransactionCategoryDao : BaseDao {
 
 	@Query("SELECT * FROM transaction_category_table WHERE category_id = :inputId")
 	fun getCategoryById(inputId: Int): TransactionCategoryEntity
@@ -13,7 +13,7 @@ interface TransactionCategoryDao : BaseDao {
 	fun getCategoriesByTransactionType(inputType: String): List<TransactionCategoryEntity>
 
 	@Insert
-	fun addNewCategory(transactionCategoryEntity: TransactionCategoryEntity): Int
+	fun addNewCategory(transactionCategoryEntity: TransactionCategoryEntity)
 
 	@Update
 	fun updateCategory(transactionCategoryEntity: TransactionCategoryEntity)

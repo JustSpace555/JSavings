@@ -10,13 +10,13 @@ import ru.jsavings.data.repository.purse.PurseRepositoryImpl
 import ru.jsavings.data.repository.transaction.TransactionRepository
 import ru.jsavings.data.repository.transaction.TransactionRepositoryImpl
 
-val repositoryModule = module {
+internal val repositoryModule = module {
 
-	single<AccountRepository> { AccountRepositoryImpl(get()) }
+	single<AccountRepository> { AccountRepositoryImpl(get(), get()) }
 
-	single<TransactionCategoryRepository> { TransactionCategoryRepositoryImpl(get()) }
+	single<TransactionCategoryRepository> { TransactionCategoryRepositoryImpl(get(), get()) }
 
-	single<PurseRepository> { PurseRepositoryImpl(get()) }
+	single<PurseRepository> { PurseRepositoryImpl(get(), get()) }
 
-	single<TransactionRepository> { TransactionRepositoryImpl(get()) }
+	single<TransactionRepository> { TransactionRepositoryImpl(get(), get()) }
 }

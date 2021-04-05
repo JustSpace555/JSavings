@@ -10,7 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import ru.jsavings.R
+import ru.jsavings.data.di.dataModule
+import ru.jsavings.domain.usecase.di.domainModule
+import ru.jsavings.presentation.di.presentationModule
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +36,15 @@ class MainActivity : AppCompatActivity() {
 		navView.setupWithNavController(navController)
 		navView.background = null
 		navView.menu.getItem(2).isEnabled = false
+
 		supportActionBar?.hide()
+
+		startKoin {
+			androidContext(this@MainActivity)
+			modules(
+				dataModule + domainModule + presentationModule
+			)
+		}
 	}
 
 	override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {

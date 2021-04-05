@@ -13,9 +13,9 @@ import ru.jsavings.presentation.ui.fragments.graph.GraphViewModel
 import ru.jsavings.presentation.ui.fragments.purses.allpurses.PursesViewModel
 import ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseViewModel
 
-val viewModelModule = module {
+internal val viewModelModule = module {
 	//Into
-	viewModel { IntroViewModel() }
+	viewModel { IntroViewModel(get()) }
 	viewModel { ReadyViewModel() }
 
 	//New account

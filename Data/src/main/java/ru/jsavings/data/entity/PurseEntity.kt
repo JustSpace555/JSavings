@@ -6,18 +6,18 @@ import ru.jsavings.data.entity.AccountEntity
 @Entity (
 	tableName = "purse_table",
 	foreignKeys = [
-		ForeignKey(entity = AccountEntity::class, parentColumns = ["purse_id"], childColumns = ["account_id"])
+		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_id"], parentColumns = ["account_id"])
 	]
 )
-data class PurseEntity (
+internal data class PurseEntity (
 
 	//Purse id
 	@PrimaryKey(autoGenerate = true)
 	@ColumnInfo(name = "purse_id")
 	val purseId: Int,
 
-	@ColumnInfo(name = "account_id")
-	val accountId: Int,
+	@ColumnInfo(name = "account_fk_id")
+	val accountFkId: Int,
 
 	//Name of purse
 	val name: String,

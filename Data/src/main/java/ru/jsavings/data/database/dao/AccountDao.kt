@@ -4,13 +4,13 @@ import androidx.room.*
 import ru.jsavings.data.entity.AccountEntity
 
 @Dao
-interface AccountDao : BaseDao {
+internal interface AccountDao : BaseDao {
 
 	@Query("SELECT * FROM account_table")
 	fun getAllAccounts(): List<AccountEntity>
 
 	@Insert
-	fun createNewAccount(accountEntity: AccountEntity): Int
+	fun createNewAccount(accountEntity: AccountEntity)
 
 	@Update
 	fun updateAccount(accountEntity: AccountEntity)

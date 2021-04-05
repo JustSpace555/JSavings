@@ -8,7 +8,7 @@ import ru.jsavings.data.mappers.PurseMapper
 import ru.jsavings.data.model.purse.Purse
 import java.lang.Exception
 
-class PurseRepositoryImpl (
+internal class PurseRepositoryImpl (
 	override val dao: PurseDao,
 	override val mapper: PurseMapper
 ) : PurseRepository {
@@ -23,11 +23,20 @@ class PurseRepositoryImpl (
 		}
 	}
 
-	override fun addNewPurse(purse: Purse): Single<Int> = Single.create { subscriber ->
+	override fun getPursesByAccountId(id: Int): Single<List<Purse>> = Single.create { subscriber ->
 		try {
 			subscriber.onSuccess(
-				dao.addNewPurse(mapper.mapModelToEntity(purse))
+				mapper.mapEntityListToModelList(dao.getPursesByAccountId(id))
 			)
+		} catch (e: Exception) {
+			subscriber.onError(e)
+		}
+	}
+
+	override fun addNewPurse(purse: Purse): Completable = Completable.create { subscriber ->
+		try {
+			dao.addNewPurse(mapper.mapModelToEntity(purse))
+			subscriber.onComplete()
 		} catch (e: Exception) {
 			subscriber.onError(e)
 		}

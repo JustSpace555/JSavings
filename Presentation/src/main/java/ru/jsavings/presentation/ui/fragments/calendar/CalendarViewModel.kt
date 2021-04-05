@@ -1,5 +1,5 @@
 package ru.jsavings.presentation.ui.fragments.calendar
 
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class CalendarViewModel : ViewModel()
+class CalendarViewModel : BaseViewModel()

@@ -1,6 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.purses.newpurse
 
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class NewPurseViewModel : ViewModel() {
+class NewPurseViewModel : BaseViewModel() {
 }

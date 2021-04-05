@@ -1,6 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.currency
 
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class ChooseCurrencyViewModel : ViewModel() {
+class ChooseCurrencyViewModel : BaseViewModel() {
 }

@@ -2,9 +2,9 @@ package ru.jsavings.presentation.ui.fragments.transactions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-class TransactionsViewModel : ViewModel() {
+class TransactionsViewModel : BaseViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

@@ -10,7 +10,7 @@ import ru.jsavings.data.mappers.BaseMapper
 import ru.jsavings.data.model.Account
 import java.lang.Exception
 
-class AccountRepositoryImpl(
+internal class AccountRepositoryImpl (
 	override val dao: AccountDao,
 	override val mapper: AccountMapper
 ) : AccountRepository {
@@ -25,11 +25,10 @@ class AccountRepositoryImpl(
 		}
 	}
 
-	override fun createNewAccount(account: Account): Single<Int> = Single.create { subscriber ->
+	override fun createNewAccount(account: Account): Completable = Completable.create { subscriber ->
 		try {
-			subscriber.onSuccess(
-				dao.createNewAccount(mapper.mapModelToEntity(account))
-			)
+			dao.createNewAccount(mapper.mapModelToEntity(account))
+			subscriber.onComplete()
 		} catch (e: Exception) {
 			subscriber.onError(e)
 		}
