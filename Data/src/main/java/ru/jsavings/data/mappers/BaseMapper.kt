@@ -5,12 +5,12 @@ import ru.jsavings.data.model.BaseModel
 
 interface BaseMapper <E : BaseEntity, M : BaseModel> {
 
-	fun mapEntityToModel(input: E, vararg additionalElements: BaseModel): M
-	fun mapModelToEntity(input: M, vararg additionalElementIds: Int): E
+	fun mapEntityToModel(input: E, vararg additionalElements: BaseEntity): M
+	fun mapModelToEntity(input: M): E
 
-	fun mapEntityListToModelList(input: List<E>, vararg additionalElements: BaseModel) =
+	fun mapEntityListToModelList(input: List<E>, vararg additionalElements: BaseEntity) =
 		input.map { mapEntityToModel(it, *additionalElements) }
 
-	fun mapModelListToEntityList(input: List<M>, vararg additionalElementIds: Int) =
-		input.map { mapModelToEntity(it, *additionalElementIds) }
+	fun mapModelListToEntityList(input: List<M>) =
+		input.map { mapModelToEntity(it) }
 }

@@ -13,20 +13,20 @@ internal class PurseRepositoryImpl (
 	override val mapper: PurseMapper
 ) : PurseRepository {
 
-	override fun getPurseById(id: Int): Single<Purse> = Single.create { subscriber ->
+	override fun getPurseByName(inputName: String): Single<Purse> = Single.create { subscriber ->
 		try {
 			subscriber.onSuccess(
-				mapper.mapEntityToModel(dao.getPurseById(id))
+				mapper.mapEntityToModel(dao.getPurseByName(inputName))
 			)
 		} catch (e: Exception) {
 			subscriber.onError(e)
 		}
 	}
 
-	override fun getPursesByAccountId(id: Int): Single<List<Purse>> = Single.create { subscriber ->
+	override fun getPursesByAccountName(accountName: String): Single<List<Purse>> = Single.create { subscriber ->
 		try {
 			subscriber.onSuccess(
-				mapper.mapEntityListToModelList(dao.getPursesByAccountId(id))
+				mapper.mapEntityListToModelList(dao.getPursesInAccountEntityName(accountName))
 			)
 		} catch (e: Exception) {
 			subscriber.onError(e)

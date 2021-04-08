@@ -6,21 +6,18 @@ import ru.jsavings.data.entity.AccountEntity
 @Entity (
 	tableName = "purse_table",
 	foreignKeys = [
-		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_id"], parentColumns = ["account_id"])
+		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_name"], parentColumns = ["account_name"])
 	]
 )
 internal data class PurseEntity (
 
-	//Purse id
-	@PrimaryKey(autoGenerate = true)
-	@ColumnInfo(name = "purse_id")
-	val purseId: Int,
-
-	@ColumnInfo(name = "account_fk_id")
-	val accountFkId: Int,
-
 	//Name of purse
-	val name: String,
+	@PrimaryKey
+	@ColumnInfo(name = "purse_name")
+	val purseName: String,
+
+	@ColumnInfo(name = "account_fk_name", index = true)
+	val accountFkName: String,
 
 	//Balance on purse
 	val balance: Double,
@@ -37,4 +34,5 @@ internal data class PurseEntity (
 	//Path to icon
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
+
 ) : BaseEntity

@@ -1,13 +1,12 @@
 package ru.jsavings.domain.usecase.di
 
 import org.koin.dsl.module
-import ru.jsavings.domain.usecase.account.GetAllAccountsUseCase
-import ru.jsavings.domain.usecase.account.GetAllAccountsUseCaseImpl
-import ru.jsavings.domain.usecase.purse.GetPursesByAccountIdUseCase
-import ru.jsavings.domain.usecase.purse.GetPursesByAccountIdUseCaseImpl
+import ru.jsavings.domain.usecase.account.DeleteAccountsUseCase
+import ru.jsavings.domain.usecase.account.GetAllAccountsWithPursesUseCase
 
 internal val useCaseModule = module {
 
-	factory<GetAllAccountsUseCase> { GetAllAccountsUseCaseImpl(get()) }
-	factory<GetPursesByAccountIdUseCase> { (accountId: Int) -> GetPursesByAccountIdUseCaseImpl(get(), accountId) }
+	factory { GetAllAccountsWithPursesUseCase(get()) }
+
+	factory { DeleteAccountsUseCase(get()) }
 }

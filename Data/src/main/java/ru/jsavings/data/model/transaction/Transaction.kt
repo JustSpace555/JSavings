@@ -1,12 +1,11 @@
 package ru.jsavings.data.model.transaction
 
 import ru.jsavings.data.model.BaseModel
-import ru.jsavings.data.model.transaction.category.TransactionCategory
 import java.util.*
 
 data class Transaction (
-	val purseId: Int,
-	val categoryId: Int,
+	val transactionId: Long,
+	val purseName: String,
 	val transactionCategory: TransactionCategory,
 	val totalSum: Double,
 	val date: Date,

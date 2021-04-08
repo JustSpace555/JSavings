@@ -43,9 +43,9 @@ internal class AccountRepositoryImpl (
 		}
 	}
 
-	override fun deleteAccount(account: Account): Completable = Completable.create { subscriber ->
+	override fun deleteAccounts(accounts: List<Account>): Completable = Completable.create { subscriber ->
 		try {
-			dao.deleteAccount(mapper.mapModelToEntity(account))
+			dao.deleteAccounts(mapper.mapModelListToEntityList(accounts))
 			subscriber.onComplete()
 		} catch (e: Exception) {
 			subscriber.onError(e)

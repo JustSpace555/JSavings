@@ -16,5 +16,5 @@ internal interface AccountDao : BaseDao {
 	fun updateAccount(accountEntity: AccountEntity)
 
 	@Delete
-	fun deleteAccount(accountEntity: AccountEntity)
+	fun deleteAccounts(accountEntities: List<AccountEntity>)
 }

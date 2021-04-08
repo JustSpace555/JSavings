@@ -6,9 +6,7 @@ import ru.jsavings.data.database.dao.AccountDao
 import ru.jsavings.data.database.dao.TransactionCategoryDao
 import ru.jsavings.data.database.dao.PurseDao
 import ru.jsavings.data.database.dao.TransactionDao
-import ru.jsavings.data.database.dao.binding.AccountWithPursesCategoriesAndTransactionsDao
-import ru.jsavings.data.database.dao.binding.CategoryWithTransactionsDao
-import ru.jsavings.data.database.dao.binding.PurseWithTransactionsDao
+import ru.jsavings.data.database.dao.binding.AccountWithPursesDao
 import ru.jsavings.data.entity.AccountEntity
 import ru.jsavings.data.entity.PurseEntity
 import ru.jsavings.data.entity.transaction.TransactionEntity
@@ -21,17 +19,11 @@ import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 	version = 1
 )
 internal abstract class JSavingsDataBase : RoomDatabase() {
+
 	abstract fun accountDao(): AccountDao
-
 	abstract fun categoryDao(): TransactionCategoryDao
-
 	abstract fun purseDao(): PurseDao
-
 	abstract fun transactionDao(): TransactionDao
 
-	abstract fun purseWithTransactionsDao(): PurseWithTransactionsDao
-
-	abstract fun categoryWithTransactionsDao(): CategoryWithTransactionsDao
-
-	abstract fun accountWithPursesCategoriesAndTransactionsDao(): AccountWithPursesCategoriesAndTransactionsDao
+	abstract fun accountWithPursesDao(): AccountWithPursesDao
 }

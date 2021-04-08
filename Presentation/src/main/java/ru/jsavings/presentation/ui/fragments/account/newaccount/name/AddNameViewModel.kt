@@ -12,6 +12,8 @@ class AddNameViewModel : BaseViewModel() {
 		object OnEmptyState : AccountNameState()
 		object OnReadyState : AccountNameState()
 	}
+
+	//TODO Переделать на nonMutableLiveData
 	val newAccountNameState = MutableLiveData<AccountNameState>().default(AccountNameState.OnEmptyState)
 
 	fun onTextChanged(text: CharSequence?) {

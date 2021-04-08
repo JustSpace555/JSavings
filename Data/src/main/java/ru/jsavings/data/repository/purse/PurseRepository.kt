@@ -8,9 +8,9 @@ import ru.jsavings.data.repository.BaseRepository
 
 interface PurseRepository : BaseRepository {
 
-	fun getPurseById(id: Int): Single<Purse>
+	fun getPurseByName(inputName: String): Single<Purse>
 
-	fun getPursesByAccountId(id: Int): Single<List<Purse>>
+	fun getPursesByAccountName(accountName: String): Single<List<Purse>>
 
 	fun addNewPurse(purse: Purse): Completable
 

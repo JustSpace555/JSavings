@@ -1,13 +1,15 @@
 package ru.jsavings.presentation.ui.fragments.common
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import ru.jsavings.domain.usecase.common.BaseUseCase
 
-abstract class BaseViewModel : ViewModel() {
-	val disposables by lazy { mutableListOf<Disposable>() }
+abstract class BaseViewModel (vararg useCases: BaseUseCase) : ViewModel() {
+
+	protected val useCasesList = listOf(*useCases)
 
 	override fun onCleared() {
-		disposables.onEach { it.dispose() }
 		super.onCleared()
+		useCasesList.onEach { it.dispose() }
 	}
 }

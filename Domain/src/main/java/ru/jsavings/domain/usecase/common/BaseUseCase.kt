@@ -1,5 +1,10 @@
 package ru.jsavings.domain.usecase.common
 
-interface BaseUseCase <RESULT> {
-	operator fun invoke(): RESULT
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+
+abstract class BaseUseCase {
+
+	protected val disposeBag = CompositeDisposable()
+
+	fun dispose() = disposeBag.dispose()
 }

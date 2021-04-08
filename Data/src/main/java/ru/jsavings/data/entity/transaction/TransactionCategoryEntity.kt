@@ -7,21 +7,19 @@ import ru.jsavings.data.entity.BaseEntity
 @Entity (
 	tableName = "transaction_category_table",
 	foreignKeys = [
-		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_id"], parentColumns = ["account_id"])
+		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_name"], parentColumns = ["account_name"])
 	]
 )
 internal data class TransactionCategoryEntity (
 
-	//Category id
-	@PrimaryKey(autoGenerate = true)
-	@ColumnInfo(name = "category_id")
-	val categoryId: Int,
+	//Name of the category
+	@PrimaryKey
+	@ColumnInfo(name = "category_name")
+	val categoryName: String,
 
-	@ColumnInfo(name = "account_fk_id")
-	val accountFkId: Int,
-
-	//Category name
-	val name: String,
+	//The name of the account which the category is linked
+	@ColumnInfo(name = "account_fk_name", index = true)
+	val accountFkName: String,
 
 	//Category type (TransactionCategoryType)
 	val type: String,
@@ -32,4 +30,5 @@ internal data class TransactionCategoryEntity (
 	//Path to icon
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
+
 ) : BaseEntity

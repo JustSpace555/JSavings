@@ -6,8 +6,8 @@ import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 @Dao
 internal interface TransactionCategoryDao : BaseDao {
 
-	@Query("SELECT * FROM transaction_category_table WHERE category_id = :inputId")
-	fun getCategoryById(inputId: Int): TransactionCategoryEntity
+	@Query("SELECT * FROM transaction_category_table WHERE category_name = :inputName")
+	fun getCategoryByName(inputName: String): TransactionCategoryEntity
 
 	@Query("SELECT * FROM transaction_category_table WHERE type = :inputType")
 	fun getCategoriesByTransactionType(inputType: String): List<TransactionCategoryEntity>

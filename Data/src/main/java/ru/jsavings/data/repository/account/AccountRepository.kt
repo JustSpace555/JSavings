@@ -14,5 +14,5 @@ interface AccountRepository : BaseRepository {
 
 	fun updateAccount(account: Account): Completable
 
-	fun deleteAccount(account: Account): Completable
+	fun deleteAccounts(accounts: List<Account>): Completable
 }

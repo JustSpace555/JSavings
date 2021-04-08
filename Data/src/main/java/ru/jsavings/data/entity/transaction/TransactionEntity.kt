@@ -7,11 +7,11 @@ import ru.jsavings.data.entity.PurseEntity
 @Entity (
 	tableName = "transaction_table",
 	foreignKeys = [
-		ForeignKey(entity = PurseEntity::class, childColumns = ["purse_fk_id"], parentColumns = ["purse_id"]),
+		ForeignKey(entity = PurseEntity::class, childColumns = ["purse_fk_name"], parentColumns = ["purse_name"]),
 		ForeignKey(
 			entity = TransactionCategoryEntity::class,
-			childColumns = ["category_fk_id"],
-			parentColumns = ["category_id"]
+			childColumns = ["category_fk_name"],
+			parentColumns = ["category_name"]
 		)
 	]
 )
@@ -23,15 +23,12 @@ internal data class TransactionEntity (
 	val transactionId: Long,
 
 	//Purse id which this transaction belongs to
-	@ColumnInfo(name = "purse_fk_id")
-	val purseFkId: Int,
-
-	@ColumnInfo(name = "category_fk_id")
-	val categoryFkId: Int,
+	@ColumnInfo(name = "purse_fk_name", index = true)
+	val purseFkName: String,
 
 	//Category id (food, entertainment, ...)
-	@ColumnInfo(name = "transaction_category_id")
-	val transactionCategoryId: Int,
+	@ColumnInfo(name = "category_fk_name", index = true)
+	val categoryFkName: String,
 
 	//Total amount spent
 	@ColumnInfo(name = "total_sum")
@@ -46,4 +43,5 @@ internal data class TransactionEntity (
 	//Path of picture attached to this transaction
 	@ColumnInfo(name = "describe_picture_path")
 	val describePicturePath: String?
+
 ) : BaseEntity
