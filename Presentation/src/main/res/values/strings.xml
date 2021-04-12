@@ -1,5 +1,8 @@
 <resources>
 
+	<!--  Shared Preferences  -->
+	<string name="sp_current_account">JS_CURRENT_ACCOUNT</string>
+
 	<!--  Global  -->
     <string name="app_name">JSavings</string>
 	<string name="save">Save</string>

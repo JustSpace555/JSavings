@@ -22,7 +22,11 @@
         android:id="@+id/transactions_fragment"
         android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
         android:label="@string/title_transactions"
-        tools:layout="@layout/main_fragment_transactions" />
+        tools:layout="@layout/main_fragment_transactions" >
+        <argument
+            android:name="account_name"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/calendar_fragment"

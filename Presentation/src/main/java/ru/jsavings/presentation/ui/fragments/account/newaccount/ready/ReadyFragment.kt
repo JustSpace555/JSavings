@@ -23,7 +23,7 @@ class ReadyFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		val appearanceAnimation = AnimationUtils.loadAnimation(context, R.anim.text_appearance)
-		bindingUtil.textIntroReadyToStart.startAnimation(appearanceAnimation)
+//		val appearanceAnimation = AnimationUtils.loadAnimation(context, R.anim.text_appearance)
+//		bindingUtil.textIntroReadyToStart.startAnimation(appearanceAnimation)
 	}
 }
