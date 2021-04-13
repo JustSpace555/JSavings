@@ -8,52 +8,53 @@
 
 	<TextView
 		android:id="@+id/text_choose_preferred_currency"
+		style="@style/HeaderTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		style="@style/HeaderTextStyle"
 		android:text="@string/choose_preferred_currency_new_account"
+		app:layout_constraintBottom_toTopOf="@+id/text_what_currency_preferred"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintStart_toStartOf="parent" />
 
 	<TextView
 		android:id="@+id/text_what_currency_preferred"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_choose_preferred_currency"
+		style="@style/StandartTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
 		android:text="@string/what_currency_prefer_new_account"
-		style="@style/StandartTextStyle"/>
+		app:layout_constraintBottom_toTopOf="@+id/rg_choose_currency"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
 
 	<RadioGroup
 		android:id="@+id/rg_choose_currency"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:checkedButton="@id/rb_regular_currency"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
+		android:checkedButton="@id/rb_regular_currency"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_what_currency_preferred">
+		app:layout_constraintTop_toTopOf="parent">
 
 		<RadioButton
 			android:id="@+id/rb_regular_currency"
+			style="@style/StandartTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/regular_currency"
-			style="@style/StandartTextStyle"
-			android:layout_weight="1" />
+			android:layout_weight="1"
+			android:text="@string/regular_currency" />
 
 		<RadioButton
 			android:id="@+id/rb_cryptocurrency"
+			style="@style/StandartTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/cryptocurrency"
-			style="@style/StandartTextStyle"
-			android:layout_weight="1"/>
+			android:layout_weight="1"
+			android:text="@string/cryptocurrency" />
 
 	</RadioGroup>
 
@@ -86,5 +87,17 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/til_new_purse_type" />
+
+	<TextView
+		android:id="@+id/text_note"
+		style="@style/AdditionalTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/add_new_account_elements_margin"
+		android:text="@string/note"
+		android:textAlignment="center"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

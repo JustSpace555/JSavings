@@ -4,12 +4,12 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.Account
+import ru.jsavings.data.model.binding.AccountWithPurses
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -19,9 +19,9 @@ class IntroFragment : BaseFragment() {
 	override lateinit var bindingUtil: IntroFragmentBinding
 
 	private var isEducationNeeded = false
-	private val accountsWithNoPurse = mutableListOf<Account>()
+	private val allAccountsWithPurses = mutableListOf<AccountWithPurses>()
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		bindingUtil = IntroFragmentBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
@@ -34,7 +34,7 @@ class IntroFragment : BaseFragment() {
 		viewModel.allAccountsWithPursesLiveData.observe(viewLifecycleOwner) { list ->
 			if (list.isEmpty() || list.all { account -> account.purses.isEmpty() })
 				isEducationNeeded = true
-			accountsWithNoPurse.addAll(list.filter { it.purses.isEmpty() }.map { it.account })
+			allAccountsWithPurses.addAll(list)
 		}
 	}
 
@@ -55,7 +55,9 @@ class IntroFragment : BaseFragment() {
 								)
 							},
 							onFinish = {
-								viewModel.requestDeleteAccounts(accountsWithNoPurse) {
+								viewModel.requestDeleteAccounts(
+									allAccountsWithPurses.filter { it.purses.isEmpty() }.map { it.account }
+								) {
 									showTextSnackBar(
 										requireView(),
 										it.localizedMessage ?: getString(R.string.something_went_wrong)
@@ -68,21 +70,45 @@ class IntroFragment : BaseFragment() {
 					override fun onAnimationEnd(animation: Animator?) {
 						super.onAnimationEnd(animation)
 
-						viewModel.sqlStatusListener.observe(viewLifecycleOwner) {
-							if (it == IntroViewModel.SQLStatus.FinishStatus) {
+						viewModel.sqlStatusListener.observe(viewLifecycleOwner) { sqlStatus ->
+
+							if (sqlStatus == IntroViewModel.SQLStatus.FinishStatus) {
 								bindingUtil.progressBar.visibility = View.GONE
-								val action = when (isEducationNeeded) {
-									false -> {
-										val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-										val currentAccountName = sharedPreferences.getString(
-											getString(R.string.sp_current_account), null
-										)!!
-										IntroFragmentDirections.actionIntroFragmentToTransactionsFragment(
-											currentAccountName
-										)
+								val action = if (isEducationNeeded) {
+									IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation()
+								} else {
+									val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+									val currentAccountName = sharedPreferences.getString(
+										getString(R.string.sp_current_account), null
+									)
+
+									when {
+										currentAccountName != null -> IntroFragmentDirections
+											.actionIntroFragmentToTransactionsFragment(currentAccountName)
+
+										allAccountsWithPurses.isNotEmpty() -> {
+											val chosenAccountName = allAccountsWithPurses
+												.minByOrNull { it.account.name }!!
+												.account.name
+											with(sharedPreferences.edit()) {
+												putString(getString(R.string.sp_current_account), chosenAccountName)
+												apply()
+											}
+											IntroFragmentDirections
+												.actionIntroFragmentToTransactionsFragment(chosenAccountName)
+
+										}
+										else -> {
+											showTextSnackBar(
+												requireView(),
+												NullPointerException().localizedMessage ?:
+												getString(R.string.something_went_wrong)
+											)
+											IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation()
+										}
 									}
-									true -> IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation()
 								}
+								bindingUtil.progressBar.visibility = View.GONE
 								findNavController().navigate(action)
 
 							} else {

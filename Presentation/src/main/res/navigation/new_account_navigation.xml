@@ -13,7 +13,10 @@
 		tools:layout="@layout/new_account_fragment_add_name">
 		<action
 			android:id="@+id/action_addNewAccountName_to_chooseCurrencyNewAccountFragment"
-			app:destination="@id/chooseCurrencyNewAccountFragment" />
+			app:destination="@id/chooseCurrencyNewAccountFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
+			app:exitAnim="@anim/anim_exit"
+			app:popEnterAnim="@android:anim/slide_in_left" />
 	</fragment>
 
 	<fragment
@@ -21,6 +24,9 @@
 		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.currency.ChooseCurrencyFragment"
 		android:label="ChooseCurrencyNewAccountFragment"
 		tools:layout="@layout/new_account_fragment_choose_currency">
+		<argument
+			android:name="new_account_name"
+			app:argType="string"/>
 		<action
 			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_startingBalanceNewAccountFragment"
 			app:destination="@id/startingBalanceNewAccountFragment" />

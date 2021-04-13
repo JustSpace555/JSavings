@@ -19,7 +19,7 @@ internal val viewModelModule = module {
 	viewModel { ReadyViewModel() }
 
 	//New account
-	viewModel { AddNameViewModel() }
+	viewModel { AddNameViewModel(get()) }
 	viewModel { ChooseCurrencyViewModel() }
 	viewModel { StartingBalanceViewModel() }
 	viewModel { CreateFirstPurseViewModel() }

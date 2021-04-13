@@ -12,7 +12,7 @@ import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 class IntroViewModel(
 	private val getAllAccountsWithPursesUseCase: GetAllAccountsWithPursesUseCase,
 	private val deleteAccountsUseCase: DeleteAccountsUseCase
-) : BaseViewModel(getAllAccountsWithPursesUseCase) {
+) : BaseViewModel(getAllAccountsWithPursesUseCase, deleteAccountsUseCase) {
 
 	private val _allAccountsWithPursesLiveData = MutableLiveData<List<AccountWithPurses>>()
 	val allAccountsWithPursesLiveData = _allAccountsWithPursesLiveData as LiveData<List<AccountWithPurses>>

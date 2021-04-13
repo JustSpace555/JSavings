@@ -11,4 +11,6 @@
     <color name="background_dark">#E0E0E0</color>
 
     <color name="red">#B00020</color>
+
+    <color name="grey">#4F4F4F</color>
 </resources>

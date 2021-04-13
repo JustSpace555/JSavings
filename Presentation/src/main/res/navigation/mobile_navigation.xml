@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/intro_fragment">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/mobile_navigation"
+	app:startDestination="@+id/intro_fragment">
 
-    <fragment
-        android:id="@+id/intro_fragment"
-        android:name="ru.jsavings.presentation.ui.fragments.intro.IntroFragment"
-        android:label="IntroFragment"
-        tools:layout="@layout/intro_fragment">
-        <action
-            android:id="@+id/action_intro_fragment_to_transactions_fragment"
-            app:destination="@id/transactions_fragment" />
-        <action
-            android:id="@+id/action_intro_fragment_to_new_account_navigation"
-            app:destination="@id/new_account_navigation" />
-    </fragment>
+	<fragment
+		android:id="@+id/intro_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.intro.IntroFragment"
+		android:label="IntroFragment"
+		tools:layout="@layout/intro_fragment">
+		<action
+			android:id="@+id/action_intro_fragment_to_transactions_fragment"
+			app:destination="@id/transactions_fragment"
+			app:popUpTo="@id/mobile_navigation"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/action_intro_fragment_to_new_account_navigation"
+			app:destination="@id/new_account_navigation"
+			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
+			app:exitAnim="@anim/anim_exit"
+			app:popUpTo="@id/mobile_navigation"
+			app:popUpToInclusive="true" />
+	</fragment>
 
-    <fragment
-        android:id="@+id/transactions_fragment"
-        android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
-        android:label="@string/title_transactions"
-        tools:layout="@layout/main_fragment_transactions" >
-        <argument
-            android:name="account_name"
-            app:argType="string" />
-    </fragment>
+	<fragment
+		android:id="@+id/transactions_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
+		android:label="@string/title_transactions"
+		tools:layout="@layout/main_fragment_transactions">
+		<argument
+			android:name="account_name"
+			app:argType="string" />
+	</fragment>
 
-    <fragment
-        android:id="@+id/calendar_fragment"
-        android:name="ru.jsavings.presentation.ui.fragments.calendar.CalendarFragment"
-        android:label="@string/title_calendar"
-        tools:layout="@layout/main_fragment_calendar" />
+	<fragment
+		android:id="@+id/calendar_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.calendar.CalendarFragment"
+		android:label="@string/title_calendar"
+		tools:layout="@layout/main_fragment_calendar" />
 
-    <fragment
-        android:id="@+id/graph_fragment"
-        android:name="ru.jsavings.presentation.ui.fragments.graph.GraphFragment"
-        android:label="@string/title_calendar"
-        tools:layout="@layout/main_fragment_graph" />
+	<fragment
+		android:id="@+id/graph_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.graph.GraphFragment"
+		android:label="@string/title_calendar"
+		tools:layout="@layout/main_fragment_graph" />
 
 
-    <fragment
-        android:id="@+id/purses_fragment"
-        android:name="ru.jsavings.presentation.ui.fragments.purses.allpurses.PursesFragment"
-        android:label="@string/title_purses"
-        tools:layout="@layout/main_fragment_purses" />
+	<fragment
+		android:id="@+id/purses_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.purses.allpurses.PursesFragment"
+		android:label="@string/title_purses"
+		tools:layout="@layout/main_fragment_purses" />
 
-    <include app:graph="@navigation/new_account_navigation" />
-    <action
-        android:id="@+id/action_global_to_transactions_fragment"
-        app:destination="@id/transactions_fragment" />
+	<include app:graph="@navigation/new_account_navigation" />
+	<action
+		android:id="@+id/action_global_to_transactions_fragment"
+		app:destination="@id/transactions_fragment" />
 
 </navigation>

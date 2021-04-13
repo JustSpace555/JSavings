@@ -2,6 +2,7 @@
 
 	<!--  Shared Preferences  -->
 	<string name="sp_current_account">JS_CURRENT_ACCOUNT</string>
+	<string name="sp_new_account_name">JS_NEW_ACCOUNT_NAME</string>
 
 	<!--  Global  -->
     <string name="app_name">JSavings</string>
@@ -45,11 +46,14 @@
         <string name="add_new_account">Add new account</string>
         <string name="choose_name_for_new_account">Choose a name for your new account</string>
         <string name="hint_input_new_account_name">Name</string>
+		<string name="error_new_account_name_is_exists">Account with the same name already exists</string>
+		<string name="error_new_account_name_is_empty">Account\'s name can not be empty</string>
     <!--    -->
 	<!--  Choose currency for new account fragment  -->
 		<string name="choose_preferred_currency_new_account">Choose currency</string>
 		<string name="what_currency_prefer_new_account">What currency do you prefer the most?</string>
 		<string name="regular_currency">Regular currency</string>
+		<string name="note">Note: The selected currency will be used as the denomination for this account. For your convenience all your savings will be transferred into this currency according to the current exchange rate. You will be able to change it in the future</string>
 		<string name="cryptocurrency">Cryptocurrency</string>
 	<!--	-->
 	<!--  Starting balance new account  -->
