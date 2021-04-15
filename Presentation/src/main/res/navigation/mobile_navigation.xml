@@ -13,6 +13,8 @@
 		<action
 			android:id="@+id/action_intro_fragment_to_transactions_fragment"
 			app:destination="@id/transactions_fragment"
+			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
+			app:exitAnim="@anim/anim_exit"
 			app:popUpTo="@id/mobile_navigation"
 			app:popUpToInclusive="true" />
 		<action
@@ -21,7 +23,13 @@
 			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
 			app:exitAnim="@anim/anim_exit"
 			app:popUpTo="@id/mobile_navigation"
-			app:popUpToInclusive="true" />
+			app:popUpToInclusive="true">
+
+			<argument
+				android:name="is_education_needed"
+				app:argType="boolean" />
+		</action>
+
 	</fragment>
 
 	<fragment

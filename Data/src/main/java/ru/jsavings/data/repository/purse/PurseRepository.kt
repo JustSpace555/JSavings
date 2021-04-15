@@ -2,11 +2,10 @@ package ru.jsavings.data.repository.purse
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.entity.PurseEntity
 import ru.jsavings.data.model.purse.Purse
-import ru.jsavings.data.repository.BaseRepository
+import ru.jsavings.data.repository.common.DbRepository
 
-interface PurseRepository : BaseRepository {
+interface PurseRepository : DbRepository {
 
 	fun getPurseByName(inputName: String): Single<Purse>
 

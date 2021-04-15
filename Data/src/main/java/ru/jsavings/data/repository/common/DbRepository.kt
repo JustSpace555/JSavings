@@ -1,9 +1,9 @@
-package ru.jsavings.data.repository
+package ru.jsavings.data.repository.common
 
 import ru.jsavings.data.database.dao.BaseDao
 import ru.jsavings.data.mappers.BaseMapper
 
-interface BaseRepository {
+interface DbRepository : BaseRepository {
 	val dao: BaseDao
 	val mapper: BaseMapper<*, *>
 }

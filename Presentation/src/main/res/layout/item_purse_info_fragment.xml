@@ -19,7 +19,7 @@
 
 	<TextView
 		android:id="@+id/text_purse_name"
-		style="@style/StandartTextStyle"
+		style="@style/StandardTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="6dp"

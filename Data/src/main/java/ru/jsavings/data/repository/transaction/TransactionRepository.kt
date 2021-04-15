@@ -2,11 +2,10 @@ package ru.jsavings.data.repository.transaction
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.entity.transaction.TransactionEntity
 import ru.jsavings.data.model.transaction.Transaction
-import ru.jsavings.data.repository.BaseRepository
+import ru.jsavings.data.repository.common.DbRepository
 
-interface TransactionRepository : BaseRepository {
+interface TransactionRepository : DbRepository {
 
 	fun getTransactionById(id: Int): Single<Transaction>
 

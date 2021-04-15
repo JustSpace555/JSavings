@@ -32,7 +32,7 @@
 			android:id="@+id/text_week_day"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textSize="5pt"
 			tools:text="Воскресенье" />
 
@@ -40,7 +40,7 @@
 			android:id="@+id/text_month_and_year"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textSize="5pt"
 			tools:text="Февраль 2021" />
 
@@ -65,13 +65,13 @@
 			android:layout_height="wrap_content"
 			android:text="@string/income_text"
 			android:textSize="5pt"
-			style="@style/StandartTextStyle"/>
+			style="@style/StandardTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_income"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textColor="@color/primary"
 			android:textSize="5pt"
 			tools:text="+0$" />
@@ -97,13 +97,13 @@
 			android:layout_height="wrap_content"
 			android:text="@string/consumption_text"
 			android:textSize="5pt"
-			style="@style/StandartTextStyle"/>
+			style="@style/StandardTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_consumption"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textColor="@color/red"
 			android:textSize="5pt"
 			tools:text="-0$" />
@@ -127,13 +127,13 @@
 			android:layout_height="wrap_content"
 			android:text="@string/profit_text"
 			android:textSize="5pt"
-			style="@style/StandartTextStyle"/>
+			style="@style/StandardTextStyle"/>
 
 		<TextView
 			android:id="@+id/text_profit"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textSize="5pt"
 			tools:text="-0$" />
 

@@ -2,38 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
 	<TextView
 		android:id="@+id/text_starting_balance"
+		style="@style/HeaderTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
 		android:text="@string/starting_balance_new_account"
-		style="@style/HeaderTextStyle"
+		app:layout_constraintBottom_toTopOf="@+id/til_new_account_name"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintStart_toStartOf="parent" />
 
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/til_new_account_name"
 		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/add_new_account_elements_margin"
+		app:endIconMode="custom"
+		app:endIconDrawable="@drawable/ic_delete_symbol"
+		app:endIconTint="?colorOnSurface"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/text_starting_balance"
-		android:layout_margin="@dimen/add_new_account_elements_margin">
+		app:layout_constraintTop_toTopOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
-			style="@style/StandartTextStyle"
-			android:drawableEnd="@drawable/ic_delete_symbol"
+			style="@style/StandardTextStyle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:inputType="numberDecimal"
-			android:hint="@string/how_much_money_new_account" />
+			android:hint="@string/how_much_money_new_account"
+			android:inputType="numberDecimal" />
 
 	</com.google.android.material.textfield.TextInputLayout>
 

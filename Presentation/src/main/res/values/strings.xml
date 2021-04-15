@@ -53,8 +53,10 @@
 		<string name="choose_preferred_currency_new_account">Choose currency</string>
 		<string name="what_currency_prefer_new_account">What currency do you prefer the most?</string>
 		<string name="regular_currency">Regular currency</string>
-		<string name="note">Note: The selected currency will be used as the denomination for this account. For your convenience all your savings will be transferred into this currency according to the current exchange rate. You will be able to change it in the future</string>
+		<string name="note">Note: The selected currency will be used as the denomination for this account. For your convenience all your savings will be transferred into this currency according to the current exchange rate. You will be able to change it in the future.</string>
 		<string name="cryptocurrency">Cryptocurrency</string>
+
+		<string name="currency_list_search">Search…</string>
 	<!--	-->
 	<!--  Starting balance new account  -->
 		<string name="starting_balance_new_account">Starting balance</string>

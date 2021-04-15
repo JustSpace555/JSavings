@@ -3,9 +3,9 @@ package ru.jsavings.data.repository.transaction.caterory
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.model.transaction.TransactionCategory
-import ru.jsavings.data.repository.BaseRepository
+import ru.jsavings.data.repository.common.DbRepository
 
-interface TransactionCategoryRepository : BaseRepository {
+interface TransactionCategoryRepository : DbRepository {
 
 	fun getCategoryByName(inputName: String): Single<TransactionCategory>
 

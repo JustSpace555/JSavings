@@ -8,8 +8,9 @@ import android.view.*
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.model.Account
 import ru.jsavings.data.model.binding.AccountWithPurses
+import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -75,25 +76,25 @@ class IntroFragment : BaseFragment() {
 							if (sqlStatus == IntroViewModel.SQLStatus.FinishStatus) {
 								bindingUtil.progressBar.visibility = View.GONE
 								val action = if (isEducationNeeded) {
-									IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation()
+									IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation(
+										isEducationNeeded = true
+									)
 								} else {
-									val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-									val currentAccountName = sharedPreferences.getString(
-										getString(R.string.sp_current_account), null
+									val currentAccountName = viewModel.getFromSharedPreferences(
+										JsSharedPreferences.JS_CURRENT_ACCOUNT, String::class, ""
 									)
 
 									when {
-										currentAccountName != null -> IntroFragmentDirections
+										currentAccountName.isNotEmpty() -> IntroFragmentDirections
 											.actionIntroFragmentToTransactionsFragment(currentAccountName)
 
 										allAccountsWithPurses.isNotEmpty() -> {
 											val chosenAccountName = allAccountsWithPurses
 												.minByOrNull { it.account.name }!!
 												.account.name
-											with(sharedPreferences.edit()) {
-												putString(getString(R.string.sp_current_account), chosenAccountName)
-												apply()
-											}
+											viewModel.putToSharedPreferences(
+												JsSharedPreferences.JS_CURRENT_ACCOUNT, chosenAccountName
+											)
 											IntroFragmentDirections
 												.actionIntroFragmentToTransactionsFragment(chosenAccountName)
 
@@ -104,7 +105,9 @@ class IntroFragment : BaseFragment() {
 												NullPointerException().localizedMessage ?:
 												getString(R.string.something_went_wrong)
 											)
-											IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation()
+											IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation(
+												isEducationNeeded = false
+											)
 										}
 									}
 								}

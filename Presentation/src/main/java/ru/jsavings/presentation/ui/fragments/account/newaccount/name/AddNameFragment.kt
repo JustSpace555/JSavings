@@ -15,10 +15,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.Account
+import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
+import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.intro.IntroFragment
 
@@ -26,11 +29,12 @@ class AddNewAccountName : BaseFragment() {
 
 	override val viewModel by viewModel<AddNameViewModel>()
 	override lateinit var bindingUtil: NewAccountFragmentAddNameBinding
-	private lateinit var sharedPreferences: SharedPreferences
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		bindingUtil = NewAccountFragmentAddNameBinding.inflate(inflater, container, false)
-		sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+
+		viewModel.newAccountNameState.observe(viewLifecycleOwner, ::onAccountNameStateChanged)
+
 		return bindingUtil.root
 	}
 
@@ -43,14 +47,15 @@ class AddNewAccountName : BaseFragment() {
 			viewModel.onTextChanged(text)
 		}
 
-		sharedPreferences.getString(getString(R.string.sp_new_account_name), null)?.let {
+		viewModel.getFromSharedPreferences(
+			NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, String::class, ""
+		).also {
 			if (it.isNotEmpty()) {
 				bindingUtil.tilNewAccountName.editText?.setText(it)
 				bindingUtil.nextButton.isEnabled = true
 			}
 		}
 
-		viewModel.newAccountNameState.observe(viewLifecycleOwner, ::onAccountNameStateChanged)
 		bindingUtil.nextButton.setOnClickListener(::onNextButtonClickListener)
 
 		bindingUtil.root.setOnTouchListener { v, _ ->
@@ -91,12 +96,11 @@ class AddNewAccountName : BaseFragment() {
 						}
 					}
 					else -> {
-						with(sharedPreferences.edit()) {
-							putString(getString(R.string.sp_new_account_name), it)
-							apply()
-						}
+						viewModel.putToSharedPreferences(NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, it)
 						findNavController().navigate(
-							AddNewAccountNameDirections.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(it)
+							AddNewAccountNameDirections.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
+								navArgs<AddNewAccountNameArgs>().value.isEducationNeeded
+							)
 						)
 					}
 				}

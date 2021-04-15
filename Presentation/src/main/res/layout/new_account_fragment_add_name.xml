@@ -29,7 +29,7 @@
 		app:layout_constraintTop_toTopOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/choose_name_for_new_account" />
@@ -43,7 +43,6 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
 		android:enabled="false"
-		android:fontFamily="@font/raleway_semi_bold"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/til_new_account_name"

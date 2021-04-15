@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.jsavings.data.model.Account
 import ru.jsavings.domain.usecase.account.GetAllAccountsUseCase
+import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
+import kotlin.reflect.KClass
 
 class AddNameViewModel(
-	private val getAllAccountsUseCase: GetAllAccountsUseCase
+	private val getAllAccountsUseCase: GetAllAccountsUseCase,
+	private val newAccountSharedPreferencesUseCase: NewAccountSharedPreferencesUseCase
 ) : BaseViewModel(getAllAccountsUseCase) {
 
 	private val _newAccountName = MutableLiveData<String>().default("")
@@ -46,4 +49,8 @@ class AddNameViewModel(
 			params = Unit
 		)
 	}
+
+	fun <T> putToSharedPreferences(key: String, value: T) = newAccountSharedPreferencesUseCase.putValue(key, value)
+	fun <T : Any> getFromSharedPreferences(key: String, kClass: KClass<T>, defaultValue: T) =
+		newAccountSharedPreferencesUseCase.getValue(key, kClass, defaultValue)
 }

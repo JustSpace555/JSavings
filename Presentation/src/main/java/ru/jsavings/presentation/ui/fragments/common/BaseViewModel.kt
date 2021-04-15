@@ -6,7 +6,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 
 abstract class BaseViewModel (vararg useCases: BaseUseCase) : ViewModel() {
 
-	protected val useCasesList = listOf(*useCases)
+	private val useCasesList = listOf(*useCases)
 
 	override fun onCleared() {
 		super.onCleared()

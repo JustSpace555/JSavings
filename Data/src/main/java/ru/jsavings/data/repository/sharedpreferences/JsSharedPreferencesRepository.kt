@@ -1,0 +1,3 @@
+package ru.jsavings.data.repository.sharedpreferences
+
+interface JsSharedPreferencesRepository: SharedPreferencesRepository

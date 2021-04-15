@@ -35,14 +35,14 @@
 			android:id="@+id/text_transaction_description"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle.Bold"
+			style="@style/StandardTextStyle.Bold"
 			tools:text="Mcdonalds"/>
 
 		<TextView
 			android:id="@+id/text_transaction_purse"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle"
+			style="@style/StandardTextStyle"
 			android:textSize="5pt"
 			tools:text="MasterCard" />
 
@@ -52,7 +52,7 @@
 		android:id="@+id/text_transaction_income"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		style="@style/StandartTextStyle"
+		style="@style/StandardTextStyle"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toStartOf="@+id/text_transaction_consumption"
 		app:layout_constraintStart_toEndOf="@+id/name_and_purse_ll"
@@ -64,7 +64,7 @@
 		android:id="@+id/text_transaction_consumption"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		style="@style/StandartTextStyle"
+		style="@style/StandardTextStyle"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toStartOf="@+id/transaction_all_time_ll"
 		app:layout_constraintStart_toEndOf="@+id/text_transaction_income"
@@ -86,7 +86,7 @@
 			android:id="@+id/text_transaction_time_hours_minutes"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			style="@style/StandartTextStyle.Bold"
+			style="@style/StandardTextStyle.Bold"
 			tools:text="20 : 59"/>
 
 		<TextView
