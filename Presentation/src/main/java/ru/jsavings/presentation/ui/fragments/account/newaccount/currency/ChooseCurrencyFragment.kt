@@ -3,7 +3,6 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.currency
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,61 +36,45 @@ class ChooseCurrencyFragment : BaseFragment() {
 			.sortedBy { it.currencyCode }
 			.map { "${it.currencyCode} - ${it.displayName} (${it.symbol})" }
 
-		val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_item, currencyList)
-
 		with(bindingUtil) {
 
-			tilNewAccountCurrency.editText?.let {
+			with (actNewAccountCurrency) {
+				setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_item, currencyList))
+				setOnItemClickListener { _, _, _, _ -> buttonNewAccountNext.isEnabled = true }
 
 				val currency = viewModel.getFromSharedPreferences(
 					NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, String::class, ""
 				)
-				if (currency.isNotEmpty()) {
-					it.setText(currency)
-					buttonNewAccountNext.isEnabled = true
-				}
 
-				it.addTextChangedListener(object : TextWatcher {
+				buttonNewAccountNext.isEnabled =
+				if (currency.isNotEmpty()) {
+					text = Editable.Factory.getInstance().newEditable(currency)
+					true
+				} else false
+
+				addTextChangedListener(object : TextWatcher {
 					override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 					override fun afterTextChanged(s: Editable?) {}
 
 					override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-						s?.let { str ->
-							if (str.toString() !in currencyList) {
-								viewModel.removeFromSharedPreferences(
-									NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY
-								)
-								buttonNewAccountNext.isEnabled = false
-							} else {
-								buttonNewAccountNext.isEnabled = true
-							}
-						}
+						s?.let { str -> buttonNewAccountNext.isEnabled = str.toString() in currencyList }
 					}
 				})
 			}
 
 			with (buttonNewAccountNext) {
-				isEnabled = false
-
 				setOnClickListener {
+					viewModel.putItemToSharedPreferences(
+						NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, actNewAccountCurrency.text.toString()
+					)
 					findNavController().navigate(
 						ChooseCurrencyFragmentDirections
-							.actionChooseCurrencyNewAccountFragmentToStartingBalanceNewAccountFragment()
+							.actionChooseCurrencyNewAccountFragmentToStartingBalanceNewAccountFragment(
+								navArgs<ChooseCurrencyFragmentArgs>().value.isEducationNeeded
+							)
 					)
 				}
 			}
-
-			with (actNewAccountCurrency) {
-				setAdapter(adapter)
-
-				setOnItemClickListener { _, _, position, _ ->
-					adapter.getItem(position)?.let {
-						viewModel.putItemToSharedPreferences(NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, it)
-					}
-					buttonNewAccountNext.isEnabled = true
-				}
-			}
-
 		}
 	}
 

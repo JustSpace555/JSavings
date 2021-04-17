@@ -22,8 +22,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
-		app:endIconMode="custom"
-		app:endIconDrawable="@drawable/ic_delete_symbol"
+		app:endIconMode="clear_text"
+		app:endIconDrawable="@drawable/ic_baseline_delete_forever_24"
 		app:endIconTint="?colorOnSurface"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +31,7 @@
 		app:layout_constraintTop_toTopOf="parent">
 
 		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/tie_starting_balance"
 			style="@style/StandardTextStyle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

@@ -11,5 +11,4 @@ class ChooseCurrencyViewModel(
 	fun <T> putItemToSharedPreferences(key: String, value: T) = newAccountSharedPreferencesUseCase.putValue(key, value)
 	fun <T : Any> getFromSharedPreferences(key: String, kClass: KClass<T>, defaultValue: T) =
 		newAccountSharedPreferencesUseCase.getValue(key, kClass, defaultValue)
-	fun removeFromSharedPreferences(key: String) = newAccountSharedPreferencesUseCase.removeValue(key)
 }

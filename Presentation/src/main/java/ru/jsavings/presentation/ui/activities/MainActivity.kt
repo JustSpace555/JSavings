@@ -1,5 +1,6 @@
 package ru.jsavings.presentation.ui.activities
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +11,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.qualifier.named
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
+import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
 import ru.jsavings.domain.usecase.di.domainModule
 import ru.jsavings.presentation.di.presentationModule
 
@@ -51,6 +55,11 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onDestroy() {
 		super.onDestroy()
+		val sp by inject<SharedPreferences>(named(NewAccountSharedPreferences::class.java.simpleName))
+		with(sp.edit()) {
+			clear()
+			apply()
+		}
 		stopKoin()
 	}
 }

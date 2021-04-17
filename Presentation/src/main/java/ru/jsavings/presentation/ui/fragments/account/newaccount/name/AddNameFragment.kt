@@ -2,28 +2,19 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.model.Account
 import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
-import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.ui.fragments.intro.IntroFragment
 
 class AddNewAccountName : BaseFragment() {
 
@@ -42,27 +33,29 @@ class AddNewAccountName : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		bindingUtil.tilNewAccountName.editText?.doOnTextChanged { text, _, _, _ ->
-			bindingUtil.tilNewAccountName.isErrorEnabled = false
-			viewModel.onTextChanged(text)
-		}
-
-		viewModel.getFromSharedPreferences(
-			NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, String::class, ""
-		).also {
-			if (it.isNotEmpty()) {
-				bindingUtil.tilNewAccountName.editText?.setText(it)
-				bindingUtil.nextButton.isEnabled = true
+		with(bindingUtil) {
+			tilNewAccountName.editText?.doOnTextChanged { text, _, _, _ ->
+				tilNewAccountName.isErrorEnabled = false
+				viewModel.onTextChanged(text)
 			}
-		}
 
-		bindingUtil.nextButton.setOnClickListener(::onNextButtonClickListener)
+			viewModel.getFromSharedPreferences(
+				NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, String::class, ""
+			).also {
+				if (it.isNotEmpty()) {
+					tilNewAccountName.editText?.setText(it)
+					nextButton.isEnabled = true
+				}
+			}
 
-		bindingUtil.root.setOnTouchListener { v, _ ->
-			(requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-				.hideSoftInputFromWindow(v.windowToken, 0)
-			bindingUtil.tilNewAccountName.clearFocus()
-			true
+			nextButton.setOnClickListener(::onNextButtonClickListener)
+
+			root.setOnTouchListener { v, _ ->
+				(requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+					.hideSoftInputFromWindow(v.windowToken, 0)
+				tilNewAccountName.clearFocus()
+				true
+			}
 		}
 	}
 

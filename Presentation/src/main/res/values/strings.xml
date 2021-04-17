@@ -47,7 +47,7 @@
         <string name="choose_name_for_new_account">Choose a name for your new account</string>
         <string name="hint_input_new_account_name">Name</string>
 		<string name="error_new_account_name_is_exists">Account with the same name already exists</string>
-		<string name="error_new_account_name_is_empty">Account\'s name can not be empty</string>
+		<string name="error_new_account_name_is_empty">Account\'s name can not be blank or empty</string>
     <!--    -->
 	<!--  Choose currency for new account fragment  -->
 		<string name="choose_preferred_currency_new_account">Choose currency</string>
