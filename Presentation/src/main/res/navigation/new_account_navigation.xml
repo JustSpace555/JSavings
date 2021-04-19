@@ -35,33 +35,17 @@
 			android:name="is_education_needed"
 			app:argType="boolean" />
 		<action
-			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_startingBalanceNewAccountFragment"
-			app:destination="@id/startingBalanceNewAccountFragment"
-			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
-			app:exitAnim="@anim/anim_exit"
-			app:popEnterAnim="@android:anim/slide_in_left"/>
-	</fragment>
-
-	<fragment
-		android:id="@+id/startingBalanceNewAccountFragment"
-		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.balance.StartingBalanceFragment"
-		android:label="StartingBalanceNewAccountFragment"
-		tools:layout="@layout/new_account_fragment_starting_balance">
-		<argument
-			android:name="is_education_needed"
-			app:argType="boolean" />
-		<action
-			android:id="@+id/action_startingBalanceNewAccountFragment_to_createFirstPurseFragment"
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_createFirstPurseFragment"
 			app:destination="@id/createFirstPurseFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
 			app:exitAnim="@anim/anim_exit"
-			app:popEnterAnim="@android:anim/slide_in_left"/>
+			app:popEnterAnim="@android:anim/slide_in_left" />
 		<action
-			android:id="@+id/action_startingBalanceNewAccountFragment_to_newPurseFragment"
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_newPurseFragment"
 			app:destination="@id/newPurseFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
 			app:exitAnim="@anim/anim_exit"
-			app:popEnterAnim="@android:anim/slide_in_left"/>
+			app:popEnterAnim="@android:anim/slide_in_left" />
 	</fragment>
 
 	<fragment
