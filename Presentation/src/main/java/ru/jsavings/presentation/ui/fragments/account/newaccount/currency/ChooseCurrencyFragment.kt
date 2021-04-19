@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.databinding.NewAccountFragmentChooseCurrencyBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import java.util.*
@@ -43,7 +43,9 @@ class ChooseCurrencyFragment : BaseFragment() {
 				setOnItemClickListener { _, _, _, _ -> buttonNewAccountNext.isEnabled = true }
 
 				val currency = viewModel.getFromSharedPreferences(
-					NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, String::class, ""
+					SharedPreferencesConsts.NewAccountSP,
+					SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
+					""
 				)
 
 				buttonNewAccountNext.isEnabled =
@@ -64,8 +66,10 @@ class ChooseCurrencyFragment : BaseFragment() {
 
 			with (buttonNewAccountNext) {
 				setOnClickListener {
-					viewModel.putItemToSharedPreferences(
-						NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, actNewAccountCurrency.text.toString()
+					viewModel.putToSharedPreferences(
+						SharedPreferencesConsts.NewAccountSP,
+						SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
+						actNewAccountCurrency.text.toString()
 					)
 					findNavController().navigate(
 						ChooseCurrencyFragmentDirections

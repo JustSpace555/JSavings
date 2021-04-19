@@ -2,15 +2,15 @@ package ru.jsavings.presentation.ui.fragments.intro
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.binding.AccountWithPurses
-import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferences
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -81,7 +81,9 @@ class IntroFragment : BaseFragment() {
 									)
 								} else {
 									val currentAccountName = viewModel.getFromSharedPreferences(
-										JsSharedPreferences.JS_CURRENT_ACCOUNT, String::class, ""
+										SharedPreferencesConsts.JsGlobalSP,
+										SharedPreferencesConsts.JsGlobalSP.JS_CURRENT_ACCOUNT,
+										""
 									)
 
 									when {
@@ -93,7 +95,9 @@ class IntroFragment : BaseFragment() {
 												.minByOrNull { it.account.name }!!
 												.account.name
 											viewModel.putToSharedPreferences(
-												JsSharedPreferences.JS_CURRENT_ACCOUNT, chosenAccountName
+												SharedPreferencesConsts.JsGlobalSP,
+												SharedPreferencesConsts.JsGlobalSP.JS_CURRENT_ACCOUNT,
+												chosenAccountName
 											)
 											IntroFragmentDirections
 												.actionIntroFragmentToTransactionsFragment(chosenAccountName)

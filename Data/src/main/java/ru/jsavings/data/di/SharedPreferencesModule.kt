@@ -4,16 +4,21 @@ import android.content.Context
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferences
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 
 internal val sharedPreferencesModule = module {
 
-	single(named(JsSharedPreferences::class.java.simpleName)) {
-		androidContext().getSharedPreferences(JsSharedPreferences.FILE_NAME, Context.MODE_PRIVATE)
+	single(named(SharedPreferencesConsts.JsGlobalSP::class.java.simpleName)) {
+		androidContext().getSharedPreferences(
+			SharedPreferencesConsts.JsGlobalSP.FILE_NAME,
+			Context.MODE_PRIVATE
+		)
 	}
 
-	single(named(NewAccountSharedPreferences::class.java.simpleName)) {
-		androidContext().getSharedPreferences(NewAccountSharedPreferences.FILE_NAME, Context.MODE_PRIVATE)
+	single(named(SharedPreferencesConsts.NewAccountSP::class.java.simpleName)) {
+		androidContext().getSharedPreferences(
+			SharedPreferencesConsts.NewAccountSP.FILE_NAME,
+			Context.MODE_PRIVATE
+		)
 	}
 }

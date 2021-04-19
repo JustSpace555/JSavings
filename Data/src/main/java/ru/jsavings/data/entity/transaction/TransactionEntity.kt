@@ -1,17 +1,26 @@
 package ru.jsavings.data.entity.transaction
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import ru.jsavings.data.entity.BaseEntity
 import ru.jsavings.data.entity.PurseEntity
 
 @Entity (
 	tableName = "transaction_table",
 	foreignKeys = [
-		ForeignKey(entity = PurseEntity::class, childColumns = ["purse_fk_name"], parentColumns = ["purse_name"]),
+		ForeignKey(
+			entity = PurseEntity::class,
+			childColumns = ["purse_fk_id"],
+			parentColumns = ["purse_id"],
+			onDelete = ForeignKey.CASCADE
+		),
 		ForeignKey(
 			entity = TransactionCategoryEntity::class,
-			childColumns = ["category_fk_name"],
-			parentColumns = ["category_name"]
+			childColumns = ["category_fk_id"],
+			parentColumns = ["category_id"],
+			onDelete = ForeignKey.CASCADE
 		)
 	]
 )
@@ -23,12 +32,12 @@ internal data class TransactionEntity (
 	val transactionId: Long,
 
 	//Purse id which this transaction belongs to
-	@ColumnInfo(name = "purse_fk_name", index = true)
-	val purseFkName: String,
+	@ColumnInfo(name = "purse_fk_id", index = true)
+	val purseFkId: Int,
 
 	//Category id (food, entertainment, ...)
-	@ColumnInfo(name = "category_fk_name", index = true)
-	val categoryFkName: String,
+	@ColumnInfo(name = "category_fk_id", index = true)
+	val categoryFkId: Int,
 
 	//Total amount spent
 	@ColumnInfo(name = "total_sum")

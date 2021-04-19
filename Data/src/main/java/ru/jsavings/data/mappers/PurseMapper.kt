@@ -1,17 +1,20 @@
 package ru.jsavings.data.mappers
 
+import ru.jsavings.data.entity.AccountEntity
 import ru.jsavings.data.entity.BaseEntity
 import ru.jsavings.data.entity.PurseEntity
-import ru.jsavings.data.model.BaseModel
 import ru.jsavings.data.model.purse.Purse
 import ru.jsavings.data.model.purse.PurseCategoryType
 
-internal class PurseMapper : BaseMapper<PurseEntity, Purse> {
+internal class PurseMapper(
+	private val accountMapper: AccountMapper
+) : BaseMapper<PurseEntity, Purse> {
 
 	override fun mapEntityToModel(input: PurseEntity, vararg additionalElements: BaseEntity): Purse =
 		Purse(
+			purseId = input.purseId,
 			name = input.purseName,
-			accountName = input.accountFkName,
+			account = accountMapper.mapEntityToModel(additionalElements.filterIsInstance<AccountEntity>().first()),
 			balance = input.balance,
 			currency = input.currency,
 			category = PurseCategoryType.valueOf(input.category),
@@ -21,8 +24,9 @@ internal class PurseMapper : BaseMapper<PurseEntity, Purse> {
 
 	override fun mapModelToEntity(input: Purse): PurseEntity =
 		PurseEntity(
+			purseId = input.purseId,
 			purseName = input.name,
-			accountFkName = input.accountName,
+			accountFkId = input.account.accountId,
 			balance = input.balance,
 			currency = input.currency,
 			category = input.category.toString(),

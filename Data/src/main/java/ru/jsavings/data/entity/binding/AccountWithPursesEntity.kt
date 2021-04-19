@@ -12,8 +12,8 @@ internal data class AccountWithPursesEntity(
 	val accountEntity: AccountEntity,
 
 	@Relation(
-		parentColumn = "account_name",
-		entityColumn = "account_fk_name"
+		parentColumn = "account_id",
+		entityColumn = "account_fk_id"
 	)
 	val purseEntities: List<PurseEntity>
 ) : BaseEntity

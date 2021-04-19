@@ -1,12 +1,17 @@
 package ru.jsavings.data.entity
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity (tableName = "account_table")
 internal data class AccountEntity (
 
-	//Account name
 	@PrimaryKey
+	@ColumnInfo(name = "account_id")
+	val accountId: Int = 0,
+
+	//Account name
 	@ColumnInfo(name = "account_name")
 	val accountName: String,
 

@@ -3,7 +3,6 @@ package ru.jsavings.data.mappers.transaction
 import ru.jsavings.data.entity.BaseEntity
 import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 import ru.jsavings.data.mappers.BaseMapper
-import ru.jsavings.data.model.BaseModel
 import ru.jsavings.data.model.transaction.TransactionCategory
 import ru.jsavings.data.model.transaction.TransactionCategoryType
 
@@ -14,8 +13,9 @@ internal class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity,
 		vararg additionalElements: BaseEntity
 	): TransactionCategory =
 		TransactionCategory(
+			categoryId = input.categoryId,
 			name = input.categoryName,
-			accountName = input.accountFkName,
+			accountId = input.accountFkId,
 			categoryType = TransactionCategoryType.valueOf(input.type),
 			color = input.color,
 			iconPath = input.iconPath
@@ -23,8 +23,9 @@ internal class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity,
 
 	override fun mapModelToEntity(input: TransactionCategory): TransactionCategoryEntity =
 		TransactionCategoryEntity(
+			categoryId = input.categoryId,
 			categoryName = input.name,
-			accountFkName = input.accountName,
+			accountFkId = input.accountId,
 			type = input.categoryType.toString(),
 			color = input.color,
 			iconPath = input.iconPath

@@ -1,23 +1,34 @@
 package ru.jsavings.data.entity
 
-import androidx.room.*
-import ru.jsavings.data.entity.AccountEntity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 @Entity (
 	tableName = "purse_table",
 	foreignKeys = [
-		ForeignKey(entity = AccountEntity::class, childColumns = ["account_fk_name"], parentColumns = ["account_name"])
+		ForeignKey(
+			entity = AccountEntity::class,
+			childColumns = ["account_fk_id"],
+			parentColumns = ["account_id"],
+			onDelete = ForeignKey.CASCADE
+		)
 	]
 )
 internal data class PurseEntity (
 
+	//Id of purse
+	@PrimaryKey(autoGenerate = true)
+	@ColumnInfo(name = "purse_id")
+	val purseId: Int = 0,
+
 	//Name of purse
-	@PrimaryKey
 	@ColumnInfo(name = "purse_name")
 	val purseName: String,
 
-	@ColumnInfo(name = "account_fk_name", index = true)
-	val accountFkName: String,
+	@ColumnInfo(name = "account_fk_id", index = true)
+	val accountFkId: Int,
 
 	//Balance on purse
 	val balance: Double,

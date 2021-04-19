@@ -1,7 +1,6 @@
 package ru.jsavings.data.repository.sharedpreferences
 
 import android.content.SharedPreferences
-import android.util.Log
 import kotlin.reflect.KClass
 
 internal class SharedPreferencesRepositoryImpl(
@@ -17,8 +16,6 @@ internal class SharedPreferencesRepositoryImpl(
 				is Long -> putLong(key, value)
 				else -> putFloat(key, value as Float)
 			}
-			//TODO Убрать
-			Log.d(SharedPreferencesRepository::class.java.simpleName, "Put to shared preferences: $key = $value")
 			apply()
 		}
 	}
@@ -33,16 +30,11 @@ internal class SharedPreferencesRepositoryImpl(
 				Long::class -> getLong(key, defaultValue as Long) as T
 				else -> getFloat(key, defaultValue as Float) as T
 			}
-		}.also {
-			//TODO Убрать
-			Log.d(SharedPreferencesRepository::class.java.simpleName, "Get from shared preferences: $key = $it")
 		}
 
 	override fun removeValue(key: String) {
 		with(sharedPreferences.edit()) {
 			remove(key)
-			//TODO Убрать
-			Log.d(SharedPreferencesRepository::class.java.simpleName, "Remove from shared preferences: $key")
 			apply()
 		}
 	}

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -40,7 +40,9 @@ class AddNewAccountName : BaseFragment() {
 			}
 
 			viewModel.getFromSharedPreferences(
-				NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, String::class, ""
+				SharedPreferencesConsts.NewAccountSP,
+				SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_NAME,
+				""
 			).also {
 				if (it.isNotEmpty()) {
 					tilNewAccountName.editText?.setText(it)
@@ -89,7 +91,11 @@ class AddNewAccountName : BaseFragment() {
 						}
 					}
 					else -> {
-						viewModel.putToSharedPreferences(NewAccountSharedPreferences.JS_NEW_ACCOUNT_NAME, it)
+						viewModel.putToSharedPreferences(
+							SharedPreferencesConsts.NewAccountSP,
+							SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_NAME,
+							it
+						)
 						findNavController().navigate(
 							AddNewAccountNameDirections.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
 								navArgs<AddNewAccountNameArgs>().value.isEducationNeeded

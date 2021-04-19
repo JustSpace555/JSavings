@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.databinding.NewAccountFragmentStartingBalanceBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -31,7 +31,9 @@ class StartingBalanceFragment : BaseFragment() {
 
 			with(buttonNewAccountNext) {
 				val balance = viewModel.getFromSharedPreferences(
-					NewAccountSharedPreferences.JS_NEW_ACCOUNT_STARTING_BALANCE, String::class, ""
+					SharedPreferencesConsts.NewAccountSP,
+					SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_STARTING_BALANCE,
+					""
 				)
 				isEnabled = balance.isNotEmpty().also {
 					if (it) tilNewAccountName.editText?.text = Editable.Factory.getInstance().newEditable(balance)
@@ -60,7 +62,9 @@ class StartingBalanceFragment : BaseFragment() {
 				}
 
 				val currency = viewModel.getFromSharedPreferences(
-					NewAccountSharedPreferences.JS_NEW_ACCOUNT_CURRENCY, String::class, ""
+					SharedPreferencesConsts.NewAccountSP,
+					SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
+					""
 				)
 				if (currency.isNotEmpty())
 					suffixText = currency.slice(currency.indexOf('(') + 1 until currency.lastIndex)
@@ -69,8 +73,9 @@ class StartingBalanceFragment : BaseFragment() {
 	}
 
 	private fun navigateToNextFragment(v: View) {
-		viewModel.putItemToSharedPreferences(
-			NewAccountSharedPreferences.JS_NEW_ACCOUNT_STARTING_BALANCE,
+		viewModel.putToSharedPreferences(
+			SharedPreferencesConsts.NewAccountSP,
+			SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_STARTING_BALANCE,
 			bindingUtil.tieStartingBalance.text?.toString() ?: "0.0"
 		)
 		findNavController().navigate(

@@ -1,16 +1,13 @@
 package ru.jsavings.data.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Update
 import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
 
 @Dao
 internal interface TransactionCategoryDao : BaseDao {
-
-	@Query("SELECT * FROM transaction_category_table WHERE category_name = :inputName")
-	fun getCategoryByName(inputName: String): TransactionCategoryEntity
-
-	@Query("SELECT * FROM transaction_category_table WHERE type = :inputType")
-	fun getCategoriesByTransactionType(inputType: String): List<TransactionCategoryEntity>
 
 	@Insert
 	fun addNewCategory(transactionCategoryEntity: TransactionCategoryEntity)

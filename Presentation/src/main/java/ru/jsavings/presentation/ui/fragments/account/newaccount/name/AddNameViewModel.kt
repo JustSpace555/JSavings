@@ -7,12 +7,14 @@ import ru.jsavings.domain.usecase.account.GetAllAccountsUseCase
 import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
-import kotlin.reflect.KClass
 
 class AddNameViewModel(
 	private val getAllAccountsUseCase: GetAllAccountsUseCase,
-	private val newAccountSharedPreferencesUseCase: NewAccountSharedPreferencesUseCase
-) : BaseViewModel(getAllAccountsUseCase) {
+	newAccountSharedPreferencesUseCase: NewAccountSharedPreferencesUseCase
+) : BaseViewModel(
+	disposableUseCases = listOf(getAllAccountsUseCase),
+	sharedPreferencesUseCases = listOf(newAccountSharedPreferencesUseCase)
+) {
 
 	private val _newAccountName = MutableLiveData<String>().default("")
 	val newAccountName = _newAccountName as LiveData<String>
@@ -49,9 +51,4 @@ class AddNameViewModel(
 			params = Unit
 		)
 	}
-
-	fun <T> putToSharedPreferences(key: String, value: T) = newAccountSharedPreferencesUseCase.putValue(key, value)
-	fun <T : Any> getFromSharedPreferences(key: String, kClass: KClass<T>, defaultValue: T) =
-		newAccountSharedPreferencesUseCase.getValue(key, kClass, defaultValue)
-	fun removeFromSharedPreferences(key: String) = newAccountSharedPreferencesUseCase.removeValue(key)
 }
