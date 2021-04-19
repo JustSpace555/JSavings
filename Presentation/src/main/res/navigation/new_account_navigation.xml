@@ -53,6 +53,9 @@
 		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.firstpurse.CreateFirstPurseFragment"
 		android:label="CreateFirstPurseFragment"
 		tools:layout="@layout/new_account_fragment_create_purse">
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean" />
 		<action
 			android:id="@+id/action_createFirstPurseFragment_to_newPurseFragment"
 			app:destination="@id/newPurseFragment" />
@@ -63,6 +66,9 @@
 		android:name="ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseFragment"
 		android:label="NewPurseFragment"
 		tools:layout="@layout/purse_fragment_new_purse">
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean" />
 		<action
 			android:id="@+id/action_newPurseFragment_to_readyFragment"
 			app:destination="@id/readyFragment" />

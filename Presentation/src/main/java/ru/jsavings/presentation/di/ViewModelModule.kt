@@ -2,7 +2,6 @@ package ru.jsavings.presentation.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import ru.jsavings.presentation.ui.fragments.account.newaccount.balance.StartingBalanceViewModel
 import ru.jsavings.presentation.ui.fragments.account.newaccount.currency.ChooseCurrencyViewModel
 import ru.jsavings.presentation.ui.fragments.account.newaccount.firstpurse.CreateFirstPurseViewModel
 import ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNameViewModel
@@ -21,7 +20,6 @@ internal val viewModelModule = module {
 	//New account
 	viewModel { AddNameViewModel(get(), get()) }
 	viewModel { ChooseCurrencyViewModel(get()) }
-	viewModel { StartingBalanceViewModel(get()) }
 	viewModel { CreateFirstPurseViewModel() }
 
 	//Calendar
@@ -32,5 +30,5 @@ internal val viewModelModule = module {
 
 	//Purses
 	viewModel { PursesViewModel() }
-	viewModel { NewPurseViewModel() }
+	viewModel { NewPurseViewModel(get(), get(), get(), get()) }
 }

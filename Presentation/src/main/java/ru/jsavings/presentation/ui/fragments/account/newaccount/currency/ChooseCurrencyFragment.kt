@@ -1,11 +1,14 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.currency
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -29,6 +32,7 @@ class ChooseCurrencyFragment : BaseFragment() {
 		return bindingUtil.root
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
@@ -71,13 +75,24 @@ class ChooseCurrencyFragment : BaseFragment() {
 						SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
 						actNewAccountCurrency.text.toString()
 					)
-					findNavController().navigate(
+
+					val action = if (navArgs<ChooseCurrencyFragmentArgs>().value.isEducationNeeded) {
 						ChooseCurrencyFragmentDirections
-							.actionChooseCurrencyNewAccountFragmentToStartingBalanceNewAccountFragment(
-								navArgs<ChooseCurrencyFragmentArgs>().value.isEducationNeeded
-							)
-					)
+							.actionChooseCurrencyNewAccountFragmentToCreateFirstPurseFragment(true)
+					} else {
+						ChooseCurrencyFragmentDirections
+							.actionChooseCurrencyNewAccountFragmentToNewPurseFragment(false)
+					}
+
+					findNavController().navigate(action)
 				}
+			}
+
+			root.setOnTouchListener { v, _ ->
+				(requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+					.hideSoftInputFromWindow(v.windowToken, 0)
+				tilNewAccountCurrency.clearFocus()
+				true
 			}
 		}
 	}

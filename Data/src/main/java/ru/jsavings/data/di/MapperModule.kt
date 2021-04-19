@@ -11,7 +11,7 @@ internal val mapperModule = module {
 
 	single { TransactionCategoryMapper() }
 	single { TransactionMapper(get()) }
-	single { PurseMapper() }
+	single { PurseMapper(get()) }
 	single { AccountMapper() }
 
 	single { AccountWithPursesMapper(get(), get()) }

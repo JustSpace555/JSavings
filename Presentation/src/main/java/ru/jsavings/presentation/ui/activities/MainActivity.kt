@@ -19,7 +19,7 @@ import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferences
+import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.domain.usecase.di.domainModule
 import ru.jsavings.presentation.di.presentationModule
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onDestroy() {
 		super.onDestroy()
-		val sp by inject<SharedPreferences>(named(NewAccountSharedPreferences::class.java.simpleName))
+		val sp by inject<SharedPreferences>(named(SharedPreferencesConsts.NewAccountSP::class.java.simpleName))
 		with(sp.edit()) {
 			clear()
 			apply()

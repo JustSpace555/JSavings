@@ -35,7 +35,7 @@ class CreateFirstPurseFragment : BaseFragment() {
 			with(buttonOk) {
 				setOnClickListener {
 					findNavController().navigate(
-						CreateFirstPurseFragmentDirections.actionCreateFirstPurseFragmentToNewPurseFragment()
+						CreateFirstPurseFragmentDirections.actionCreateFirstPurseFragmentToNewPurseFragment(true)
 					)
 				}
 
