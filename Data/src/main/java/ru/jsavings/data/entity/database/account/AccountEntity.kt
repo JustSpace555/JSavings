@@ -1,8 +1,9 @@
-package ru.jsavings.data.entity
+package ru.jsavings.data.entity.database.account
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ru.jsavings.data.entity.database.common.BaseDbEntity
 
 @Entity (tableName = "account_table")
 internal data class AccountEntity (
@@ -23,4 +24,4 @@ internal data class AccountEntity (
 	@ColumnInfo(name = "balance_in_main_currency")
 	val balanceInMainCurrency: Double
 
-) : BaseEntity
+) : BaseDbEntity

@@ -1,8 +1,8 @@
 package ru.jsavings.data.mappers.transaction
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.PurseEntity
-import ru.jsavings.data.entity.transaction.TransactionEntity
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.database.purse.PurseEntity
+import ru.jsavings.data.entity.database.transaction.TransactionEntity
 import ru.jsavings.data.mappers.BaseMapper
 import ru.jsavings.data.mappers.PurseMapper
 import ru.jsavings.data.model.transaction.Transaction

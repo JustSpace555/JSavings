@@ -7,10 +7,10 @@ import ru.jsavings.data.database.dao.TransactionCategoryDao
 import ru.jsavings.data.database.dao.PurseDao
 import ru.jsavings.data.database.dao.TransactionDao
 import ru.jsavings.data.database.dao.binding.AccountWithPursesDao
-import ru.jsavings.data.entity.AccountEntity
-import ru.jsavings.data.entity.PurseEntity
-import ru.jsavings.data.entity.transaction.TransactionEntity
-import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
+import ru.jsavings.data.entity.database.account.AccountEntity
+import ru.jsavings.data.entity.database.purse.PurseEntity
+import ru.jsavings.data.entity.database.transaction.TransactionEntity
+import ru.jsavings.data.entity.database.transaction.TransactionCategoryEntity
 
 @Database (
 	entities = [

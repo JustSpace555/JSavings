@@ -1,9 +1,11 @@
-package ru.jsavings.data.entity
+package ru.jsavings.data.entity.database.purse
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import ru.jsavings.data.entity.database.account.AccountEntity
+import ru.jsavings.data.entity.database.common.BaseDbEntity
 
 @Entity (
 	tableName = "purse_table",
@@ -46,4 +48,4 @@ internal data class PurseEntity (
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
 
-) : BaseEntity
+) : BaseDbEntity

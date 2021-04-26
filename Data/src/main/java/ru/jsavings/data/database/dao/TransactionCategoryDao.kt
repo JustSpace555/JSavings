@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
-import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
+import ru.jsavings.data.entity.database.transaction.TransactionCategoryEntity
 
 @Dao
 internal interface TransactionCategoryDao : BaseDao {

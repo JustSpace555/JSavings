@@ -1,7 +1,7 @@
 package ru.jsavings.data.mappers.transaction
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.database.transaction.TransactionCategoryEntity
 import ru.jsavings.data.mappers.BaseMapper
 import ru.jsavings.data.model.transaction.TransactionCategory
 import ru.jsavings.data.model.transaction.TransactionCategoryType

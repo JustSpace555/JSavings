@@ -1,11 +1,10 @@
 package ru.jsavings.data.mappers.binding
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.binding.AccountWithPursesEntity
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.database.binding.AccountWithPursesEntity
 import ru.jsavings.data.mappers.AccountMapper
 import ru.jsavings.data.mappers.BaseMapper
 import ru.jsavings.data.mappers.PurseMapper
-import ru.jsavings.data.model.BaseModel
 import ru.jsavings.data.model.binding.AccountWithPurses
 
 internal class AccountWithPursesMapper(

@@ -1,7 +1,7 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entity.AccountEntity
+import ru.jsavings.data.entity.database.account.AccountEntity
 
 @Dao
 internal interface AccountDao : BaseDao {

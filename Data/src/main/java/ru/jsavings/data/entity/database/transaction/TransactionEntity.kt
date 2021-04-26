@@ -1,11 +1,11 @@
-package ru.jsavings.data.entity.transaction
+package ru.jsavings.data.entity.database.transaction
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.PurseEntity
+import ru.jsavings.data.entity.database.common.BaseDbEntity
+import ru.jsavings.data.entity.database.purse.PurseEntity
 
 @Entity (
 	tableName = "transaction_table",
@@ -53,4 +53,4 @@ internal data class TransactionEntity (
 	@ColumnInfo(name = "describe_picture_path")
 	val describePicturePath: String?
 
-) : BaseEntity
+) : BaseDbEntity

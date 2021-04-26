@@ -1,6 +1,6 @@
 package ru.jsavings.data.mappers
 
-import ru.jsavings.data.entity.BaseEntity
+import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.model.BaseModel
 
 interface BaseMapper <E : BaseEntity, M : BaseModel> {

@@ -1,7 +1,7 @@
 package ru.jsavings.data.mappers
 
-import ru.jsavings.data.entity.AccountEntity
-import ru.jsavings.data.entity.BaseEntity
+import ru.jsavings.data.entity.database.account.AccountEntity
+import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.model.Account
 import java.util.*
 

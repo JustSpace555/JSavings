@@ -1,7 +1,7 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.*
-import ru.jsavings.data.entity.transaction.TransactionEntity
+import ru.jsavings.data.entity.database.transaction.TransactionEntity
 
 @Dao
 internal interface TransactionDao : BaseDao {
