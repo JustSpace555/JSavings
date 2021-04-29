@@ -2,10 +2,10 @@ package ru.jsavings.presentation.ui.fragments.intro
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.jsavings.data.model.Account
-import ru.jsavings.data.model.binding.AccountWithPurses
-import ru.jsavings.domain.usecase.account.DeleteAccountsUseCase
-import ru.jsavings.domain.usecase.account.GetAllAccountsWithPursesUseCase
+import ru.jsavings.data.model.database.Account
+import ru.jsavings.data.model.database.binding.AccountWithPurses
+import ru.jsavings.domain.usecase.database.account.DeleteAccountsUseCase
+import ru.jsavings.domain.usecase.database.account.GetAllAccountsWithPursesUseCase
 import ru.jsavings.domain.usecase.sharedpreferences.JsSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel

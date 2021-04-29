@@ -1,6 +1,6 @@
 package ru.jsavings.domain.usecase.common
 
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesRepository
+import ru.jsavings.data.repository.sharedpreferences.common.SharedPreferencesRepository
 import kotlin.reflect.KClass
 
 abstract class SharedPreferencesUseCase(

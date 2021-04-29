@@ -1,3 +1,5 @@
 package ru.jsavings.data.entity.network.common
 
-interface BaseNetworkEntity
+import ru.jsavings.data.entity.common.BaseEntity
+
+interface BaseNetworkEntity : BaseEntity
