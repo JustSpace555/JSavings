@@ -22,6 +22,7 @@
 			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin">
 
 			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/tie_new_purse_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				style="@style/StandardTextStyle"
