@@ -41,6 +41,22 @@ internal data class PurseEntity (
 	// Purse category (PurseCategoryType)
 	val category: String,
 
+	//Credit purse limit
+	@ColumnInfo(name = "credit_limit")
+	val creditLimit: Double?,
+
+	//Credit purse interest rate
+	@ColumnInfo(name = "interest_rate")
+	val interestRate: Double?,
+
+	//Credit purse day of payment
+	@ColumnInfo(name = "payment_day")
+	val paymentDay: Int?,
+
+	//Credit purse grace period
+	@ColumnInfo(name = "grace_period")
+	val gracePeriod: Int?,
+
 	//Purse's color (#0xFFFFFFFF)
 	val color: String,
 

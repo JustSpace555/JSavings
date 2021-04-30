@@ -1,4 +1,4 @@
-package ru.jsavings.data.mappers.netrowk
+package ru.jsavings.data.mappers.network
 
 import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.network.crypto.CryptoCoinEntity

@@ -18,6 +18,10 @@ internal class PurseMapper(
 			account = accountMapper.mapEntityToModel(additionalElements.filterIsInstance<AccountEntity>().first()),
 			balance = input.balance,
 			currency = input.currency,
+			creditLimit = input.creditLimit,
+			paymentDay = input.paymentDay,
+			gracePeriod = input.gracePeriod,
+			interestRate = input.interestRate,
 			category = PurseCategoryType.valueOf(input.category),
 			color = input.color,
 			iconPath = input.iconPath
@@ -31,6 +35,10 @@ internal class PurseMapper(
 			balance = input.balance,
 			currency = input.currency,
 			category = input.category.toString(),
+			creditLimit = input.creditLimit,
+			paymentDay = input.paymentDay,
+			gracePeriod = input.gracePeriod,
+			interestRate = input.interestRate,
 			color = input.color,
 			iconPath = input.iconPath
 		)

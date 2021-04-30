@@ -22,7 +22,11 @@ class IntroFragment : BaseFragment() {
 	private var isEducationNeeded = false
 	private val allAccountsWithPurses = mutableListOf<AccountWithPurses>()
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
 		bindingUtil = IntroFragmentBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
@@ -57,7 +61,9 @@ class IntroFragment : BaseFragment() {
 							},
 							onFinish = {
 								viewModel.requestDeleteAccounts(
-									allAccountsWithPurses.filter { it.purses.isEmpty() }.map { it.account }
+									allAccountsWithPurses
+										.filter { it.purses.isEmpty() }
+										.map { it.account }
 								) {
 									showTextSnackBar(
 										requireView(),
@@ -76,9 +82,10 @@ class IntroFragment : BaseFragment() {
 							if (sqlStatus == IntroViewModel.SQLStatus.FinishStatus) {
 								bindingUtil.progressBar.visibility = View.GONE
 								val action = if (isEducationNeeded) {
-									IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation(
-										isEducationNeeded = true
-									)
+									IntroFragmentDirections
+										.actionIntroFragmentToNewAccountNavigation(
+											isEducationNeeded = true
+										)
 								} else {
 									val currentAccountName = viewModel.getFromSharedPreferences(
 										SharedPreferencesConsts.JsGlobalSP,
@@ -88,7 +95,9 @@ class IntroFragment : BaseFragment() {
 
 									when {
 										currentAccountName.isNotEmpty() -> IntroFragmentDirections
-											.actionIntroFragmentToTransactionsFragment(currentAccountName)
+											.actionIntroFragmentToTransactionsFragment(
+												currentAccountName
+											)
 
 										allAccountsWithPurses.isNotEmpty() -> {
 											val chosenAccountName = allAccountsWithPurses
@@ -100,8 +109,9 @@ class IntroFragment : BaseFragment() {
 												chosenAccountName
 											)
 											IntroFragmentDirections
-												.actionIntroFragmentToTransactionsFragment(chosenAccountName)
-
+												.actionIntroFragmentToTransactionsFragment(
+													chosenAccountName
+												)
 										}
 										else -> {
 											showTextSnackBar(
@@ -109,9 +119,10 @@ class IntroFragment : BaseFragment() {
 												NullPointerException().localizedMessage ?:
 												getString(R.string.something_went_wrong)
 											)
-											IntroFragmentDirections.actionIntroFragmentToNewAccountNavigation(
-												isEducationNeeded = false
-											)
+											IntroFragmentDirections
+												.actionIntroFragmentToNewAccountNavigation(
+													isEducationNeeded = false
+												)
 										}
 									}
 								}

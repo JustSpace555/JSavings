@@ -31,7 +31,7 @@
 		</com.google.android.material.textfield.TextInputLayout>
 
 		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/til_new_account_currency"
+			android:id="@+id/til_new_purse_type"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
 			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
 			<AutoCompleteTextView
+				android:id="@+id/actv_new_purse_type"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:inputType="none"
@@ -60,7 +61,7 @@
 			app:endIconMode="clear_text"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/til_new_account_currency"
+			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_type"
 			android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
 			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
 			android:layout_marginTop="@dimen/add_new_purse_elements_margin">
@@ -75,13 +76,101 @@
 		</com.google.android.material.textfield.TextInputLayout>
 
 		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/til_new_purse_credit_limit"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_starting_balance"
+			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+			android:layout_marginHorizontal="@dimen/add_new_purse_elements_side_margin"
+			android:visibility="gone">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				style="@style/StandardTextStyle"
+				android:hint="@string/new_purse_credit_limit"
+				android:inputType="numberDecimal" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_credit_purse"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_credit_limit"
+			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+			android:layout_marginHorizontal="@dimen/add_new_purse_elements_side_margin">
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_purse_credit_percent"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:suffixText="%"
+				app:helperTextEnabled="true"
+				app:helperText="@string/new_purse_percent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/StandardTextStyle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_purse_credit_payment_day"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:helperTextEnabled="true"
+				app:helperText="@string/new_purse_payment_day"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/til_new_purse_credit_grace"
+				app:layout_constraintStart_toEndOf="@id/til_new_purse_credit_percent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/StandardTextStyle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_purse_credit_grace"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:helperTextEnabled="true"
+				app:helperText="@string/new_purse_grace_period"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/StandardTextStyle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/til_new_purse_currency"
 			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_starting_balance"
+			app:layout_constraintTop_toBottomOf="@+id/cl_credit_purse"
 			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
 			android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
 			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin">
@@ -147,20 +236,30 @@
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--		<Button-->
-<!--			android:id="@+id/button_new_purse_save"-->
-<!--			style="@style/ButtonTextStyle.Outlined"-->
-<!--			android:layout_width="wrap_content"-->
-<!--			android:layout_height="wrap_content"-->
-<!--			android:text="@string/save"-->
-<!--			android:layout_marginTop="@dimen/add_new_purse_elements_margin"-->
-<!--			android:layout_marginBottom="@dimen/add_new_purse_elements_margin"-->
-<!--			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"-->
-<!--			android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"-->
-<!--			app:layout_constraintBottom_toBottomOf="parent"-->
-<!--			app:layout_constraintEnd_toEndOf="parent"-->
-<!--			app:layout_constraintStart_toStartOf="parent"-->
-<!--			app:layout_constraintTop_toBottomOf="@+id/ll_choose_color_icon" />-->
+		<Button
+			android:id="@+id/button_new_purse_save"
+			style="@style/ButtonTextStyle.Outlined"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/save"
+			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
+			android:layout_marginBottom="@dimen/add_new_purse_elements_margin"
+			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin"
+			android:layout_marginStart="@dimen/add_new_purse_elements_side_margin"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/ll_choose_color_icon" />
+
+		<com.google.android.material.progressindicator.CircularProgressIndicator
+			android:id="@+id/cpi_loading"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

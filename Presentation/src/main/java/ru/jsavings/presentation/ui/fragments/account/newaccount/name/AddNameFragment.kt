@@ -97,9 +97,10 @@ class AddNewAccountName : BaseFragment() {
 							it
 						)
 						findNavController().navigate(
-							AddNewAccountNameDirections.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
-								navArgs<AddNewAccountNameArgs>().value.isEducationNeeded
-							)
+							AddNewAccountNameDirections
+								.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
+									navArgs<AddNewAccountNameArgs>().value.isEducationNeeded
+								)
 						)
 					}
 				}

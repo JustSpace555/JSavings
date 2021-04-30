@@ -87,6 +87,12 @@
 		<string name="new_purse_purse_type_main">Main purse</string>
 		<string name="new_purse_purse_type_crypto">Cryptocurrency</string>
 		<string name="new_purse_purse_type_credit">Credit purse</string>
+	
+	<!--  Credit purse  -->
+		<string name="new_purse_credit_limit">Credit limit</string>
+		<string name="new_purse_percent">Interest rate</string>
+		<string name="new_purse_payment_day">Day of payment</string>
+		<string name="new_purse_grace_period">Grace period</string>
 	<!--	-->
 
 </resources>
