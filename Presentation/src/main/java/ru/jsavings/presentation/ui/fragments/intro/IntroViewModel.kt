@@ -4,20 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.jsavings.data.model.database.Account
 import ru.jsavings.data.model.database.binding.AccountWithPurses
+import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.account.DeleteAccountsUseCase
 import ru.jsavings.domain.usecase.database.account.GetAllAccountsWithPursesUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.JsSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class IntroViewModel(
 	private val getAllAccountsWithPursesUseCase: GetAllAccountsWithPursesUseCase,
 	private val deleteAccountsUseCase: DeleteAccountsUseCase,
-	jsSharedPreferencesUseCase: JsSharedPreferencesUseCase
-) : BaseViewModel(
-	disposableUseCases = listOf(getAllAccountsWithPursesUseCase, deleteAccountsUseCase),
-	sharedPreferencesUseCases = listOf(jsSharedPreferencesUseCase)
-) {
+	cacheUseCase: CacheUseCase
+) : BaseViewModel(getAllAccountsWithPursesUseCase, deleteAccountsUseCase, cacheUseCase) {
 
 	private val _allAccountsWithPursesLiveData = MutableLiveData<List<AccountWithPurses>>()
 	val allAccountsWithPursesLiveData = _allAccountsWithPursesLiveData as LiveData<List<AccountWithPurses>>

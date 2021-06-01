@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
+import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.databinding.NewAccountFragmentChooseCurrencyBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import java.util.*
@@ -46,11 +46,7 @@ class ChooseCurrencyFragment : BaseFragment() {
 				setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_item, currencyList))
 				setOnItemClickListener { _, _, _, _ -> buttonNewAccountNext.isEnabled = true }
 
-				val currency = viewModel.getFromSharedPreferences(
-					SharedPreferencesConsts.NewAccountSP,
-					SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
-					""
-				)
+				val currency = viewModel.getFromCache(CacheKeys.JS_NEW_ACCOUNT_CURRENCY, "")
 
 				buttonNewAccountNext.isEnabled =
 				if (currency.isNotEmpty()) {
@@ -70,9 +66,8 @@ class ChooseCurrencyFragment : BaseFragment() {
 
 			with (buttonNewAccountNext) {
 				setOnClickListener {
-					viewModel.putToSharedPreferences(
-						SharedPreferencesConsts.NewAccountSP,
-						SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_CURRENCY,
+					viewModel.putToCache(
+						CacheKeys.JS_NEW_ACCOUNT_CURRENCY,
 						actNewAccountCurrency.text.toString()
 					)
 

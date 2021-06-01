@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.database.binding.AccountWithPurses
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
+import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -87,11 +87,8 @@ class IntroFragment : BaseFragment() {
 											isEducationNeeded = true
 										)
 								} else {
-									val currentAccountName = viewModel.getFromSharedPreferences(
-										SharedPreferencesConsts.JsGlobalSP,
-										SharedPreferencesConsts.JsGlobalSP.JS_CURRENT_ACCOUNT,
-										""
-									)
+									val currentAccountName = viewModel
+										.getFromCache(CacheKeys.JS_CURRENT_ACCOUNT, "")
 
 									when {
 										currentAccountName.isNotEmpty() -> IntroFragmentDirections
@@ -103,9 +100,8 @@ class IntroFragment : BaseFragment() {
 											val chosenAccountName = allAccountsWithPurses
 												.minByOrNull { it.account.name }!!
 												.account.name
-											viewModel.putToSharedPreferences(
-												SharedPreferencesConsts.JsGlobalSP,
-												SharedPreferencesConsts.JsGlobalSP.JS_CURRENT_ACCOUNT,
+											viewModel.putToCache(
+												CacheKeys.JS_CURRENT_ACCOUNT,
 												chosenAccountName
 											)
 											IntroFragmentDirections

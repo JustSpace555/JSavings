@@ -1,7 +1,9 @@
 package ru.jsavings.data.di
 
-import org.koin.core.qualifier.named
+import android.content.Context
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import ru.jsavings.data.repository.cache.CacheRepository
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.data.repository.database.account.AccountRepositoryImpl
 import ru.jsavings.data.repository.database.binding.AccountWithPursesRepository
@@ -14,20 +16,8 @@ import ru.jsavings.data.repository.database.transaction.caterory.TransactionCate
 import ru.jsavings.data.repository.database.transaction.caterory.TransactionCategoryRepositoryImpl
 import ru.jsavings.data.repository.network.crypto.CryptoRepository
 import ru.jsavings.data.repository.network.crypto.CryptoRepositoryImpl
-import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferencesRepository
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferencesRepository
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesRepositoryImpl
 
 internal val repositoryModule = module {
-
-	//Shared preferences
-	single<JsSharedPreferencesRepository> {
-		SharedPreferencesRepositoryImpl(get(named(SharedPreferencesConsts.JsGlobalSP::class.java.simpleName)))
-	}
-	single<NewAccountSharedPreferencesRepository> {
-		SharedPreferencesRepositoryImpl(get(named(SharedPreferencesConsts.NewAccountSP::class.java.simpleName)))
-	}
 
 	//DataBase
 	single<AccountRepository> { AccountRepositoryImpl(get(), get()) }
@@ -37,6 +27,11 @@ internal val repositoryModule = module {
 
 	//DataBase binding
 	single<AccountWithPursesRepository> { AccountWithPursesRepositoryImpl(get(), get()) }
+
+	//Cache
+	single { CacheRepository(
+		androidContext().getSharedPreferences("JS_CACHE", Context.MODE_PRIVATE)
+	) }
 
 	//Network
 	single<CryptoRepository> { CryptoRepositoryImpl(get(), get()) }

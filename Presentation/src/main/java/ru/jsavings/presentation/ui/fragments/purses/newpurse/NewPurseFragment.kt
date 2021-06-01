@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.database.purse.PurseCategoryType
@@ -41,6 +43,8 @@ class NewPurseFragment : BaseFragment() {
 
 		with(bindingUtil) {
 
+			setCreditPurseVisibility(View.GONE)
+
 			with (actvNewPurseType) {
 				inputType = InputType.TYPE_NULL
 				val purseTypeAdapter = ArrayAdapter(
@@ -61,11 +65,7 @@ class NewPurseFragment : BaseFragment() {
 								}
 						)
 
-						val currencyAdapter = when(it) {
-							PurseCategoryType.CREDIT_CARD -> {
-								setCreditPurseVisibility(View.VISIBLE)
-								standardCurrencyAdapter
-							}
+						val finalCurrencyAdapter = when(it) {
 
 							//TODO API
 							PurseCategoryType.PRECIOUS_METALS, PurseCategoryType.SECURITIES -> {
@@ -86,32 +86,56 @@ class NewPurseFragment : BaseFragment() {
 								)
 
 								viewModel.cryptoCoinLiveData.observe(viewLifecycleOwner) { state ->
-									when(state) {
-										is NewPurseViewModel.CryptoApiRequestState.OnNextState -> {
-											adapter.addAll(state.coins)
-											cpiLoading.visibility = View.GONE
-										}
-										else -> cpiLoading.visibility = View.VISIBLE
-									}
+									if (state is NewPurseViewModel.CryptoApiRequestState.OnNextState) {
+										adapter.addAll(state.coins)
+										cpiLoading.visibility = View.GONE
+									} else cpiLoading.visibility = View.VISIBLE
 								}
 								adapter
 							}
 
 							else -> {
-								setCreditPurseVisibility(View.GONE)
+								setCreditPurseVisibility(
+									if (it == PurseCategoryType.CREDIT_CARD)
+										View.VISIBLE
+									else
+										View.GONE
+								)
 								standardCurrencyAdapter
 							}
 						}
+
+						actvNewPurseCurrency.setAdapter(finalCurrencyAdapter)
 					}
 				}
 			}
 
+			tilNewPurseCreditLimit.editText?.doOnTextChanged { text, _, _, _ ->
+
+				val showTextInputLayoutError: TextInputLayout.() -> Unit = {
+					isErrorEnabled = true
+					error = getString(R.string.new_purse_invalid_value_error)
+				}
+
+				text?.toString()?.let {
+					try {
+						val percent = it.toDouble()
+						if (percent < 0 || percent > 100)
+							tilNewPurseCreditLimit.showTextInputLayoutError()
+						tilNewPurseCreditLimit.isErrorEnabled = false
+
+					} catch (t: NumberFormatException) {
+						tilNewPurseCreditLimit.showTextInputLayoutError()
+					}
+				}
+			}
 
 		}
 	}
 
-	private fun setCreditPurseVisibility(visibility: Int) {
-		bindingUtil.tilNewPurseCreditLimit.visibility = visibility
-		bindingUtil.clCreditPurse.visibility = visibility
-	}
+	private fun setCreditPurseVisibility(visibility: Int) =
+		with (bindingUtil) {
+			tilNewPurseCreditLimit.visibility = visibility
+			clCreditPurse.visibility = visibility
+		}
 }

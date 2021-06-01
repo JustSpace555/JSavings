@@ -1,8 +1,0 @@
-package ru.jsavings.domain.usecase.sharedpreferences
-
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferencesRepository
-import ru.jsavings.domain.usecase.common.SharedPreferencesUseCase
-
-class NewAccountSharedPreferencesUseCase(
-	private val newAccountSharedPreferencesRepository: NewAccountSharedPreferencesRepository
-) : SharedPreferencesUseCase(newAccountSharedPreferencesRepository)

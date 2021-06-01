@@ -1,45 +1,23 @@
 package ru.jsavings.presentation.ui.fragments.common
 
 import androidx.lifecycle.ViewModel
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
+import ru.jsavings.data.repository.cache.CacheKeys
+import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.common.BaseUseCase
-import ru.jsavings.domain.usecase.common.SharedPreferencesUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.JsSharedPreferencesUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 
-abstract class BaseViewModel (
-	private val disposableUseCases: List<BaseUseCase> = emptyList(),
-	private val sharedPreferencesUseCases: List<SharedPreferencesUseCase> = emptyList()
-) : ViewModel() {
+abstract class BaseViewModel (vararg val useCases: BaseUseCase) : ViewModel() {
 
-	private fun findSharedPreferencesUseCase(sp: SharedPreferencesConsts) = when(sp) {
-		is SharedPreferencesConsts.JsGlobalSP ->
-			sharedPreferencesUseCases.filterIsInstance<JsSharedPreferencesUseCase>().first()
-		is SharedPreferencesConsts.NewAccountSP ->
-			sharedPreferencesUseCases.filterIsInstance<NewAccountSharedPreferencesUseCase>().first()
-	}
+	fun <T: Any> putToCache(key: CacheKeys, value: T) =
+		useCases.filterIsInstance<CacheUseCase>().first().put(key, value)
 
-	internal fun <T> putToSharedPreferences(sp: SharedPreferencesConsts, key: String, value: T) {
-		val useCase = findSharedPreferencesUseCase(sp)
-		useCase.putValue(key, value)
-	}
+	inline fun <reified T: Any> getFromCache(key: CacheKeys, defaultValue: T) =
+		useCases.filterIsInstance<CacheUseCase>().first().get(key, defaultValue)
 
-	internal inline fun <reified T : Any> getFromSharedPreferences(
-		sp: SharedPreferencesConsts,
-		key: String,
-		defaultValue: T
-	): T {
-		val useCase = findSharedPreferencesUseCase(sp)
-		return useCase.getValue(key, T::class, defaultValue)
-	}
-
-	internal fun removeFromSharedPreferences(sp: SharedPreferencesConsts, key: String) {
-		val useCase = findSharedPreferencesUseCase(sp)
-		useCase.removeValue(key)
-	}
+	fun removeFromCache(key: CacheKeys) =
+		useCases.filterIsInstance<CacheUseCase>().first().remove(key)
 
 	override fun onCleared() {
 		super.onCleared()
-		disposableUseCases.onEach { it.dispose() }
+		useCases.onEach { it.dispose() }
 	}
 }

@@ -9,5 +9,6 @@ class GetAllAccountsUseCase(
 	private val accountRepository: AccountRepository
 ) : SingleUseCase<List<Account>, Unit>() {
 
-	override fun buildSingleUseCase(params: Unit): Single<List<Account>> = accountRepository.getAllAccounts()
+	override fun buildSingleUseCase(params: Unit): Single<List<Account>> =
+		accountRepository.getAllAccounts()
 }

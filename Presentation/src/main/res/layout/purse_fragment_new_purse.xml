@@ -84,8 +84,7 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_starting_balance"
 			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
-			android:layout_marginHorizontal="@dimen/add_new_purse_elements_side_margin"
-			android:visibility="gone">
+			android:layout_marginHorizontal="@dimen/add_new_purse_elements_side_margin">
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:layout_width="match_parent"
@@ -100,7 +99,6 @@
 			android:id="@+id/cl_credit_purse"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:visibility="gone"
 			app:layout_constraintTop_toBottomOf="@+id/til_new_purse_credit_limit"
 			android:layout_marginTop="@dimen/add_new_purse_elements_margin"
 			android:layout_marginHorizontal="@dimen/add_new_purse_elements_side_margin">
@@ -120,7 +118,8 @@
 				<com.google.android.material.textfield.TextInputEditText
 					style="@style/StandardTextStyle"
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content" />
+					android:layout_height="wrap_content"
+					android:inputType="numberDecimal" />
 
 			</com.google.android.material.textfield.TextInputLayout>
 
@@ -176,6 +175,7 @@
 			android:layout_marginEnd="@dimen/add_new_purse_elements_side_margin">
 
 			<AutoCompleteTextView
+				android:id="@+id/actv_new_purse_currency"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/new_purse_currency"

@@ -1,6 +1,5 @@
 package ru.jsavings.presentation.ui.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +15,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.koin.core.qualifier.named
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
+import ru.jsavings.data.repository.cache.CacheRepository
 import ru.jsavings.domain.usecase.di.domainModule
 import ru.jsavings.presentation.di.presentationModule
 
@@ -55,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onDestroy() {
 		super.onDestroy()
-		val sp by inject<SharedPreferences>(named(SharedPreferencesConsts.NewAccountSP::class.java.simpleName))
-		with(sp.edit()) {
+		val cache by inject<CacheRepository>()
+		with(cache.sp.edit()) {
 			clear()
 			apply()
 		}

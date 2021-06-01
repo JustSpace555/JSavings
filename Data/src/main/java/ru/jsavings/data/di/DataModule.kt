@@ -4,6 +4,5 @@ val dataModule = listOf(
 	dataBaseModule,
 	mapperModule,
 	repositoryModule,
-	sharedPreferencesModule,
 	networkModule
 )

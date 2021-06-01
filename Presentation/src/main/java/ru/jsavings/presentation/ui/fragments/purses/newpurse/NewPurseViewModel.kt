@@ -3,11 +3,10 @@ package ru.jsavings.presentation.ui.fragments.purses.newpurse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.jsavings.data.model.network.crypto.CryptoCoin
+import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.account.AddAccountUseCase
 import ru.jsavings.domain.usecase.database.purse.AddPurseUseCase
 import ru.jsavings.domain.usecase.network.GetAllCoinsUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.JsSharedPreferencesUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
@@ -15,12 +14,8 @@ class NewPurseViewModel(
 	private val addAccountUseCase: AddAccountUseCase,
 	private val addPurseUseCase: AddPurseUseCase,
 	private val getAllCoinsUseCase: GetAllCoinsUseCase,
-	jsSharedPreferencesUseCase: JsSharedPreferencesUseCase,
-	newAccountSharedPreferencesUseCase: NewAccountSharedPreferencesUseCase
-) : BaseViewModel(
-	disposableUseCases = listOf(addAccountUseCase, addPurseUseCase, getAllCoinsUseCase),
-	sharedPreferencesUseCases = listOf(jsSharedPreferencesUseCase, newAccountSharedPreferencesUseCase)
-) {
+	cacheUseCase: CacheUseCase
+) : BaseViewModel(addAccountUseCase, addPurseUseCase, getAllCoinsUseCase, cacheUseCase) {
 
 	sealed class CryptoApiRequestState {
 		object DefaultState : CryptoApiRequestState()

@@ -3,18 +3,15 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.jsavings.data.model.database.Account
+import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
-import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class AddNameViewModel(
 	private val getAllAccountsUseCase: GetAllAccountsUseCase,
-	newAccountSharedPreferencesUseCase: NewAccountSharedPreferencesUseCase
-) : BaseViewModel(
-	disposableUseCases = listOf(getAllAccountsUseCase),
-	sharedPreferencesUseCases = listOf(newAccountSharedPreferencesUseCase)
-) {
+	cacheUseCase: CacheUseCase
+) : BaseViewModel(getAllAccountsUseCase, cacheUseCase) {
 
 	private val _newAccountName = MutableLiveData<String>().default("")
 	val newAccountName = _newAccountName as LiveData<String>
@@ -24,7 +21,8 @@ class AddNameViewModel(
 		object OnReadyState : AccountNameState()
 	}
 
-	private val _newAccountNameState = MutableLiveData<AccountNameState>().default(AccountNameState.OnEmptyState)
+	private val _newAccountNameState =
+		MutableLiveData<AccountNameState>().default(AccountNameState.OnEmptyState)
 	val newAccountNameState = _newAccountNameState as LiveData<AccountNameState>
 
 	fun onTextChanged(text: CharSequence?) {

@@ -92,7 +92,8 @@
 		<string name="new_purse_credit_limit">Credit limit</string>
 		<string name="new_purse_percent">Interest rate</string>
 		<string name="new_purse_payment_day">Day of payment</string>
-		<string name="new_purse_grace_period">Grace period</string>
+		<string name="new_purse_grace_period">Grace period (days)</string>
+		<string name="new_purse_invalid_value_error">Invalid value</string>
 	<!--	-->
 
 </resources>

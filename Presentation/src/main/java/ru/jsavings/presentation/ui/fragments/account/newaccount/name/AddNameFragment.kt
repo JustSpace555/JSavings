@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
+import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 
@@ -21,7 +21,11 @@ class AddNewAccountName : BaseFragment() {
 	override val viewModel by viewModel<AddNameViewModel>()
 	override lateinit var bindingUtil: NewAccountFragmentAddNameBinding
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
 		bindingUtil = NewAccountFragmentAddNameBinding.inflate(inflater, container, false)
 
 		viewModel.newAccountNameState.observe(viewLifecycleOwner, ::onAccountNameStateChanged)
@@ -39,11 +43,7 @@ class AddNewAccountName : BaseFragment() {
 				viewModel.onTextChanged(text)
 			}
 
-			viewModel.getFromSharedPreferences(
-				SharedPreferencesConsts.NewAccountSP,
-				SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_NAME,
-				""
-			).also {
+			viewModel.getFromCache(CacheKeys.JS_NEW_ACCOUNT_NAME, "").also {
 				if (it.isNotEmpty()) {
 					tilNewAccountName.editText?.setText(it)
 					nextButton.isEnabled = true
@@ -91,11 +91,7 @@ class AddNewAccountName : BaseFragment() {
 						}
 					}
 					else -> {
-						viewModel.putToSharedPreferences(
-							SharedPreferencesConsts.NewAccountSP,
-							SharedPreferencesConsts.NewAccountSP.JS_NEW_ACCOUNT_NAME,
-							it
-						)
+						viewModel.putToCache(CacheKeys.JS_NEW_ACCOUNT_NAME, it)
 						findNavController().navigate(
 							AddNewAccountNameDirections
 								.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
