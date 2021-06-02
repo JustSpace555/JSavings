@@ -27,8 +27,13 @@ class ChooseCurrencyFragment : BaseFragment() {
 
 	private val args: ChooseCurrencyFragmentArgs by navArgs()
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = NewAccountFragmentChooseCurrencyBinding.inflate(inflater, container, false)
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		bindingUtil = NewAccountFragmentChooseCurrencyBinding
+			.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

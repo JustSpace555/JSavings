@@ -1,17 +1,18 @@
 package ru.jsavings.presentation.ui.fragments.purses.newpurse
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.data.model.database.purse.PurseCategoryType
-import ru.jsavings.data.model.network.crypto.CryptoCoin
 import ru.jsavings.databinding.PurseFragmentNewPurseBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import java.util.*
@@ -20,7 +21,7 @@ class NewPurseFragment : BaseFragment() {
 
 	override val viewModel by viewModel<NewPurseViewModel>()
 
-	override lateinit var bindingUtil : PurseFragmentNewPurseBinding
+	override lateinit var bindingUtil: PurseFragmentNewPurseBinding
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -31,28 +32,66 @@ class NewPurseFragment : BaseFragment() {
 		return bindingUtil.root
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-
-		viewModel.requestCryptoCoins { t ->
-			showTextSnackBar(
-				view,
-				t.localizedMessage ?: getString(R.string.something_went_wrong)
-			)
-		}
 
 		with(bindingUtil) {
 
 			setCreditPurseVisibility(View.GONE)
+			tilNewPurseCurrency.isEnabled = false
+
+			root.setOnTouchListener { v, _ ->
+				(requireContext()
+					.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+				).hideSoftInputFromWindow(v.windowToken, 0)
+				requireActivity().window.currentFocus?.clearFocus()
+				true
+			}
+
+			viewModel.requestCryptoCoins { t ->
+				showTextSnackBar(
+					view,
+					t.localizedMessage ?: getString(R.string.something_went_wrong)
+				)
+			}
 
 			with (actvNewPurseType) {
-				inputType = InputType.TYPE_NULL
+				data class PurseTypeObject(
+					val type: PurseCategoryType,
+					val id: Int,
+					val name: String
+					) {
+					override fun toString() = name
+				}
+
 				val purseTypeAdapter = ArrayAdapter(
-					requireContext(), R.layout.item_dropdown_item, PurseCategoryType.values()
+					requireContext(),
+					R.layout.item_dropdown_item,
+					PurseCategoryType.values().map {
+
+						val strId = when (it) {
+							PurseCategoryType.CASH -> R.string.purse_type_cash
+							PurseCategoryType.CREDIT_CARD -> R.string.purse_type_credit_card
+							PurseCategoryType.DEBIT_CARD -> R.string.purse_type_debit_card
+							PurseCategoryType.CRYPTO_CURRENCY ->
+								R.string.purse_type_crypto_currency
+							PurseCategoryType.PRECIOUS_METALS ->
+								R.string.purse_type_precious_metal
+							PurseCategoryType.SECURITIES -> R.string.purse_type_securities
+						}
+
+						PurseTypeObject(
+							type = it,
+							id = strId,
+							name = getString(strId)
+						)
+					}
 				)
 				setAdapter(purseTypeAdapter)
 				setOnItemClickListener { _, _, i, _ ->
-					purseTypeAdapter.getItem(i)?.let {
+					tilNewPurseCurrency.isEnabled = true
+					purseTypeAdapter.getItem(i)?.let { purseTypeObject ->
 
 						val standardCurrencyAdapter = ArrayAdapter(
 							requireContext(),
@@ -65,7 +104,7 @@ class NewPurseFragment : BaseFragment() {
 								}
 						)
 
-						val finalCurrencyAdapter = when(it) {
+						val finalCurrencyAdapter = when(purseTypeObject.type) {
 
 							//TODO API
 							PurseCategoryType.PRECIOUS_METALS, PurseCategoryType.SECURITIES -> {
@@ -80,14 +119,20 @@ class NewPurseFragment : BaseFragment() {
 							PurseCategoryType.CRYPTO_CURRENCY -> {
 
 								setCreditPurseVisibility(View.GONE)
-								val adapter = ArrayAdapter<CryptoCoin>(
+								val adapter = ArrayAdapter<String>(
 									requireContext(),
 									R.layout.item_dropdown_item
 								)
 
 								viewModel.cryptoCoinLiveData.observe(viewLifecycleOwner) { state ->
-									if (state is NewPurseViewModel.CryptoApiRequestState.OnNextState) {
-										adapter.addAll(state.coins)
+									if (
+										state is NewPurseViewModel.CryptoApiRequestState.OnNextState
+									) {
+										adapter.addAll(
+											state.coins
+												.sortedBy { it.symbol }
+												.map { "${it.symbol} - ${it.name}" }
+										)
 										cpiLoading.visibility = View.GONE
 									} else cpiLoading.visibility = View.VISIBLE
 								}
@@ -96,7 +141,7 @@ class NewPurseFragment : BaseFragment() {
 
 							else -> {
 								setCreditPurseVisibility(
-									if (it == PurseCategoryType.CREDIT_CARD)
+									if (purseTypeObject.type == PurseCategoryType.CREDIT_CARD)
 										View.VISIBLE
 									else
 										View.GONE

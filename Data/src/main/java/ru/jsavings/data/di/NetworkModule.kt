@@ -6,7 +6,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.jsavings.data.network.crypto.CryptoApi
 
-private const val BASE_URL = "https://api.coingecko.com/api/v3/"
+private const val BASE_URL = "https://api.coingecko.com/"
 
 internal val networkModule = module {
 
