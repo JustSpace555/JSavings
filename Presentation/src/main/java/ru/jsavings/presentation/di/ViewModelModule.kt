@@ -30,5 +30,5 @@ internal val viewModelModule = module {
 
 	//Purses
 	viewModel { PursesViewModel() }
-	viewModel { NewPurseViewModel(get(), get(), get(), get()) }
+	viewModel { NewPurseViewModel(get(), get(), get(), get(), get()) }
 }

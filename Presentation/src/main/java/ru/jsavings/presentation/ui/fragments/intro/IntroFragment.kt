@@ -80,7 +80,7 @@ class IntroFragment : BaseFragment() {
 						viewModel.sqlStatusListener.observe(viewLifecycleOwner) { sqlStatus ->
 
 							if (sqlStatus == IntroViewModel.SQLStatus.FinishStatus) {
-								bindingUtil.progressBar.visibility = View.GONE
+								hideLoading()
 								val action = if (isEducationNeeded) {
 									IntroFragmentDirections
 										.actionIntroFragmentToNewAccountNavigation(
@@ -122,15 +122,10 @@ class IntroFragment : BaseFragment() {
 										}
 									}
 								}
-								bindingUtil.progressBar.visibility = View.GONE
+								hideLoading()
 								findNavController().navigate(action)
 
-							} else {
-								bindingUtil.textIntro.animate()
-									.alpha(0.2f)
-									.duration = 500
-								bindingUtil.progressBar.visibility = View.VISIBLE
-							}
+							} else showLoading()
 						}
 					}
 				})

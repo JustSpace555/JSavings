@@ -17,10 +17,9 @@ internal data class AccountEntity (
 	val accountName: String,
 
 	//Main currency of this account
-	@ColumnInfo(name = "main_currency")
+	@ColumnInfo(name = "main_currency_code")
 	val mainCurrency: String,
 
-	//
 	@ColumnInfo(name = "balance_in_main_currency")
 	val balanceInMainCurrency: Double
 

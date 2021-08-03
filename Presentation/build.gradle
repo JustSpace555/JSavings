@@ -82,7 +82,7 @@ dependencies {
     implementation "org.koin:koin-android-ext:$koin_version"
 
     // ColorPicker
-    implementation 'com.github.QuadFlask:colorpicker:0.0.15'
+    implementation 'com.pes.materialcolorpicker:library:1.2.5'
 
     implementation project (":Data")
     implementation project (":Domain")

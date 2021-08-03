@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/total_balance"
-                app:chipIcon="@drawable/new_purse_money_bag" />
+                app:chipIcon="@drawable/ic_purse_bottom_nav_menu" />
 
         </com.google.android.material.chip.ChipGroup>
 

@@ -1,12 +1,10 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -52,12 +50,7 @@ class AddNewAccountName : BaseFragment() {
 
 			nextButton.setOnClickListener(::onNextButtonClickListener)
 
-			root.setOnTouchListener { v, _ ->
-				(requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-					.hideSoftInputFromWindow(v.windowToken, 0)
-				tilNewAccountName.clearFocus()
-				true
-			}
+			hideKeyBoardOnRootTouch(root)
 		}
 	}
 

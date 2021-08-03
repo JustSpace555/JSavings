@@ -1,20 +1,23 @@
 package ru.jsavings.presentation.ui.fragments.purses.newpurse
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import androidx.core.widget.doOnTextChanged
+import androidx.annotation.ColorInt
 import com.google.android.material.textfield.TextInputLayout
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
+import ru.jsavings.data.model.database.Account
 import ru.jsavings.data.model.database.purse.PurseCategoryType
 import ru.jsavings.databinding.PurseFragmentNewPurseBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 import java.util.*
 
 class NewPurseFragment : BaseFragment() {
@@ -22,6 +25,9 @@ class NewPurseFragment : BaseFragment() {
 	override val viewModel by viewModel<NewPurseViewModel>()
 
 	override lateinit var bindingUtil: PurseFragmentNewPurseBinding
+
+	@ColorInt
+	private var currentColor: Int = Color.BLUE
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -36,18 +42,16 @@ class NewPurseFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		currentColor = TypedValue().apply {
+			requireActivity().theme.resolveAttribute(R.attr.colorPrimary, this, true)
+		}.data
+
 		with(bindingUtil) {
 
 			setCreditPurseVisibility(View.GONE)
 			tilNewPurseCurrency.isEnabled = false
 
-			root.setOnTouchListener { v, _ ->
-				(requireContext()
-					.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-				).hideSoftInputFromWindow(v.windowToken, 0)
-				requireActivity().window.currentFocus?.clearFocus()
-				true
-			}
+			hideKeyBoardOnRootTouch(root)
 
 			viewModel.requestCryptoCoins { t ->
 				showTextSnackBar(
@@ -56,131 +60,144 @@ class NewPurseFragment : BaseFragment() {
 				)
 			}
 
-			with (actvNewPurseType) {
-				data class PurseTypeObject(
-					val type: PurseCategoryType,
-					val id: Int,
-					val name: String
-					) {
-					override fun toString() = name
-				}
-
-				val purseTypeAdapter = ArrayAdapter(
-					requireContext(),
-					R.layout.item_dropdown_item,
-					PurseCategoryType.values().map {
-
-						val strId = when (it) {
-							PurseCategoryType.CASH -> R.string.purse_type_cash
-							PurseCategoryType.CREDIT_CARD -> R.string.purse_type_credit_card
-							PurseCategoryType.DEBIT_CARD -> R.string.purse_type_debit_card
-							PurseCategoryType.CRYPTO_CURRENCY ->
-								R.string.purse_type_crypto_currency
-							PurseCategoryType.PRECIOUS_METALS ->
-								R.string.purse_type_precious_metal
-							PurseCategoryType.SECURITIES -> R.string.purse_type_securities
-						}
-
-						PurseTypeObject(
-							type = it,
-							id = strId,
-							name = getString(strId)
-						)
-					}
-				)
-				setAdapter(purseTypeAdapter)
-				setOnItemClickListener { _, _, i, _ ->
-					tilNewPurseCurrency.isEnabled = true
-					purseTypeAdapter.getItem(i)?.let { purseTypeObject ->
-
-						val standardCurrencyAdapter = ArrayAdapter(
-							requireContext(),
-							R.layout.item_dropdown_item,
-							Currency.getAvailableCurrencies()
-								.sortedBy { currency -> currency.currencyCode }
-								.map { currency ->
-									"${currency.currencyCode} - " +
-									"${currency.displayName} (${currency.symbol})"
-								}
-						)
-
-						val finalCurrencyAdapter = when(purseTypeObject.type) {
-
-							//TODO API
-							PurseCategoryType.PRECIOUS_METALS, PurseCategoryType.SECURITIES -> {
-								setCreditPurseVisibility(View.GONE)
-								ArrayAdapter(
-									requireContext(),
-									R.layout.item_dropdown_item,
-									listOf("")
-								)
-							}
-
-							PurseCategoryType.CRYPTO_CURRENCY -> {
-
-								setCreditPurseVisibility(View.GONE)
-								val adapter = ArrayAdapter<String>(
-									requireContext(),
-									R.layout.item_dropdown_item
-								)
-
-								viewModel.cryptoCoinLiveData.observe(viewLifecycleOwner) { state ->
-									if (
-										state is NewPurseViewModel.CryptoApiRequestState.OnNextState
-									) {
-										adapter.addAll(
-											state.coins
-												.sortedBy { it.symbol }
-												.map { "${it.symbol} - ${it.name}" }
-										)
-										cpiLoading.visibility = View.GONE
-									} else cpiLoading.visibility = View.VISIBLE
-								}
-								adapter
-							}
-
-							else -> {
-								setCreditPurseVisibility(
-									if (purseTypeObject.type == PurseCategoryType.CREDIT_CARD)
-										View.VISIBLE
-									else
-										View.GONE
-								)
-								standardCurrencyAdapter
-							}
-						}
-
-						actvNewPurseCurrency.setAdapter(finalCurrencyAdapter)
-					}
+			val purseTypeAdapter = setupPurseTypeAdapter().also { actvNewPurseType.setAdapter(it) }
+			actvNewPurseType.setOnItemClickListener { _, _, i, _ ->
+				tilNewPurseCurrency.isEnabled = true
+				purseTypeAdapter.getItem(i)?.let { purseTypeObject ->
+					actvNewPurseCurrency.setAdapter(setupCurrencyAdapter(purseTypeObject.type))
 				}
 			}
 
-			tilNewPurseCreditLimit.editText?.doOnTextChanged { text, _, _, _ ->
+			buttonNewPurseChooseColor.setOnClickListener(::setOnChoosePurseButtonColorClickListener)
 
-				val showTextInputLayoutError: TextInputLayout.() -> Unit = {
-					isErrorEnabled = true
-					error = getString(R.string.new_purse_invalid_value_error)
-				}
-
-				text?.toString()?.let {
-					try {
-						val percent = it.toDouble()
-						if (percent < 0 || percent > 100)
-							tilNewPurseCreditLimit.showTextInputLayoutError()
-						tilNewPurseCreditLimit.isErrorEnabled = false
-
-					} catch (t: NumberFormatException) {
-						tilNewPurseCreditLimit.showTextInputLayoutError()
-					}
-				}
+			/* TODO Credit card
+			tilNewPurseCreditPercent.editText?.doOnTextChanged { text, _, _, _ ->
+				text?.let { onCreditPersentTextChanged(it.toString()) }
 			}
-
+			*/
 		}
 	}
 
-	private fun setCreditPurseVisibility(visibility: Int) =
-		with (bindingUtil) {
-			tilNewPurseCreditLimit.visibility = visibility
-			clCreditPurse.visibility = visibility
+	private data class PurseTypeObject(val type: PurseCategoryType, val id: Int, val name: String) {
+		override fun toString() = name
+	}
+
+	private fun setupPurseTypeAdapter(): ArrayAdapter<PurseTypeObject> {
+
+		val purseTypeObjectValues = PurseCategoryType.values().map {
+
+			val strId = when (it) {
+				PurseCategoryType.CASH -> R.string.purse_type_cash
+				PurseCategoryType.CREDIT_CARD -> R.string.purse_type_credit_card
+				PurseCategoryType.DEBIT_CARD -> R.string.purse_type_debit_card
+				PurseCategoryType.CRYPTO_CURRENCY -> R.string.purse_type_crypto_currency
+				PurseCategoryType.PRECIOUS_METALS -> R.string.purse_type_precious_metal
+				PurseCategoryType.SECURITIES -> R.string.purse_type_securities
+			}
+
+			PurseTypeObject(type = it, id = strId, name = getString(strId))
 		}
+
+		return ArrayAdapter(requireContext(), R.layout.item_dropdown_item, purseTypeObjectValues)
+	}
+
+	private fun setupCurrencyAdapter(purseType: PurseCategoryType): ArrayAdapter<String> =
+		when (purseType) {
+
+			//TODO API
+			PurseCategoryType.PRECIOUS_METALS, PurseCategoryType.SECURITIES -> {
+				setCreditPurseVisibility(View.GONE)
+				ArrayAdapter(requireContext(), R.layout.item_dropdown_item, listOf(""))
+			}
+
+			PurseCategoryType.CRYPTO_CURRENCY -> {
+				setCreditPurseVisibility(View.GONE)
+				val adapter = ArrayAdapter<String>(requireContext(), R.layout.item_dropdown_item)
+
+				viewModel.cryptoCoinLiveData.observe(viewLifecycleOwner) { state ->
+					when (state) {
+						is BaseViewModel.NetworkRequestState.SendingState -> showLoading()
+						is BaseViewModel.NetworkRequestState.OnSuccessState -> {
+							adapter.addAll(state.data
+								.sortedBy { it.symbol }
+								.map { "${it.symbol} - ${it.name}" }
+							)
+							hideLoading()
+						}
+						is BaseViewModel.NetworkRequestState.ErrorState -> {
+							hideLoading()
+							view?.let {
+								showTextSnackBar(
+									it,
+									state.t.localizedMessage
+										?: getString(R.string.something_went_wrong)
+								)
+							}
+						}
+						else -> hideLoading()
+					}
+				}
+				adapter
+			}
+
+			else -> {
+				setCreditPurseVisibility(
+					if (purseType == PurseCategoryType.CREDIT_CARD)
+						View.VISIBLE
+					else
+						View.GONE
+				)
+				ArrayAdapter(requireContext(), R.layout.item_dropdown_item,
+					Currency.getAvailableCurrencies()
+						.sortedBy { currency -> currency.currencyCode }
+						.map { currency ->
+							"${currency.currencyCode} - " +
+									"${currency.displayName} (${currency.symbol})"
+						}
+				)
+			}
+		}
+
+	private fun setOnChoosePurseButtonColorClickListener(view: View) {
+		ColorPicker(
+			requireActivity(),
+			Color.red(currentColor),
+			Color.green(currentColor),
+			Color.blue(currentColor)
+		).apply {
+			setCallback { color ->
+				currentColor = color
+				view.setBackgroundColor(color)
+			}
+			enableAutoClose()
+			show()
+		}
+	}
+
+	private fun onCreditPercentTextChanged(text: String) {
+		val showTextInputLayoutError: TextInputLayout.() -> Unit = {
+			isErrorEnabled = true
+			error = getString(R.string.new_purse_invalid_value_error)
+		}
+
+		with(bindingUtil.tilNewPurseCreditLimit) {
+			try {
+				val percent = text.toDouble()
+				if (percent < 0 || percent > 100)
+					showTextInputLayoutError()
+				else
+					isErrorEnabled = false
+			} catch (t: NumberFormatException) {
+				showTextInputLayoutError()
+			}
+		}
+	}
+
+	private fun onSaveButtonClickListener(view: View) {
+		val account = Account(name = )
+	}
+
+	private fun setCreditPurseVisibility(visibility: Int) {
+		bindingUtil.hsvCreditPurseElements.visibility = visibility
+	}
 }
