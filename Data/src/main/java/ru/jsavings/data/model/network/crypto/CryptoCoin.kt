@@ -6,4 +6,6 @@ data class CryptoCoin(
 	val id: String,
 	val symbol: String,
 	val name: String
-) : BaseNetworkModel
+) : BaseNetworkModel() {
+	override fun toString(): String = "$symbol - $name"
+}

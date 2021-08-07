@@ -1,6 +1,7 @@
 package ru.jsavings.data.repository.database.transaction.caterory
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionCategoryDao
 import ru.jsavings.data.mappers.database.transaction.TransactionCategoryMapper
 import ru.jsavings.data.model.database.transaction.TransactionCategory
@@ -10,11 +11,11 @@ internal class TransactionCategoryRepositoryImpl (
 	override val mapper: TransactionCategoryMapper
 ) : TransactionCategoryRepository {
 
-	override fun addNewCategory(transactionCategory: TransactionCategory): Completable =
-		Completable.create { subscriber ->
+	override fun addNewCategory(transactionCategory: TransactionCategory): Single<Long> =
+		Single.create { subscriber ->
 			try {
-				dao.addNewCategory(mapper.mapModelToEntity(transactionCategory))
-				subscriber.onComplete()
+				val id = dao.addNewCategory(mapper.mapModelToEntity(transactionCategory))
+				subscriber.onSuccess(id)
 			} catch (e: Exception) {
 				subscriber.onError(e)
 			}

@@ -14,11 +14,11 @@ import ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseViewModel
 
 internal val viewModelModule = module {
 	//Into
-	viewModel { IntroViewModel(get(), get(), get()) }
+	viewModel { IntroViewModel(get(), get()) }
 	viewModel { ReadyViewModel() }
 
 	//New account
-	viewModel { AddNameViewModel(get(), get()) }
+	viewModel { AddNameViewModel(get()) }
 	viewModel { ChooseCurrencyViewModel(get()) }
 	viewModel { CreateFirstPurseViewModel() }
 
@@ -30,5 +30,5 @@ internal val viewModelModule = module {
 
 	//Purses
 	viewModel { PursesViewModel() }
-	viewModel { NewPurseViewModel(get(), get(), get(), get(), get()) }
+	viewModel { NewPurseViewModel(get(), get(), get()) }
 }

@@ -11,6 +11,8 @@
 		android:layout_height="wrap_content"
 		android:text="@string/new_account_ready_to_start"
 		android:textAlignment="center"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"
+		android:layout_marginVertical="@dimen/all_elements_separation"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

@@ -6,11 +6,8 @@ import ru.jsavings.data.entity.database.purse.PurseEntity
 @Dao
 internal interface PurseDao : BaseDao {
 
-	@Query("SELECT * FROM purse_table WHERE account_fk_id = :inputId")
-	fun getPursesInAccountEntityName(inputId: Int): List<PurseEntity>
-
-	@Insert
-	fun addNewPurse(purseEntity: PurseEntity)
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	fun addNewPurse(purseEntity: PurseEntity): Long
 
 	@Update
 	fun updatePurse(purseEntity: PurseEntity)

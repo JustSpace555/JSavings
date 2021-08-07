@@ -22,7 +22,7 @@ internal data class TransactionCategoryEntity (
 
 	@PrimaryKey
 	@ColumnInfo(name = "category_id")
-	val categoryId: Int = 0,
+	val categoryId: Long = 0,
 
 	//Name of the category
 	@ColumnInfo(name = "category_name")

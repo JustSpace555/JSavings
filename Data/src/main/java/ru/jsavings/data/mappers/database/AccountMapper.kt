@@ -2,17 +2,16 @@ package ru.jsavings.data.mappers.database
 
 import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.database.account.AccountEntity
-import ru.jsavings.data.mappers.common.BaseMapper
+import ru.jsavings.data.mappers.common.BaseDataBaseMapper
 import ru.jsavings.data.model.database.Account
-import java.util.*
 
-internal class AccountMapper : BaseMapper<AccountEntity, Account> {
+internal class AccountMapper : BaseDataBaseMapper<AccountEntity, Account> {
 
 	override fun mapEntityToModel(input: AccountEntity, vararg additionalElements: BaseEntity): Account =
 		Account(
 			accountId = input.accountId,
 			name = input.accountName,
-			mainCurrency = Currency.getInstance(input.mainCurrency),
+			mainCurrencyCode = input.mainCurrencyCode,
 			balanceInMainCurrency = input.balanceInMainCurrency
 		)
 
@@ -20,7 +19,7 @@ internal class AccountMapper : BaseMapper<AccountEntity, Account> {
 		AccountEntity(
 			accountId = input.accountId,
 			accountName = input.name,
-			mainCurrency = input.mainCurrency.currencyCode,
+			mainCurrencyCode = input.mainCurrencyCode,
 			balanceInMainCurrency = input.balanceInMainCurrency
 		)
 }

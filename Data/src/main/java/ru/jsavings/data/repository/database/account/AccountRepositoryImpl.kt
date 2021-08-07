@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.AccountDao
 import ru.jsavings.data.mappers.database.AccountMapper
 import ru.jsavings.data.model.database.Account
-import java.lang.Exception
 
 internal class AccountRepositoryImpl (
 	override val dao: AccountDao,
@@ -22,10 +21,10 @@ internal class AccountRepositoryImpl (
 		}
 	}
 
-	override fun createNewAccount(account: Account): Completable = Completable.create { subscriber ->
+	override fun createNewAccount(account: Account): Single<Long> = Single.create { subscriber ->
 		try {
-			dao.createNewAccount(mapper.mapModelToEntity(account))
-			subscriber.onComplete()
+			val id = dao.createNewAccount(mapper.mapModelToEntity(account))
+			subscriber.onSuccess(id)
 		} catch (e: Exception) {
 			subscriber.onError(e)
 		}
@@ -44,6 +43,15 @@ internal class AccountRepositoryImpl (
 		try {
 			dao.deleteAccounts(mapper.mapModelListToEntityList(accounts))
 			subscriber.onComplete()
+		} catch (e: Exception) {
+			subscriber.onError(e)
+		}
+	}
+
+	override fun getAccountById(id: Long): Single<Account> = Single.create { subscriber ->
+		try {
+			val account = mapper.mapEntityToModel(dao.getAccountById(id))
+			subscriber.onSuccess(account)
 		} catch (e: Exception) {
 			subscriber.onError(e)
 		}

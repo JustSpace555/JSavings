@@ -4,12 +4,13 @@ import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.data.repository.cache.CacheRepository
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
-class CacheUseCase(val cacheRepository: CacheRepository) : BaseUseCase() {
+class CacheUseCase(override val repository: CacheRepository) : BaseUseCase() {
 
-	fun <T: Any> put(key: CacheKeys, value: T) = cacheRepository.putValue(key, value)
+	fun <T: Any> put(key: CacheKeys, value: T) = repository.putValue(key, value)
 
+	//TODO подумать как убрать
 	inline fun <reified T: Any> get(key: CacheKeys, defaultValue: T) =
-		cacheRepository.getValue(key, defaultValue)
+		repository.getValue(key, defaultValue)
 
-	fun remove(key: CacheKeys) = cacheRepository.deleteValue(key)
+	fun remove(key: CacheKeys) = repository.deleteValue(key)
 }

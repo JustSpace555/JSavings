@@ -16,11 +16,10 @@ abstract class BaseViewModel (vararg val useCases: BaseUseCase) : ViewModel() {
 	fun removeFromCache(key: CacheKeys) =
 		useCases.filterIsInstance<CacheUseCase>().first().remove(key)
 
-	sealed class NetworkRequestState <T> {
-		class DefaultState<T> : NetworkRequestState<T>()
-		class SendingState<T>: NetworkRequestState<T>()
-		class ErrorState<T> (val t: Throwable): NetworkRequestState<T>()
-		class OnSuccessState<T> (val data: T): NetworkRequestState<T>()
+	sealed class RequestState {
+		object SendingState : RequestState()
+		class ErrorState<T : Throwable> (val t: T): RequestState()
+		class SuccessState<T> (val data: T): RequestState()
 	}
 
 	override fun onCleared() {

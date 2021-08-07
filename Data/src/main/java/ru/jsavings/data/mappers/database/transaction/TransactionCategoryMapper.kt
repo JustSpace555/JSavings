@@ -2,12 +2,12 @@ package ru.jsavings.data.mappers.database.transaction
 
 import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.database.transaction.TransactionCategoryEntity
-import ru.jsavings.data.mappers.common.BaseMapper
+import ru.jsavings.data.mappers.common.BaseDataBaseMapper
 import ru.jsavings.data.model.database.transaction.TransactionCategory
 import ru.jsavings.data.model.database.transaction.TransactionCategoryType
 
 internal class TransactionCategoryMapper :
-	BaseMapper<TransactionCategoryEntity, TransactionCategory> {
+	BaseDataBaseMapper<TransactionCategoryEntity, TransactionCategory> {
 
 	override fun mapEntityToModel(
 		input: TransactionCategoryEntity,

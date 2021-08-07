@@ -9,9 +9,11 @@ interface AccountRepository : BaseDbRepository {
 
 	fun getAllAccounts(): Single<List<Account>>
 
-	fun createNewAccount(account: Account): Completable
+	fun createNewAccount(account: Account): Single<Long>
 
 	fun updateAccount(account: Account): Completable
 
 	fun deleteAccounts(accounts: List<Account>): Completable
+
+	fun getAccountById(id: Long): Single<Account>
 }

@@ -10,6 +10,8 @@
 	<string name="next">Next</string>
 	<string name="something_went_wrong">Something went wrong :(</string>
 	<string name="ok">OK</string>
+	<string name="no_internet">Ooops, no internet connection</string>
+	<string name="retry">Retry</string>
 	<!--	-->
 
 
@@ -92,9 +94,16 @@
 		<string name="new_purse_currency">Currency</string>
 		<string name="new_purse_choose_color">Choose color</string>
 
-		<string name="new_purse_purse_type_main">Main purse</string>
-		<string name="new_purse_purse_type_crypto">Cryptocurrency</string>
-		<string name="new_purse_purse_type_credit">Credit purse</string>
+		<string name="new_purse_error_name_empty">Purse\'s name must not be empty</string>
+		<string name="new_purse_error_type_empty">Purse\'s type must not be empty</string>
+		<string name="new_purse_error_starting_balance_wrong">Purse\'s starting balance is invalid</string>
+		<string name="new_purse_error_currency_empty">Purse\'s currency must not be empty</string>
+		<string name="new_purse_error_currency_wrong">Purse\'s currency must be valid according to provided list</string>
+
+		<string name="new_purse_credit_error_limit_empty">Purse\'s credit limit must not be empty</string>
+		<string name="new_purse_credit_error_rate_empty">Purse\'s credit interest rate must not be empty</string>
+		<string name="new_purse_credit_error_payment_day_empty">Purse\'s credit payment day must not be empty</string>
+		<string name="new_purse_credit_error_grace_empty">Purse\'s credit grace must not be empty</string>
 	
 	<!--  Credit purse  -->
 		<string name="new_purse_credit_limit">Credit limit</string>
@@ -102,10 +111,6 @@
 		<string name="new_purse_payment_day">Day of payment</string>
 		<string name="new_purse_grace_period">Grace period (days)</string>
 		<string name="new_purse_invalid_value_error">Invalid value</string>
-	<!--	-->
-	<!--  Internet  -->
-		<string name="new_purse_no_internet_helper">Unavailable due no internet connection</string>
-		<string name="new_purse_no_internet_text_bar">Crypto currency, precious metals and securities types are not available when there is no internet connection</string>
 	<!--	-->
 
 </resources>

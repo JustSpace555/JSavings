@@ -1,8 +1,9 @@
 package ru.jsavings.data.repository.cache
 
 import android.content.SharedPreferences
+import ru.jsavings.data.repository.common.BaseRepository
 
-class CacheRepository(val sp: SharedPreferences) {
+class CacheRepository(val sp: SharedPreferences) : BaseRepository {
 
 	@Suppress("UNCHECKED_CAST")
 	fun <T: Any> putValue(key: CacheKeys, value: T) {
@@ -49,10 +50,5 @@ class CacheRepository(val sp: SharedPreferences) {
 }
 
 enum class CacheKeys {
-	JS_CURRENT_ACCOUNT,
-
-	//New Account
-	JS_NEW_ACCOUNT_NAME,
-	JS_NEW_ACCOUNT_CURRENCY,
-	JS_NEW_ACCOUNT_STARTING_BALANCE
+	JS_CURRENT_ACCOUNT
 }

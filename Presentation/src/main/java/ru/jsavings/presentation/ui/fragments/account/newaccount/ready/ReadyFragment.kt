@@ -1,10 +1,13 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.ready
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.databinding.NewAccountFragmentReadyToStartBinding
@@ -23,7 +26,20 @@ class ReadyFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-//		val appearanceAnimation = AnimationUtils.loadAnimation(context, R.anim.text_appearance)
-//		bindingUtil.textIntroReadyToStart.startAnimation(appearanceAnimation)
+		bindingUtil.textIntroReadyToStart.alpha = 0f
+		bindingUtil.textIntroReadyToStart
+			.animate()
+			.alpha(1f)
+			.setDuration(3000)
+			.setListener(object : AnimatorListenerAdapter() {
+				override fun onAnimationEnd(animation: Animator?) {
+					super.onAnimationEnd(animation)
+					val args by navArgs<ReadyFragmentArgs>()
+					findNavController().navigate(
+						ReadyFragmentDirections
+							.actionGlobalFragmentToTransactionsFragment(args.newAccountId)
+					)
+				}
+			})
 	}
 }

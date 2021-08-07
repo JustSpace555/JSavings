@@ -6,8 +6,9 @@ import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.domain.usecase.common.CompletableUseCase
 
 class DeleteAccountsUseCase(
-	private val accountRepository: AccountRepository
+	override val repository: AccountRepository
 ) : CompletableUseCase<List<Account>>() {
 
-	override fun buildCompletableUseCase(params: List<Account>): Completable = accountRepository.deleteAccounts(params)
+	override fun buildCompletableUseCase(params: List<Account>): Completable =
+		repository.deleteAccounts(params)
 }

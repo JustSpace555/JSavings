@@ -8,24 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
-import ru.jsavings.R
-import ru.jsavings.data.model.database.binding.AccountWithPurses
+import ru.jsavings.data.model.database.Account
 import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class IntroFragment : BaseFragment() {
 
 	override val viewModel by viewModel<IntroViewModel>()
 	override lateinit var bindingUtil: IntroFragmentBinding
 
-	private var isEducationNeeded = false
-	private val allAccountsWithPurses = mutableListOf<AccountWithPurses>()
-
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
-		savedInstanceState: Bundle?
+		savedInstanceState: Bundle?,
 	): View {
 		bindingUtil = IntroFragmentBinding.inflate(inflater, container, false)
 		return bindingUtil.root
@@ -34,100 +31,59 @@ class IntroFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		viewModel.requestAllAccounts()
+
 		bindingUtil.textIntro.alpha = 0f
-
-		viewModel.allAccountsWithPursesLiveData.observe(viewLifecycleOwner) { list ->
-			if (list.isEmpty() || list.all { account -> account.purses.isEmpty() })
-				isEducationNeeded = true
-			allAccountsWithPurses.addAll(list)
-		}
-	}
-
-	override fun onStart() {
-		super.onStart()
 		bindingUtil.textIntro.animate()
 			.alpha(1f)
 			.setDuration(1500)
-			.setListener(
-				object : AnimatorListenerAdapter() {
-					override fun onAnimationStart(animation: Animator?) {
-						super.onAnimationStart(animation)
+			.setListener(object : AnimatorListenerAdapter() {
+				override fun onAnimationEnd(animation: Animator?) {
+					super.onAnimationEnd(animation)
+					moveToNextFragment()
+				}
+			})
+	}
 
-						viewModel.requestAllAccountsWithPurses(
-							onError = {
-								showTextSnackBar(
-									requireView(), it.localizedMessage ?: getString(R.string.something_went_wrong)
-								)
-							},
-							onFinish = {
-								viewModel.requestDeleteAccounts(
-									allAccountsWithPurses
-										.filter { it.purses.isEmpty() }
-										.map { it.account }
-								) {
-									showTextSnackBar(
-										requireView(),
-										it.localizedMessage ?: getString(R.string.something_went_wrong)
-									)
-								}
-							}
+	@Suppress("UNCHECKED_CAST")
+	private fun moveToNextFragment() {
+
+		val currentAccountId = viewModel.getFromCache(CacheKeys.JS_CURRENT_ACCOUNT, -1L)
+		if (currentAccountId != -1L) {
+			findNavController().navigate(
+				IntroFragmentDirections.actionIntroFragmentToTransactionsFragment(currentAccountId)
+			)
+			return
+		}
+
+		viewModel.requestAllAccounts()
+
+		viewModel.allAccountsRequestState.observe(viewLifecycleOwner) { state ->
+			when(state) {
+				is BaseViewModel.RequestState.SuccessState<*> -> {
+					val data = state.data as List<Account>
+					if (data.isEmpty()) {
+						findNavController().navigate(
+							IntroFragmentDirections.actionIntroFragmentToAddNewAccountName(true)
+						)
+					} else {
+						val accountId = data.random().accountId
+						viewModel.putToCache(CacheKeys.JS_CURRENT_ACCOUNT, accountId)
+						findNavController().navigate(
+							IntroFragmentDirections.actionIntroFragmentToTransactionsFragment(
+								accountId
+							)
 						)
 					}
-
-					override fun onAnimationEnd(animation: Animator?) {
-						super.onAnimationEnd(animation)
-
-						viewModel.sqlStatusListener.observe(viewLifecycleOwner) { sqlStatus ->
-
-							if (sqlStatus == IntroViewModel.SQLStatus.FinishStatus) {
-								hideLoading()
-								val action = if (isEducationNeeded) {
-									IntroFragmentDirections
-										.actionIntroFragmentToNewAccountNavigation(
-											isEducationNeeded = true
-										)
-								} else {
-									val currentAccountName = viewModel
-										.getFromCache(CacheKeys.JS_CURRENT_ACCOUNT, "")
-
-									when {
-										currentAccountName.isNotEmpty() -> IntroFragmentDirections
-											.actionIntroFragmentToTransactionsFragment(
-												currentAccountName
-											)
-
-										allAccountsWithPurses.isNotEmpty() -> {
-											val chosenAccountName = allAccountsWithPurses
-												.minByOrNull { it.account.name }!!
-												.account.name
-											viewModel.putToCache(
-												CacheKeys.JS_CURRENT_ACCOUNT,
-												chosenAccountName
-											)
-											IntroFragmentDirections
-												.actionIntroFragmentToTransactionsFragment(
-													chosenAccountName
-												)
-										}
-										else -> {
-											showTextSnackBar(
-												requireView(),
-												NullPointerException().localizedMessage ?:
-												getString(R.string.something_went_wrong)
-											)
-											IntroFragmentDirections
-												.actionIntroFragmentToNewAccountNavigation(
-													isEducationNeeded = false
-												)
-										}
-									}
-								}
-								hideLoading()
-								findNavController().navigate(action)
-
-							} else showLoading()
-						}
-					}
-				})
+				}
+				is BaseViewModel.RequestState.ErrorState<*> -> {
+					showTextSnackBar(state.t.getErrorString())
+					findNavController().navigate(
+						IntroFragmentDirections.actionIntroFragmentToAddNewAccountName(true)
+					)
+				}
+				else -> {}
+			}
+		}
 	}
 }

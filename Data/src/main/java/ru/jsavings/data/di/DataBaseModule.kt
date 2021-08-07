@@ -11,6 +11,4 @@ internal val dataBaseModule = module {
 	single { get<JSavingsDataBase>().categoryDao() }
 	single { get<JSavingsDataBase>().purseDao() }
 	single { get<JSavingsDataBase>().transactionDao() }
-
-	single { get<JSavingsDataBase>().accountWithPursesDao() }
 }

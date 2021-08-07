@@ -4,16 +4,16 @@ import ru.jsavings.data.model.database.Account
 import ru.jsavings.data.model.database.common.BaseDbModel
 
 data class Purse (
-	val purseId: Int = 0,
+	val purseId: Long = 0,
 	val name: String,
 	val account: Account,
 	val balance: Double,
 	val currency: String,
 	val category: PurseCategoryType,
-	val creditLimit: Double?,
-	val interestRate: Double?,
-	val paymentDay: Int?,
-	val gracePeriod: Int?,
-	val color: String,
+	val creditLimit: Double = 0.0,
+	val interestRate: Double = 0.0,
+	val paymentDay: Int = 0,
+	val gracePeriod: Int = 0,
+	val color: Int,
 	val iconPath: String
 ) : BaseDbModel

@@ -10,9 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.cache.CacheKeys
+import ru.jsavings.data.model.database.Account
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class AddNewAccountName : BaseFragment() {
 
@@ -25,9 +26,6 @@ class AddNewAccountName : BaseFragment() {
 		savedInstanceState: Bundle?
 	): View {
 		bindingUtil = NewAccountFragmentAddNameBinding.inflate(inflater, container, false)
-
-		viewModel.newAccountNameState.observe(viewLifecycleOwner, ::onAccountNameStateChanged)
-
 		return bindingUtil.root
 	}
 
@@ -36,64 +34,81 @@ class AddNewAccountName : BaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		with(bindingUtil) {
+
 			tilNewAccountName.editText?.doOnTextChanged { text, _, _, _ ->
 				tilNewAccountName.isErrorEnabled = false
-				viewModel.onTextChanged(text)
-			}
-
-			viewModel.getFromCache(CacheKeys.JS_NEW_ACCOUNT_NAME, "").also {
-				if (it.isNotEmpty()) {
-					tilNewAccountName.editText?.setText(it)
-					nextButton.isEnabled = true
+				text?.let {
+					nextButton.isEnabled = it.isNotEmpty()
 				}
 			}
 
-			nextButton.setOnClickListener(::onNextButtonClickListener)
+			nextButton.setOnClickListener { onNextButtonClickListener() }
 
 			hideKeyBoardOnRootTouch(root)
 		}
 	}
 
+	@Suppress("UNCHECKED_CAST")
+	private fun onNextButtonClickListener() {
+		viewModel.requestAllAccounts()
 
-
-	private fun onAccountNameStateChanged(state: AddNameViewModel.AccountNameState) {
-		bindingUtil.nextButton.isEnabled = when(state) {
-			is AddNameViewModel.AccountNameState.OnEmptyState -> false
-			is AddNameViewModel.AccountNameState.OnReadyState -> true
+		viewModel.allAccountsRequestState.observe(viewLifecycleOwner) { state ->
+			val newAccountName = bindingUtil.tietNewAccountName.text?.toString()
+			if (newAccountName != null)
+				when (state) {
+					is BaseViewModel.RequestState.SuccessState<*> -> {
+						val newAccountName = bindingUtil.tietNewAccountName.text?.toString()
+						if (newAccountName != null) {
+							validateNewAcctounNameAndMove(
+								newAccountName, state.data as List<Account>
+							)
+						}
+					}
+					is BaseViewModel.RequestState.ErrorState<*> -> {
+						showTextSnackBar(state.t.getErrorString())
+					}
+					else -> {}
+				}
 		}
 	}
 
-	private fun onNextButtonClickListener(view: View) {
-		viewModel.requestAllAccounts {
-			showTextSnackBar(view, it.localizedMessage ?: getString(R.string.something_went_wrong))
+	private fun validateNewAcctounNameAndMove(
+		newAccountName: String,
+		accountsList: List<Account>
+	) {
+		if (newAccountName.isEmpty() || newAccountName.isBlank()) {
+			bindingUtil.tilNewAccountName.apply {
+				isErrorEnabled = true
+				error = getString(R.string.error_new_account_name_is_empty)
+			}
+			return
 		}
 
-		viewModel.allAccountsListener.observe(viewLifecycleOwner) { accounts ->
-			viewModel.newAccountName.value?.let {
-				when {
-					it.isEmpty() || it.isBlank() -> {
-						bindingUtil.tilNewAccountName.apply {
-							isErrorEnabled = true
-							error = getString(R.string.error_new_account_name_is_empty)
-						}
-					}
-					it in accounts.map { account -> account.name } -> {
-						bindingUtil.tilNewAccountName.apply {
-							isErrorEnabled = true
-							error = getString(R.string.error_new_account_name_is_exists)
-						}
-					}
-					else -> {
-						viewModel.putToCache(CacheKeys.JS_NEW_ACCOUNT_NAME, it)
-						findNavController().navigate(
-							AddNewAccountNameDirections
-								.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
-									navArgs<AddNewAccountNameArgs>().value.isEducationNeeded
-								)
-						)
-					}
-				}
-			}
+		val args by navArgs<AddNewAccountNameArgs>()
+		if (accountsList.isEmpty()) {
+			findNavController().navigate(
+				AddNewAccountNameDirections
+					.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
+						isEducationNeeded = args.isEducationNeeded,
+						newAccountName = newAccountName
+					)
+			)
+			return
 		}
+
+		if (accountsList.map { account -> account.name }.contains(newAccountName)) {
+			bindingUtil.tilNewAccountName.apply {
+				isErrorEnabled = true
+				error = getString(R.string.error_new_account_name_is_exists)
+			}
+			return
+		}
+
+		findNavController().navigate(
+			AddNewAccountNameDirections.actionAddNewAccountNameToChooseCurrencyNewAccountFragment(
+				isEducationNeeded = args.isEducationNeeded,
+				newAccountName = newAccountName
+			)
+		)
 	}
 }

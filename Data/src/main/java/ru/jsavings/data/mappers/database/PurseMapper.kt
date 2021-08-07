@@ -3,13 +3,13 @@ package ru.jsavings.data.mappers.database
 import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.database.account.AccountEntity
 import ru.jsavings.data.entity.database.purse.PurseEntity
-import ru.jsavings.data.mappers.common.BaseMapper
+import ru.jsavings.data.mappers.common.BaseDataBaseMapper
 import ru.jsavings.data.model.database.purse.Purse
 import ru.jsavings.data.model.database.purse.PurseCategoryType
 
 internal class PurseMapper(
 	private val accountMapper: AccountMapper
-) : BaseMapper<PurseEntity, Purse> {
+) : BaseDataBaseMapper<PurseEntity, Purse> {
 
 	override fun mapEntityToModel(input: PurseEntity, vararg additionalElements: BaseEntity): Purse =
 		Purse(

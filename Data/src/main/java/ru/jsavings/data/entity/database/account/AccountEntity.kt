@@ -8,9 +8,9 @@ import ru.jsavings.data.entity.database.common.BaseDbEntity
 @Entity (tableName = "account_table")
 internal data class AccountEntity (
 
-	@PrimaryKey
+	@PrimaryKey(autoGenerate = true)
 	@ColumnInfo(name = "account_id")
-	val accountId: Int = 0,
+	val accountId: Long = 0,
 
 	//Account name
 	@ColumnInfo(name = "account_name")
@@ -18,7 +18,7 @@ internal data class AccountEntity (
 
 	//Main currency of this account
 	@ColumnInfo(name = "main_currency_code")
-	val mainCurrency: String,
+	val mainCurrencyCode: String,
 
 	@ColumnInfo(name = "balance_in_main_currency")
 	val balanceInMainCurrency: Double

@@ -1,58 +1,81 @@
 package ru.jsavings.presentation.ui.fragments.purses.newpurse
 
+import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.jsavings.data.model.network.crypto.CryptoCoin
+import ru.jsavings.data.model.database.Account
+import ru.jsavings.data.model.database.purse.Purse
+import ru.jsavings.data.model.database.purse.PurseCategoryType
+import ru.jsavings.domain.interactor.database.DataBaseInteractor
+import ru.jsavings.domain.interactor.network.NetworkInteractor
 import ru.jsavings.domain.usecase.cache.CacheUseCase
-import ru.jsavings.domain.usecase.database.account.AddAccountUseCase
-import ru.jsavings.domain.usecase.database.purse.AddPurseUseCase
-import ru.jsavings.domain.usecase.network.GetAllCoinsUseCase
-import ru.jsavings.domain.usecase.network.GetCoinsPriceUseCase
-import ru.jsavings.presentation.extensions.default
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
-typealias CoinsPrice = Map<String, Map<String, Int?>>
-
 class NewPurseViewModel(
-	private val addAccountUseCase: AddAccountUseCase,
-	private val addPurseUseCase: AddPurseUseCase,
-	private val getAllCoinsUseCase: GetAllCoinsUseCase,
-	private val getCoinsPriceUseCase: GetCoinsPriceUseCase,
+	private val dataBaseInteractor: DataBaseInteractor,
+	private val networkInteractor: NetworkInteractor,
 	cacheUseCase: CacheUseCase
 ) : BaseViewModel(
-	addAccountUseCase,
-	addPurseUseCase,
-	getAllCoinsUseCase,
-	getCoinsPriceUseCase,
+	dataBaseInteractor.addOrUpdateAccountAndCreateNewPurseUseCase,
+	networkInteractor.currenciesInteractor.getCurrenciesUseCase,
+	networkInteractor.cryptoCoinInteractor.getCryptoCoinsUseCase,
+	networkInteractor.currenciesInteractor.convertCurrencyUseCase,
 	cacheUseCase
 ) {
 
-	private val _cryptoCoinLiveData = MutableLiveData<NetworkRequestState<List<CryptoCoin>>>()
-		.default(NetworkRequestState.DefaultState())
-	val cryptoCoinLiveData = _cryptoCoinLiveData as LiveData<NetworkRequestState<List<CryptoCoin>>>
+	var purseType = PurseCategoryType.CASH
 
-	private val _cryptoCoinUsdPriceLiveData = MutableLiveData<NetworkRequestState<CoinsPrice>>()
-		.default(NetworkRequestState.DefaultState())
-	val cryptoCoinUsdPriceLiveData =
-		_cryptoCoinUsdPriceLiveData as LiveData<NetworkRequestState<CoinsPrice>>
+	var currencyList = mutableListOf<String>()
 
-	fun requestCryptoCoins(onError: (t: Throwable) -> Unit) {
-		getAllCoinsUseCase.execute(
+	@ColorInt
+	var purseColor = 0
+
+	private val _currenciesRequestState = MutableLiveData<RequestState>()
+	val currenciesRequestState = _currenciesRequestState as LiveData<RequestState>
+
+	fun requestCurrencies() {
+		_currenciesRequestState.postValue(RequestState.SendingState)
+		networkInteractor.currenciesInteractor.getCurrenciesUseCase.execute(
 			onSuccess = { list ->
-				_cryptoCoinLiveData.postValue(NetworkRequestState.OnSuccessState(list))
+				_currenciesRequestState.postValue(RequestState.SuccessState(list))
 			},
-			onError = onError,
+			onError = { t -> _currenciesRequestState.postValue(RequestState.ErrorState(t)) },
 			params = Unit
 		)
 	}
 
-	fun requestCryptoCoinUsdPrice(coinsIds: List<String>, onError: (t: Throwable) -> Unit) {
-		getCoinsPriceUseCase.execute(
-			onSuccess = { map ->
-				_cryptoCoinUsdPriceLiveData.postValue(NetworkRequestState.OnSuccessState(map))
+
+
+	private val _cryptoCoinRequestState = MutableLiveData<RequestState>()
+	val cryptoCoinRequestState = _cryptoCoinRequestState as LiveData<RequestState>
+
+	fun requestCryptoCoins() {
+		_cryptoCoinRequestState.postValue(RequestState.SendingState)
+		networkInteractor.cryptoCoinInteractor.getCryptoCoinsUseCase.execute(
+			onSuccess = { list ->
+				_cryptoCoinRequestState.postValue(RequestState.SuccessState(list))
 			},
-			onError = onError,
-			params = Pair(coinsIds, listOf("usd"))
+			onError = { t -> _cryptoCoinRequestState.postValue(RequestState.ErrorState(t)) },
+			params = Unit
+		)
+	}
+
+
+
+	private val _addOrUpdateAccountAndSavePurseRequest = MutableLiveData<RequestState>()
+	val addOrUpdateAccountAndSavePurseRequest =
+		_addOrUpdateAccountAndSavePurseRequest as LiveData<RequestState>
+
+	fun requestAddOrUpdateAccountAndSavePurse(account: Account, purse: Purse) {
+		_addOrUpdateAccountAndSavePurseRequest.postValue(RequestState.SendingState)
+		dataBaseInteractor.addOrUpdateAccountAndCreateNewPurseUseCase.execute(
+			onSuccess = { accountId ->
+				_addOrUpdateAccountAndSavePurseRequest.postValue(RequestState.SuccessState(accountId))
+			},
+			onError = { t ->
+				_addOrUpdateAccountAndSavePurseRequest.postValue(RequestState.ErrorState(t))
+			},
+			params = Pair(account, purse)
 		)
 	}
 }

@@ -10,15 +10,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
-import ru.jsavings.data.repository.cache.CacheRepository
-import ru.jsavings.domain.usecase.di.domainModule
+import ru.jsavings.domain.di.domainModule
 import ru.jsavings.presentation.di.presentationModule
 
 class MainActivity : AppCompatActivity() {
@@ -53,11 +51,6 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onDestroy() {
 		super.onDestroy()
-		val cache by inject<CacheRepository>()
-		with(cache.sp.edit()) {
-			clear()
-			apply()
-		}
 		stopKoin()
 	}
 }

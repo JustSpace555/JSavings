@@ -3,16 +3,15 @@ package ru.jsavings.data.mappers.database.transaction
 import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.database.purse.PurseEntity
 import ru.jsavings.data.entity.database.transaction.TransactionEntity
-import ru.jsavings.data.mappers.common.BaseMapper
+import ru.jsavings.data.mappers.common.BaseDataBaseMapper
 import ru.jsavings.data.mappers.database.PurseMapper
 import ru.jsavings.data.model.database.transaction.Transaction
 import java.util.*
 
 internal class TransactionMapper(
 	private val purseMapper: PurseMapper
-) : BaseMapper<TransactionEntity, Transaction> {
+) : BaseDataBaseMapper<TransactionEntity, Transaction> {
 
-	// additionElements must contain TransactionCategory
 	override fun mapEntityToModel(input: TransactionEntity, vararg additionalElements: BaseEntity): Transaction =
 		Transaction(
 			transactionId = input.transactionId,

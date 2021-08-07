@@ -33,11 +33,11 @@ internal data class TransactionEntity (
 
 	//Purse id which this transaction belongs to
 	@ColumnInfo(name = "purse_fk_id", index = true)
-	val purseFkId: Int,
+	val purseFkId: Long,
 
 	//Category id (food, entertainment, ...)
 	@ColumnInfo(name = "category_fk_id", index = true)
-	val categoryFkId: Int,
+	val categoryFkId: Long,
 
 	//Total amount spent
 	@ColumnInfo(name = "total_sum")

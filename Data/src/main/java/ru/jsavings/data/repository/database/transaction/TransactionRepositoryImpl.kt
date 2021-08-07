@@ -1,6 +1,7 @@
 package ru.jsavings.data.repository.database.transaction
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionDao
 import ru.jsavings.data.mappers.database.transaction.TransactionMapper
 import ru.jsavings.data.model.database.transaction.Transaction
@@ -10,11 +11,11 @@ internal class TransactionRepositoryImpl(
 	override val mapper: TransactionMapper
 ) : TransactionRepository {
 
-	override fun addNewTransaction(transaction: Transaction): Completable =
-		Completable.create { subscriber ->
+	override fun addNewTransaction(transaction: Transaction): Single<Long> =
+		Single.create { subscriber ->
 			try {
-				dao.addNewTransaction(mapper.mapModelToEntity(transaction))
-				subscriber.onComplete()
+				val id = dao.addNewTransaction(mapper.mapModelToEntity(transaction))
+				subscriber.onSuccess(id)
 			} catch (e: Exception) {
 				subscriber.onError(e)
 			}

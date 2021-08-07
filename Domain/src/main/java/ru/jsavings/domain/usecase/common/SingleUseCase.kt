@@ -8,7 +8,7 @@ abstract class SingleUseCase <T, in PARAMS> : BaseUseCase() {
 
 	internal abstract fun buildSingleUseCase(params: PARAMS): Single<T>
 
-	fun execute (
+	fun execute(
 		onSuccess: (t: T) -> Unit,
 		onError: (t: Throwable) -> Unit,
 		onFinish: () -> Unit = {},

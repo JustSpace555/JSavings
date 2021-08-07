@@ -13,15 +13,15 @@
 		<action
 			android:id="@+id/action_intro_fragment_to_transactions_fragment"
 			app:destination="@id/transactions_fragment"
-			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
-			app:exitAnim="@anim/anim_exit"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
 			app:popUpTo="@id/mobile_navigation"
 			app:popUpToInclusive="true" />
 		<action
-			android:id="@+id/action_intro_fragment_to_new_account_navigation"
-			app:destination="@id/new_account_navigation"
-			app:enterAnim="@anim/anim_slide_in_from_right_to_left"
-			app:exitAnim="@anim/anim_exit"
+			android:id="@+id/action_intro_fragment_to_addNewAccountName"
+			app:destination="@id/addNewAccountName"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
 			app:popUpTo="@id/mobile_navigation"
 			app:popUpToInclusive="true">
 
@@ -38,8 +38,8 @@
 		android:label="@string/title_transactions"
 		tools:layout="@layout/main_fragment_transactions">
 		<argument
-			android:name="account_name"
-			app:argType="string" />
+			android:name="account_id"
+			app:argType="long" />
 	</fragment>
 
 	<fragment
@@ -59,11 +59,136 @@
 		android:id="@+id/purses_fragment"
 		android:name="ru.jsavings.presentation.ui.fragments.purses.allpurses.PursesFragment"
 		android:label="@string/title_purses"
-		tools:layout="@layout/main_fragment_purses" />
+		tools:layout="@layout/main_fragment_purses" >
+		<action
+			android:id="@+id/action_purses_fragment_to_newPurseFragment"
+			app:destination="@id/newPurseFragment" />
+	</fragment>
 
-	<include app:graph="@navigation/new_account_navigation" />
+	<fragment
+		android:id="@+id/noInternetFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.NoInternetFragment"
+		android:label="NoInternetFragment"
+		tools:layout="@layout/no_internet_fragment"/>
+
 	<action
-		android:id="@+id/action_global_to_transactions_fragment"
-		app:destination="@id/transactions_fragment" />
+		android:id="@+id/action_global_fragment_to_transactions_fragment"
+		app:destination="@id/transactions_fragment"
+		app:enterAnim="@anim/anim_slide_in_from_right"
+		app:exitAnim="@anim/anim_slide_out_to_left"
+		app:popUpTo="@id/mobile_navigation"
+		app:popUpToInclusive="true" />
+
+	<action
+		android:id="@+id/action_global_to_no_internet_fragment"
+		app:enterAnim="@anim/anim_fade_in"
+		app:exitAnim="@anim/anim_fade_out"
+		app:popExitAnim="@anim/anim_fade_out"
+		app:destination="@id/noInternetFragment" />
+
+
+
+	<fragment
+		android:id="@+id/addNewAccountName"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountName"
+		android:label="AddNewAccountName"
+		tools:layout="@layout/new_account_fragment_add_name">
+
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean" />
+
+		<action
+			android:id="@+id/action_addNewAccountName_to_chooseCurrencyNewAccountFragment"
+			app:destination="@id/chooseCurrencyNewAccountFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
+			app:popEnterAnim="@anim/anim_slide_in_from_left"
+			app:popExitAnim="@anim/anim_slide_out_to_right">
+		</action>
+
+	</fragment>
+
+	<fragment
+		android:id="@+id/chooseCurrencyNewAccountFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.currency.ChooseCurrencyFragment"
+		android:label="ChooseCurrencyNewAccountFragment"
+		tools:layout="@layout/new_account_fragment_choose_currency">
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean" />
+		<action
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_createFirstPurseFragment"
+			app:destination="@id/createFirstPurseFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
+			app:popEnterAnim="@anim/anim_slide_in_from_left"
+			app:popExitAnim="@anim/anim_slide_out_to_right"/>
+		<action
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_newPurseFragment"
+			app:destination="@id/newPurseFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
+			app:popEnterAnim="@anim/anim_slide_in_from_left"
+			app:popExitAnim="@anim/anim_slide_out_to_right"/>
+		<argument
+			android:name="new_account_name"
+			app:argType="string" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/createFirstPurseFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.firstpurse.CreateFirstPurseFragment"
+		android:label="CreateFirstPurseFragment"
+		tools:layout="@layout/new_account_fragment_create_purse">
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean" />
+		<action
+			android:id="@+id/action_createFirstPurseFragment_to_newPurseFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
+			app:popEnterAnim="@anim/anim_slide_in_from_left"
+			app:popExitAnim="@anim/anim_slide_out_to_right"
+			app:destination="@id/newPurseFragment" />
+		<argument
+			android:name="new_account_name"
+			app:argType="string" />
+		<argument
+			android:name="new_accoun_main_currency"
+			app:argType="string" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/newPurseFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseFragment"
+		android:label="NewPurseFragment"
+		tools:layout="@layout/purse_fragment_new_purse">
+		<argument
+			android:name="is_education_needed"
+			app:argType="boolean"
+			android:defaultValue="false" />
+		<argument
+			android:name="new_account_name"
+			app:argType="string"
+			android:defaultValue="" />
+		<argument
+			android:name="new_account_main_currency"
+			app:argType="string"
+			android:defaultValue=""/>
+		<action
+			android:id="@+id/action_newPurseFragment_to_readyFragment"
+			app:destination="@id/readyFragment" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/readyFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.ready.ReadyFragment"
+		android:label="ReadyFragment"
+		tools:layout="@layout/new_account_fragment_ready_to_start">
+		<argument
+			android:name="new_account_id"
+			app:argType="long" />
+	</fragment>
 
 </navigation>

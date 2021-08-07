@@ -1,21 +1,19 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount.currency
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.cache.CacheKeys
+import ru.jsavings.data.model.network.currency.Currency
 import ru.jsavings.databinding.NewAccountFragmentChooseCurrencyBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import java.util.*
+import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class ChooseCurrencyFragment : BaseFragment() {
 
@@ -30,62 +28,38 @@ class ChooseCurrencyFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		bindingUtil = NewAccountFragmentChooseCurrencyBinding
-			.inflate(inflater, container, false)
+		bindingUtil = NewAccountFragmentChooseCurrencyBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 
-	@SuppressLint("ClickableViewAccessibility")
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		val currencyList = Currency.getAvailableCurrencies()
-			.sortedBy { it.currencyCode }
-			.map { "${it.currencyCode} - ${it.displayName} (${it.symbol})" }
+		if (isInternetAvailable)
+			viewModel.requestCurrencies()
+		else
+			findNavController().navigate(R.id.action_global_to_no_internet_fragment)
 
 		with(bindingUtil) {
 			hideKeyBoardOnRootTouch(root)
 
-			with (actNewAccountCurrency) {
-				setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_item, currencyList))
-				setOnItemClickListener { _, _, _, _ -> buttonNewAccountNext.isEnabled = true }
+			with(actvNewAccountCurrency) {
 
-				val currency = viewModel.getFromCache(CacheKeys.JS_NEW_ACCOUNT_CURRENCY, "")
+				if (viewModel.newAccountCurrency.isNotEmpty()) buttonNewAccountNext.isEnabled = true
 
-				buttonNewAccountNext.isEnabled =
-				if (currency.isNotEmpty()) {
-					text = Editable.Factory.getInstance().newEditable(currency)
-					true
-				} else false
+				setOnItemClickListener { _, _, i, _ ->
+					viewModel.newAccountCurrency = adapter.getItem(i).toString()
+					buttonNewAccountNext.isEnabled = true
+				}
 
-				addTextChangedListener(object : TextWatcher {
-					override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-					override fun afterTextChanged(s: Editable?) {}
-
-					override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-						s?.let { str -> buttonNewAccountNext.isEnabled = str.toString() in currencyList }
-					}
-				})
-			}
-
-			with (buttonNewAccountNext) {
-				setOnClickListener {
-					viewModel.putToCache(
-						CacheKeys.JS_NEW_ACCOUNT_CURRENCY,
-						actNewAccountCurrency.text.toString()
-					)
-
-					val action = if (navArgs<ChooseCurrencyFragmentArgs>().value.isEducationNeeded) {
-						ChooseCurrencyFragmentDirections
-							.actionChooseCurrencyNewAccountFragmentToCreateFirstPurseFragment(true)
-					} else {
-						ChooseCurrencyFragmentDirections
-							.actionChooseCurrencyNewAccountFragmentToNewPurseFragment(false)
-					}
-
-					findNavController().navigate(action)
+				//TODO Подумать как убрать
+				addTextChangedListener {
+					it?.let { text -> viewModel.newAccountCurrency = text.toString() }
+					if (hasFocus()) buttonNewAccountNext.isEnabled = false
 				}
 			}
+
+			buttonNewAccountNext.setOnClickListener { setOnButtonNewAccountClick() }
 		}
 	}
 
@@ -103,5 +77,52 @@ class ChooseCurrencyFragment : BaseFragment() {
 		} else {
 			bindingUtil.textNote.visibility = View.GONE
 		}
+
+		val adapter = ArrayAdapter<Currency>(requireContext(), R.layout.item_dropdown_item)
+
+		bindingUtil.actvNewAccountCurrency.setAdapter(adapter)
+
+		viewModel.allCurrenciesRequestStateLiveData.observe(viewLifecycleOwner) { state ->
+			when (state) {
+				is BaseViewModel.RequestState.SuccessState<*> ->
+					@Suppress("UNCHECKED_CAST")
+					adapter.addAll(state.data as List<Currency>)
+				is BaseViewModel.RequestState.ErrorState<*> -> {
+					showTextSnackBar(
+						text = state.t.getErrorString(),
+						actionText = getString(R.string.retry),
+						action = { viewModel.requestCurrencies() }
+					)
+				}
+				else -> {}
+			}
+		}
+	}
+
+	private fun setOnButtonNewAccountClick() {
+
+		val newAccountMainCurrency = viewModel.newAccountCurrency
+			.split(' ')
+			.first()
+			.uppercase()
+
+		val args by navArgs<ChooseCurrencyFragmentArgs>()
+		val action = if (args.isEducationNeeded) {
+			ChooseCurrencyFragmentDirections
+				.actionChooseCurrencyNewAccountFragmentToCreateFirstPurseFragment(
+					isEducationNeeded = true,
+					newAccountName = args.newAccountName,
+					newAccountMainCurrency
+				)
+		} else {
+			ChooseCurrencyFragmentDirections
+				.actionChooseCurrencyNewAccountFragmentToNewPurseFragment(
+					isEducationNeeded = false,
+					newAccountName = args.newAccountName,
+					newAccountMainCurrency
+				)
+		}
+
+		findNavController().navigate(action)
 	}
 }

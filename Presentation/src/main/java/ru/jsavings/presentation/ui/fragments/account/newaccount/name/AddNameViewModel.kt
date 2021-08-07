@@ -2,50 +2,24 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.jsavings.data.model.database.Account
-import ru.jsavings.domain.usecase.cache.CacheUseCase
-import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
-import ru.jsavings.presentation.extensions.default
+import ru.jsavings.domain.usecase.database.account.GetAccountsUseCase
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class AddNameViewModel(
-	private val getAllAccountsUseCase: GetAllAccountsUseCase,
-	cacheUseCase: CacheUseCase
-) : BaseViewModel(getAllAccountsUseCase, cacheUseCase) {
+	private val getAccountsUseCase: GetAccountsUseCase
+) : BaseViewModel(getAccountsUseCase) {
 
-	private val _newAccountName = MutableLiveData<String>().default("")
-	val newAccountName = _newAccountName as LiveData<String>
+	private val _allAccountsRequestState = MutableLiveData<RequestState>()
+	val allAccountsRequestState = _allAccountsRequestState as LiveData<RequestState>
 
-	sealed class AccountNameState {
-		object OnEmptyState : AccountNameState()
-		object OnReadyState : AccountNameState()
-	}
-
-	private val _newAccountNameState =
-		MutableLiveData<AccountNameState>().default(AccountNameState.OnEmptyState)
-	val newAccountNameState = _newAccountNameState as LiveData<AccountNameState>
-
-	fun onTextChanged(text: CharSequence?) {
-		if (text != null) {
-			_newAccountName.postValue(text.toString())
-			_newAccountNameState.postValue(
-				if (text.isEmpty())
-					AccountNameState.OnEmptyState
-				else
-					AccountNameState.OnReadyState
-			)
-		} else {
-			_newAccountNameState.postValue(AccountNameState.OnEmptyState)
-		}
-	}
-
-	private val _allAccountsListener = MutableLiveData<List<Account>>().default(emptyList())
-	val allAccountsListener = _allAccountsListener as LiveData<List<Account>>
-
-	fun requestAllAccounts(onError: (t: Throwable) -> Unit) {
-		getAllAccountsUseCase.execute(
-			onSuccess = { _allAccountsListener.postValue(it) },
-			onError = onError,
+	fun requestAllAccounts() {
+		getAccountsUseCase.execute(
+			onSuccess = { list ->
+				_allAccountsRequestState.postValue(RequestState.SuccessState(list))
+			},
+			onError = { t ->
+				_allAccountsRequestState.postValue(RequestState.ErrorState(t))
+			},
 			params = Unit
 		)
 	}

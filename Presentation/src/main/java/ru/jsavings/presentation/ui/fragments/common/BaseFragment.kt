@@ -3,8 +3,10 @@ package ru.jsavings.presentation.ui.fragments.common
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
@@ -24,16 +26,27 @@ abstract class BaseFragment : Fragment() {
 	@SuppressLint("ClickableViewAccessibility")
 	protected fun hideKeyBoardOnRootTouch(root: View) {
 		root.setOnTouchListener { v, _ ->
-			(requireContext()
+			val inputMethodManager = requireContext()
 				.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-					).hideSoftInputFromWindow(v.windowToken, 0)
+
+			inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
+
 			requireActivity().window.currentFocus?.clearFocus()
-			true
+			false
 		}
 	}
 
-	protected fun showTextSnackBar(view: View, text: String, length: Int = Snackbar.LENGTH_SHORT) =
-		Snackbar.make(view, text, length).show()
+	protected fun showTextSnackBar(
+		text: String,
+		length: Int = Snackbar.LENGTH_LONG,
+		actionText: String = "",
+		action: (View) -> Unit = {},
+	) {
+		val snackBar = Snackbar.make(requireView(), text, length)
+		if (actionText.isNotEmpty())
+			snackBar.setAction(actionText, action)
+		snackBar.show()
+	}
 
 	protected fun showLoading() {
 		dialog = Dialog(requireContext()).apply {
@@ -50,4 +63,16 @@ abstract class BaseFragment : Fragment() {
 		dialog?.dismiss()
 		dialog = null
 	}
+
+	//TODO Переделать на нормальную версию
+	protected val isInternetAvailable: Boolean
+		get() {
+			val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) ?: return false
+			cm as ConnectivityManager
+
+			return cm.activeNetworkInfo?.isConnected ?: false
+		}
+
+	protected fun Throwable.getErrorString(): String =
+		localizedMessage ?: getString(R.string.something_went_wrong)
 }

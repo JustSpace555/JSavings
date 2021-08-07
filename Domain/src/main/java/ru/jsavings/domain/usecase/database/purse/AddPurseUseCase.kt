@@ -1,13 +1,13 @@
 package ru.jsavings.domain.usecase.database.purse
 
-import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.model.database.purse.Purse
 import ru.jsavings.data.repository.database.purse.PurseRepository
-import ru.jsavings.domain.usecase.common.CompletableUseCase
+import ru.jsavings.domain.usecase.common.SingleUseCase
 
 class AddPurseUseCase(
-	private val purseRepository: PurseRepository
-) : CompletableUseCase<Purse>() {
+	override val repository: PurseRepository
+) : SingleUseCase<Long, Purse>() {
 
-	override fun buildCompletableUseCase(params: Purse): Completable = purseRepository.addNewPurse(params)
+	override fun buildSingleUseCase(params: Purse): Single<Long> = repository.addNewPurse(params)
 }

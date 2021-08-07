@@ -2,50 +2,32 @@ package ru.jsavings.presentation.ui.fragments.intro
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.jsavings.data.model.database.Account
-import ru.jsavings.data.model.database.binding.AccountWithPurses
 import ru.jsavings.domain.usecase.cache.CacheUseCase
-import ru.jsavings.domain.usecase.database.account.DeleteAccountsUseCase
-import ru.jsavings.domain.usecase.database.account.GetAllAccountsWithPursesUseCase
-import ru.jsavings.presentation.extensions.default
+import ru.jsavings.domain.usecase.database.account.GetAccountsUseCase
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
 class IntroViewModel(
-	private val getAllAccountsWithPursesUseCase: GetAllAccountsWithPursesUseCase,
-	private val deleteAccountsUseCase: DeleteAccountsUseCase,
+	private val getAccountsUseCase: GetAccountsUseCase,
 	cacheUseCase: CacheUseCase
-) : BaseViewModel(getAllAccountsWithPursesUseCase, deleteAccountsUseCase, cacheUseCase) {
+) : BaseViewModel(
+	getAccountsUseCase,
+	cacheUseCase
+) {
 
-	private val _allAccountsWithPursesLiveData = MutableLiveData<List<AccountWithPurses>>()
-	val allAccountsWithPursesLiveData = _allAccountsWithPursesLiveData as LiveData<List<AccountWithPurses>>
+	private val _allAccountsRequestState = MutableLiveData<RequestState>()
+	val allAccountsRequestState =
+		_allAccountsRequestState as LiveData<RequestState>
 
-	fun requestAllAccountsWithPurses(onError: (t: Throwable) -> Unit, onFinish: () -> Unit) {
-		_sqlStatusListener.postValue(SQLStatus.RunningStatus)
-		getAllAccountsWithPursesUseCase.execute(
-			onSuccess = { _allAccountsWithPursesLiveData.postValue(it) },
-			onError = onError,
-			onFinish = onFinish,
+	fun requestAllAccounts() {
+		_allAccountsRequestState.postValue(RequestState.SendingState)
+		getAccountsUseCase.execute(
+			onSuccess = { list ->
+				_allAccountsRequestState.postValue(RequestState.SuccessState(list))
+			},
+			onError = { t ->
+				_allAccountsRequestState.postValue(RequestState.ErrorState(t))
+			},
 			params = Unit
 		)
 	}
-
-	fun requestDeleteAccounts(accounts: List<Account>, onError: (t: Throwable) -> Unit) {
-		_sqlStatusListener.postValue(SQLStatus.RunningStatus)
-		deleteAccountsUseCase.execute(
-			onComplete = { _sqlStatusListener.postValue(SQLStatus.FinishStatus) },
-			onError = onError,
-			params = accounts
-		)
-	}
-
-
-
-	sealed class SQLStatus {
-		object DefaultStatus : SQLStatus()
-		object RunningStatus : SQLStatus()
-		object FinishStatus : SQLStatus()
-	}
-
-	private val _sqlStatusListener = MutableLiveData<SQLStatus>().default(SQLStatus.DefaultStatus)
-	val sqlStatusListener = _sqlStatusListener as LiveData<SQLStatus>
 }

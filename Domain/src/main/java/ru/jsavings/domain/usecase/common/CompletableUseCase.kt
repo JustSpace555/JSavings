@@ -8,7 +8,7 @@ abstract class CompletableUseCase <in PARAMS> : BaseUseCase() {
 
 	internal abstract fun buildCompletableUseCase(params: PARAMS): Completable
 
-	fun execute (
+	fun execute(
 		onComplete: () -> Unit,
 		onError: (t: Throwable) -> Unit,
 		onFinish: () -> Unit = {},
