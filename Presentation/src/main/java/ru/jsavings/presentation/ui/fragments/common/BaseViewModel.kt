@@ -1,8 +1,11 @@
 package ru.jsavings.presentation.ui.fragments.common
 
 import androidx.lifecycle.ViewModel
+<<<<<<< refs/remotes/origin/dev
 import ru.jsavings.data.repository.cache.CacheKeys
 import ru.jsavings.domain.usecase.cache.CacheUseCase
+=======
+>>>>>>> Rework started
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
 abstract class BaseViewModel (vararg val useCases: BaseUseCase) : ViewModel() {

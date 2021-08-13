@@ -10,7 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
+<<<<<<< refs/remotes/origin/dev
 import ru.jsavings.data.model.database.Account
+=======
+>>>>>>> Rework started
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel

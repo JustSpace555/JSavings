@@ -16,7 +16,11 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
+<<<<<<< refs/remotes/origin/dev
 import ru.jsavings.domain.di.domainModule
+=======
+import ru.jsavings.domain.usecase.di.domainModule
+>>>>>>> Rework started
 import ru.jsavings.presentation.di.presentationModule
 
 class MainActivity : AppCompatActivity() {

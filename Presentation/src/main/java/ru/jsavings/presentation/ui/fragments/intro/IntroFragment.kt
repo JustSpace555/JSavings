@@ -8,8 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
+<<<<<<< refs/remotes/origin/dev
 import ru.jsavings.data.model.database.Account
 import ru.jsavings.data.repository.cache.CacheKeys
+=======
+import ru.jsavings.R
+import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
+>>>>>>> Rework started
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
