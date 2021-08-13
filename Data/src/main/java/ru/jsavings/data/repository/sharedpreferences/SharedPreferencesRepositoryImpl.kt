@@ -5,30 +5,31 @@ import kotlin.reflect.KClass
 
 internal class SharedPreferencesRepositoryImpl(
 	private val sharedPreferences: SharedPreferences
-) : JsSharedPreferencesRepository, NewAccountSharedPreferencesRepository {
+) : SharedPreferencesRepository {
 
-	override fun <T> putValue(key: String, value: T) {
+	override fun <T: Any> putValue(key: String, value: T) {
 		with(sharedPreferences.edit()) {
 			when (value) {
 				is Boolean -> putBoolean(key, value)
 				is String -> putString(key, value)
 				is Int -> putInt(key, value)
 				is Long -> putLong(key, value)
-				else -> putFloat(key, value as Float)
+				is Float -> putFloat(key, value)
 			}
 			apply()
 		}
 	}
 
 	@Suppress("UNCHECKED_CAST")
-	override fun <T : Any> getValue(key: String, kClass: KClass<T>, defaultValue: T): T =
+	override fun <T : Any> getValue(key: String, defaultValue: T): T =
 		with(sharedPreferences) {
-			when (kClass) {
-				Boolean::class -> getBoolean(key, defaultValue as Boolean) as T
-				String::class -> getString(key, defaultValue as String) as T
-				Int::class -> getInt(key, defaultValue as Int) as T
-				Long::class -> getLong(key, defaultValue as Long) as T
-				else -> getFloat(key, defaultValue as Float) as T
+			when (defaultValue) {
+				is Boolean -> getBoolean(key, defaultValue) as T
+				is String -> getString(key, defaultValue) as T
+				is Int -> getInt(key, defaultValue) as T
+				is Long -> getLong(key, defaultValue) as T
+				is Float -> getFloat(key, defaultValue) as T
+				else -> throw IllegalArgumentException("Illegal argument type")
 			}
 		}
 

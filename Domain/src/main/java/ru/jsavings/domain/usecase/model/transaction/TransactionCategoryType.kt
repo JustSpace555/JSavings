@@ -1,4 +1,4 @@
-package ru.jsavings.data.model.transaction
+package ru.jsavings.domain.usecase.model.transaction
 
 enum class TransactionCategoryType {
 	INCOME,

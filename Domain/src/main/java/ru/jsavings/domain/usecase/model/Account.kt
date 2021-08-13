@@ -1,4 +1,4 @@
-package ru.jsavings.data.model
+package ru.jsavings.domain.usecase.model
 
 import java.util.*
 

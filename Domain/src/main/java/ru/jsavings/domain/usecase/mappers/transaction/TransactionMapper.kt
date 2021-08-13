@@ -1,11 +1,11 @@
-package ru.jsavings.data.mappers.transaction
+package ru.jsavings.domain.usecase.mappers.transaction
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.PurseEntity
-import ru.jsavings.data.entity.transaction.TransactionEntity
-import ru.jsavings.data.mappers.BaseMapper
-import ru.jsavings.data.mappers.PurseMapper
-import ru.jsavings.data.model.transaction.Transaction
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.WalletEntity
+import ru.jsavings.data.entity.TransactionEntity
+import ru.jsavings.domain.usecase.mappers.BaseMapper
+import ru.jsavings.domain.usecase.mappers.PurseMapper
+import ru.jsavings.domain.usecase.model.transaction.Transaction
 import java.util.*
 
 internal class TransactionMapper(
@@ -16,7 +16,7 @@ internal class TransactionMapper(
 	override fun mapEntityToModel(input: TransactionEntity, vararg additionalElements: BaseEntity): Transaction =
 		Transaction(
 			transactionId = input.transactionId,
-			purse = purseMapper.mapEntityToModel(additionalElements.filterIsInstance<PurseEntity>().first()),
+			purse = purseMapper.mapEntityToModel(additionalElements.filterIsInstance<WalletEntity>().first()),
 			transactionCategoryId = input.categoryFkId,
 			totalSum = input.totalSum,
 			date = Date(input.date),

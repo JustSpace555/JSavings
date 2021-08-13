@@ -1,7 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.common
 
 import androidx.lifecycle.ViewModel
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.domain.usecase.common.BaseUseCase
 import ru.jsavings.domain.usecase.common.SharedPreferencesUseCase
 import ru.jsavings.domain.usecase.sharedpreferences.JsSharedPreferencesUseCase

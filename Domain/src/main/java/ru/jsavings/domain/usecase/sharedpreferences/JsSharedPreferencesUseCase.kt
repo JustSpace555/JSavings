@@ -1,6 +1,5 @@
 package ru.jsavings.domain.usecase.sharedpreferences
 
-import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferencesRepository
 import ru.jsavings.domain.usecase.common.SharedPreferencesUseCase
 
 class JsSharedPreferencesUseCase(

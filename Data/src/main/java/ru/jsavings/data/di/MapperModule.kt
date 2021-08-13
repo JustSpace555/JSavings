@@ -1,18 +1,18 @@
 package ru.jsavings.data.di
 
 import org.koin.dsl.module
-import ru.jsavings.data.mappers.AccountMapper
-import ru.jsavings.data.mappers.PurseMapper
-import ru.jsavings.data.mappers.binding.AccountWithPursesMapper
-import ru.jsavings.data.mappers.transaction.TransactionCategoryMapper
-import ru.jsavings.data.mappers.transaction.TransactionMapper
+import ru.jsavings.domain.usecase.mappers.AccountMapper
+import ru.jsavings.domain.usecase.mappers.PurseMapper
+import ru.jsavings.domain.usecase.mappers.binding.AccountWithPursesMapper
+import ru.jsavings.domain.usecase.mappers.transaction.TransactionCategoryMapper
+import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
 
 internal val mapperModule = module {
 
-	single { TransactionCategoryMapper() }
-	single { TransactionMapper(get()) }
-	single { PurseMapper(get()) }
-	single { AccountMapper() }
+	single { ru.jsavings.domain.usecase.mappers.transaction.TransactionCategoryMapper() }
+	single { ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper(get()) }
+	single { ru.jsavings.domain.usecase.mappers.PurseMapper(get()) }
+	single { ru.jsavings.domain.usecase.mappers.AccountMapper() }
 
-	single { AccountWithPursesMapper(get(), get()) }
+	single { ru.jsavings.domain.usecase.mappers.binding.AccountWithPursesMapper(get(), get()) }
 }

@@ -1,12 +1,11 @@
-package ru.jsavings.data.mappers.binding
+package ru.jsavings.domain.usecase.mappers.binding
 
-import ru.jsavings.data.entity.BaseEntity
+import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.binding.AccountWithPursesEntity
-import ru.jsavings.data.mappers.AccountMapper
-import ru.jsavings.data.mappers.BaseMapper
-import ru.jsavings.data.mappers.PurseMapper
-import ru.jsavings.data.model.BaseModel
-import ru.jsavings.data.model.binding.AccountWithPurses
+import ru.jsavings.domain.usecase.mappers.AccountMapper
+import ru.jsavings.domain.usecase.mappers.BaseMapper
+import ru.jsavings.domain.usecase.mappers.PurseMapper
+import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
 
 internal class AccountWithPursesMapper(
 	private val accountMapper: AccountMapper,

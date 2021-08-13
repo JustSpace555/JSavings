@@ -1,7 +1,7 @@
-package ru.jsavings.data.model.transaction
+package ru.jsavings.domain.usecase.model.transaction
 
-import ru.jsavings.data.model.BaseModel
-import ru.jsavings.data.model.purse.Purse
+import ru.jsavings.domain.usecase.model.BaseModel
+import ru.jsavings.domain.usecase.model.purse.Purse
 import java.util.*
 
 data class Transaction (

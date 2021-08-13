@@ -8,9 +8,6 @@ import ru.jsavings.data.repository.binding.AccountWithPursesRepository
 import ru.jsavings.data.repository.binding.AccountWithPursesRepositoryImpl
 import ru.jsavings.data.repository.purse.PurseRepository
 import ru.jsavings.data.repository.purse.PurseRepositoryImpl
-import ru.jsavings.data.repository.sharedpreferences.JsSharedPreferencesRepository
-import ru.jsavings.data.repository.sharedpreferences.NewAccountSharedPreferencesRepository
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesRepositoryImpl
 import ru.jsavings.data.repository.transaction.TransactionRepository
 import ru.jsavings.data.repository.transaction.TransactionRepositoryImpl

@@ -1,10 +1,10 @@
-package ru.jsavings.data.mappers.transaction
+package ru.jsavings.domain.usecase.mappers.transaction
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
-import ru.jsavings.data.mappers.BaseMapper
-import ru.jsavings.data.model.transaction.TransactionCategory
-import ru.jsavings.data.model.transaction.TransactionCategoryType
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.TransactionCategoryEntity
+import ru.jsavings.domain.usecase.mappers.BaseMapper
+import ru.jsavings.domain.usecase.model.transaction.TransactionCategory
+import ru.jsavings.domain.usecase.model.transaction.TransactionCategoryType
 
 internal class TransactionCategoryMapper : BaseMapper<TransactionCategoryEntity, TransactionCategory> {
 

@@ -1,6 +1,6 @@
-package ru.jsavings.data.model.transaction
+package ru.jsavings.domain.usecase.model.transaction
 
-import ru.jsavings.data.model.BaseModel
+import ru.jsavings.domain.usecase.model.BaseModel
 
 data class TransactionCategory (
 	val categoryId: Int = 0,

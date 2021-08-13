@@ -1,12 +1,23 @@
-package ru.jsavings.data.entity.transaction
+package ru.jsavings.data.entity
 
+import androidx.annotation.ColorInt
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import ru.jsavings.data.entity.AccountEntity
-import ru.jsavings.data.entity.BaseEntity
+import ru.jsavings.data.entity.common.BaseEntity
 
+/**
+ * Entity of transaction category in database
+ * @param categoryId Id of category in database
+ * @param categoryName Name of category
+ * @param accountFkId Id of [AccountEntity] to which this category belongs
+ * @param type Type of category: INCOME, CONSUMPTION, TRANSFER
+ * @param color Number representation of color
+ * @param iconPath Path to icon of this category
+ *
+ * @author JustSpace
+ */
 @Entity (
 	tableName = "transaction_category_table",
 	foreignKeys = [
@@ -22,23 +33,19 @@ internal data class TransactionCategoryEntity (
 
 	@PrimaryKey
 	@ColumnInfo(name = "category_id")
-	val categoryId: Int = 0,
+	val categoryId: Long = 0,
 
-	//Name of the category
 	@ColumnInfo(name = "category_name")
 	val categoryName: String,
 
-	//The name of the account which the category is linked
 	@ColumnInfo(name = "account_fk_id", index = true)
 	val accountFkId: Int,
 
-	//Category type (TransactionCategoryType)
 	val type: String,
 
-	//Category color (0xFFFFFF)
-	val color: String,
+	@ColorInt
+	val color: Int,
 
-	//Path to icon
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
 

@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.databinding.NewAccountFragmentAddNameBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 

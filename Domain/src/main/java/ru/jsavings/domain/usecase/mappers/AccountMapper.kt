@@ -1,8 +1,8 @@
-package ru.jsavings.data.mappers
+package ru.jsavings.domain.usecase.mappers
 
 import ru.jsavings.data.entity.AccountEntity
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.model.Account
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.domain.usecase.model.Account
 import java.util.*
 
 internal class AccountMapper : BaseMapper<AccountEntity, Account> {
@@ -11,7 +11,7 @@ internal class AccountMapper : BaseMapper<AccountEntity, Account> {
 		Account(
 			accountId = input.accountId,
 			name = input.accountName,
-			mainCurrency = Currency.getInstance(input.mainCurrency),
+			mainCurrency = Currency.getInstance(input.mainCurrencyCode),
 			balanceInMainCurrency = input.balanceInMainCurrency
 		)
 
@@ -19,7 +19,7 @@ internal class AccountMapper : BaseMapper<AccountEntity, Account> {
 		AccountEntity(
 			accountId = input.accountId,
 			accountName = input.name,
-			mainCurrency = input.mainCurrency.currencyCode,
+			mainCurrencyCode = input.mainCurrency.currencyCode,
 			balanceInMainCurrency = input.balanceInMainCurrency
 		)
 }

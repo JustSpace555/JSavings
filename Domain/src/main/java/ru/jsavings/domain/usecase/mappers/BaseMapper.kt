@@ -1,7 +1,7 @@
-package ru.jsavings.data.mappers
+package ru.jsavings.domain.usecase.mappers
 
-import ru.jsavings.data.entity.BaseEntity
-import ru.jsavings.data.model.BaseModel
+import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.domain.usecase.model.BaseModel
 
 interface BaseMapper <E : BaseEntity, M : BaseModel> {
 

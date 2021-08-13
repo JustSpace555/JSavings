@@ -19,7 +19,6 @@ import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import ru.jsavings.R
 import ru.jsavings.data.di.dataModule
-import ru.jsavings.data.repository.sharedpreferences.SharedPreferencesConsts
 import ru.jsavings.domain.usecase.di.domainModule
 import ru.jsavings.presentation.di.presentationModule
 

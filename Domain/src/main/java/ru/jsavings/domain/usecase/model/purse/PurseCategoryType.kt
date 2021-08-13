@@ -1,4 +1,4 @@
-package ru.jsavings.data.model.purse
+package ru.jsavings.domain.usecase.model.purse
 
 enum class PurseCategoryType {
 	CASH,

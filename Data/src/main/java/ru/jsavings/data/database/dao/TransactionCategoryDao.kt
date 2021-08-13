@@ -3,18 +3,35 @@ package ru.jsavings.data.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.Update
-import ru.jsavings.data.entity.transaction.TransactionCategoryEntity
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import ru.jsavings.data.entity.TransactionCategoryEntity
 
+/**
+ * Data access object for transaction category
+ *
+ * @author JustSpace
+ */
 @Dao
 internal interface TransactionCategoryDao : BaseDao {
 
+	/**
+	 * Add new category to transactions category table
+	 * @param transactionCategoryEntity [TransactionCategoryEntity] which must be insert
+	 * @return [Single] source with id of new category
+	 *
+	 * @author JustSpace
+	 */
 	@Insert
-	fun addNewCategory(transactionCategoryEntity: TransactionCategoryEntity)
+	fun insertNewCategory(transactionCategoryEntity: TransactionCategoryEntity): Single<Long>
 
-	@Update
-	fun updateCategory(transactionCategoryEntity: TransactionCategoryEntity)
-
+	/**
+	 * Delete transaction category from transaction categories' table
+	 * @param transactionCategoryEntity [TransactionCategoryEntity] which must be deleted
+	 * @return [Completable] source of action
+	 *
+	 * @author JustSpace
+	 */
 	@Delete
-	fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity)
+	fun deleteCategoryById(transactionCategoryEntity: TransactionCategoryEntity): Completable
 }

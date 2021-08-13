@@ -2,25 +2,25 @@ package ru.jsavings.data.repository.transaction
 
 import io.reactivex.rxjava3.core.Completable
 import ru.jsavings.data.database.dao.TransactionDao
-import ru.jsavings.data.mappers.transaction.TransactionMapper
-import ru.jsavings.data.model.transaction.Transaction
+import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
+import ru.jsavings.domain.usecase.model.transaction.Transaction
 
 internal class TransactionRepositoryImpl(
 	override val dao: TransactionDao,
-	override val mapper: TransactionMapper
+	override val mapper: ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
 ) : TransactionRepository {
 
-	override fun addNewTransaction(transaction: Transaction): Completable =
+	override fun addNewTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
 		Completable.create { subscriber ->
 			try {
-				dao.addNewTransaction(mapper.mapModelToEntity(transaction))
+				dao.insertNewTransaction(mapper.mapModelToEntity(transaction))
 				subscriber.onComplete()
 			} catch (e: Exception) {
 				subscriber.onError(e)
 			}
 		}
 
-	override fun updateTransaction(transaction: Transaction): Completable =
+	override fun updateTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
 		Completable.create { subscriber ->
 			try {
 				dao.updateTransaction(mapper.mapModelToEntity(transaction))
@@ -30,10 +30,10 @@ internal class TransactionRepositoryImpl(
 			}
 		}
 
-	override fun deleteTransaction(transaction: Transaction): Completable =
+	override fun deleteTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
 		Completable.create { subscriber ->
 			try {
-				dao.deleteTransaction(mapper.mapModelToEntity(transaction))
+				dao.deleteTransactionById(mapper.mapModelToEntity(transaction))
 				subscriber.onComplete()
 			} catch (e: Exception) {
 				subscriber.onError(e)

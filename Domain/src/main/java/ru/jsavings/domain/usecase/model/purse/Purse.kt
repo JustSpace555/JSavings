@@ -1,7 +1,7 @@
-package ru.jsavings.data.model.purse
+package ru.jsavings.domain.usecase.model.purse
 
-import ru.jsavings.data.model.Account
-import ru.jsavings.data.model.BaseModel
+import ru.jsavings.domain.usecase.model.Account
+import ru.jsavings.domain.usecase.model.BaseModel
 
 data class Purse (
 	val purseId: Int = 0,

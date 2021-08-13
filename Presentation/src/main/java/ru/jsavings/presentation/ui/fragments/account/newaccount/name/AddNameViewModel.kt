@@ -2,7 +2,7 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.jsavings.data.model.Account
+import ru.jsavings.domain.usecase.model.Account
 import ru.jsavings.domain.usecase.account.GetAllAccountsUseCase
 import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase
 import ru.jsavings.presentation.extensions.default

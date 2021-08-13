@@ -1,8 +1,8 @@
 package ru.jsavings.domain.usecase.account
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.model.Account
-import ru.jsavings.data.model.binding.AccountWithPurses
+import ru.jsavings.domain.usecase.model.Account
+import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
 import ru.jsavings.data.repository.account.AccountRepository
 import ru.jsavings.data.repository.binding.AccountWithPursesRepository
 import ru.jsavings.domain.usecase.common.SingleUseCase
