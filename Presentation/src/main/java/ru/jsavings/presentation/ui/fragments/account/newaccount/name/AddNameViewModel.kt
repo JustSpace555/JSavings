@@ -2,9 +2,12 @@ package ru.jsavings.presentation.ui.fragments.account.newaccount.name
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/dev
 import ru.jsavings.domain.usecase.database.account.GetAccountsUseCase
 =======
+=======
+>>>>>>> main
 import ru.jsavings.domain.usecase.model.Account
 import ru.jsavings.domain.usecase.account.GetAllAccountsUseCase
 import ru.jsavings.domain.usecase.sharedpreferences.NewAccountSharedPreferencesUseCase

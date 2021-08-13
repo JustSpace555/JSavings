@@ -3,10 +3,13 @@ package ru.jsavings.data.repository.database.account
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.AccountDao
+<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/account/AccountRepositoryImpl.kt
 <<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/account/AccountRepositoryImpl.kt
 import ru.jsavings.data.mappers.database.AccountMapper
 import ru.jsavings.data.model.database.Account
 =======
+=======
+>>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/account/AccountRepositoryImpl.kt
 import ru.jsavings.domain.usecase.mappers.AccountMapper
 import ru.jsavings.domain.usecase.model.Account
 import java.lang.Exception
@@ -27,6 +30,7 @@ internal class AccountRepositoryImpl (
 		}
 	}
 
+<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/account/AccountRepositoryImpl.kt
 <<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/account/AccountRepositoryImpl.kt
 	override fun createNewAccount(account: Account): Single<Long> = Single.create { subscriber ->
 		try {
@@ -35,6 +39,10 @@ internal class AccountRepositoryImpl (
 =======
 	override fun createNewAccount(account: ru.jsavings.domain.usecase.model.Account): Completable = Completable.create { subscriber ->
 		try {
+=======
+	override fun createNewAccount(account: ru.jsavings.domain.usecase.model.Account): Completable = Completable.create { subscriber ->
+		try {
+>>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/account/AccountRepositoryImpl.kt
 			dao.insertNewAccount(mapper.mapModelToEntity(account))
 			subscriber.onComplete()
 >>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/account/AccountRepositoryImpl.kt

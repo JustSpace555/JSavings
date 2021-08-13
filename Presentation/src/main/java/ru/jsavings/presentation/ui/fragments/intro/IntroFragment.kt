@@ -14,7 +14,10 @@ import ru.jsavings.data.repository.cache.CacheKeys
 =======
 import ru.jsavings.R
 import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
+<<<<<<< HEAD
 >>>>>>> Rework started
+=======
+>>>>>>> main
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel

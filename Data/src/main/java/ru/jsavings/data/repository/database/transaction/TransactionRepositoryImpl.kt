@@ -3,6 +3,7 @@ package ru.jsavings.data.repository.database.transaction
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionDao
+<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
 <<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
 import ru.jsavings.data.mappers.database.transaction.TransactionMapper
 import ru.jsavings.data.model.database.transaction.Transaction
@@ -10,12 +11,17 @@ import ru.jsavings.data.model.database.transaction.Transaction
 import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
 import ru.jsavings.domain.usecase.model.transaction.Transaction
 >>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
+=======
+import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
+import ru.jsavings.domain.usecase.model.transaction.Transaction
+>>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
 
 internal class TransactionRepositoryImpl(
 	override val dao: TransactionDao,
 	override val mapper: ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
 ) : TransactionRepository {
 
+<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
 <<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
 	override fun addNewTransaction(transaction: Transaction): Single<Long> =
 		Single.create { subscriber ->
@@ -23,6 +29,8 @@ internal class TransactionRepositoryImpl(
 				val id = dao.addNewTransaction(mapper.mapModelToEntity(transaction))
 				subscriber.onSuccess(id)
 =======
+=======
+>>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
 	override fun addNewTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
 		Completable.create { subscriber ->
 			try {

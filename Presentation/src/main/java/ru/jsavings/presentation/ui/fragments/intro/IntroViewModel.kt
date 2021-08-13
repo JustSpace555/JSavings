@@ -2,10 +2,13 @@ package ru.jsavings.presentation.ui.fragments.intro
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/dev
 import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.account.GetAccountsUseCase
 =======
+=======
+>>>>>>> main
 import ru.jsavings.domain.usecase.model.Account
 import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
 import ru.jsavings.domain.usecase.account.DeleteAccountsUseCase

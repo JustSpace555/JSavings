@@ -10,10 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/dev
 import ru.jsavings.data.model.network.currency.Currency
 =======
 >>>>>>> Rework started
+=======
+>>>>>>> main
 import ru.jsavings.databinding.NewAccountFragmentChooseCurrencyBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
