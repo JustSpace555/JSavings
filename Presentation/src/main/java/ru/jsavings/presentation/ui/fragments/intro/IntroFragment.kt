@@ -3,21 +3,13 @@ package ru.jsavings.presentation.ui.fragments.intro
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
-<<<<<<< refs/remotes/origin/dev
-import ru.jsavings.data.model.database.Account
-import ru.jsavings.data.repository.cache.CacheKeys
-=======
-import ru.jsavings.R
-import ru.jsavings.domain.usecase.model.binding.AccountWithPurses
-<<<<<<< HEAD
->>>>>>> Rework started
-=======
->>>>>>> main
+import ru.jsavings.domain.model.database.Account
 import ru.jsavings.databinding.IntroFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
@@ -56,42 +48,37 @@ class IntroFragment : BaseFragment() {
 	@Suppress("UNCHECKED_CAST")
 	private fun moveToNextFragment() {
 
-		val currentAccountId = viewModel.getFromCache(CacheKeys.JS_CURRENT_ACCOUNT, -1L)
-		if (currentAccountId != -1L) {
-			findNavController().navigate(
-				IntroFragmentDirections.actionIntroFragmentToTransactionsFragment(currentAccountId)
-			)
+		val accountId = viewModel.getAccountFromCache()
+		if (accountId != -1L) {
+			navigateToTransactionsFragment()
 			return
 		}
-
-		viewModel.requestAllAccounts()
+		else
+			viewModel.requestAllAccounts()
 
 		viewModel.allAccountsRequestState.observe(viewLifecycleOwner) { state ->
 			when(state) {
 				is BaseViewModel.RequestState.SuccessState<*> -> {
-					val data = state.data as List<Account>
-					if (data.isEmpty()) {
-						findNavController().navigate(
-							IntroFragmentDirections.actionIntroFragmentToAddNewAccountName(true)
-						)
-					} else {
-						val accountId = data.random().accountId
-						viewModel.putToCache(CacheKeys.JS_CURRENT_ACCOUNT, accountId)
-						findNavController().navigate(
-							IntroFragmentDirections.actionIntroFragmentToTransactionsFragment(
-								accountId
-							)
-						)
-					}
+					val chosenAccountId = viewModel.chooseAccount(state.data as List<Account>)
+					if (chosenAccountId != -1L)
+						navigateToTransactionsFragment()
+					else
+						navigateToNewAccountFragment()
 				}
 				is BaseViewModel.RequestState.ErrorState<*> -> {
 					showTextSnackBar(state.t.getErrorString())
-					findNavController().navigate(
-						IntroFragmentDirections.actionIntroFragmentToAddNewAccountName(true)
-					)
+					navigateToNewAccountFragment()
 				}
 				else -> {}
 			}
 		}
 	}
+
+	private fun navigateToTransactionsFragment() = findNavController().navigate(
+		IntroFragmentDirections.actionIntroFragmentToTransactionsFragment()
+	)
+
+	private fun navigateToNewAccountFragment() = findNavController().navigate(
+		IntroFragmentDirections.actionIntroFragmentToAddNewAccountName(true)
+	)
 }

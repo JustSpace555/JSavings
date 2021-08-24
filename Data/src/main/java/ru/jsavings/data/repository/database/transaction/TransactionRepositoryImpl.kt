@@ -1,64 +1,37 @@
 package ru.jsavings.data.repository.database.transaction
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionDao
-<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
-<<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
-import ru.jsavings.data.mappers.database.transaction.TransactionMapper
-import ru.jsavings.data.model.database.transaction.Transaction
-=======
-import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
-import ru.jsavings.domain.usecase.model.transaction.Transaction
->>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
-=======
-import ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
-import ru.jsavings.domain.usecase.model.transaction.Transaction
->>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
+import ru.jsavings.data.entity.database.TransactionEntity
 
-internal class TransactionRepositoryImpl(
-	override val dao: TransactionDao,
-	override val mapper: ru.jsavings.domain.usecase.mappers.transaction.TransactionMapper
-) : TransactionRepository {
+/**
+ * Implementation of [TransactionRepository]
+ * @param dao [TransactionDao] to get data from
+ *
+ * @author JustSpace
+ */
+internal class TransactionRepositoryImpl(override val dao: TransactionDao) : TransactionRepository {
 
-<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
-<<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/TransactionRepositoryImpl.kt
-	override fun addNewTransaction(transaction: Transaction): Single<Long> =
-		Single.create { subscriber ->
-			try {
-				val id = dao.addNewTransaction(mapper.mapModelToEntity(transaction))
-				subscriber.onSuccess(id)
-=======
-=======
->>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
-	override fun addNewTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.insertNewTransaction(mapper.mapModelToEntity(transaction))
-				subscriber.onComplete()
->>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/transaction/TransactionRepositoryImpl.kt
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun getTransactionById(transactionId: Long): Single<TransactionEntity> =
+		dao.getTransactionById(transactionId)
 
-	override fun updateTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.updateTransaction(mapper.mapModelToEntity(transaction))
-				subscriber.onComplete()
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun insertNewTransaction(transactionEntity: TransactionEntity): Single<Long> =
+		dao.insertNewTransaction(transactionEntity)
 
-	override fun deleteTransaction(transaction: ru.jsavings.domain.usecase.model.transaction.Transaction): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.deleteTransactionById(mapper.mapModelToEntity(transaction))
-				subscriber.onComplete()
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun updateTransaction(transactionEntity: TransactionEntity): Completable =
+		dao.updateTransaction(transactionEntity)
+
+	override fun deleteTransaction(transactionEntity: TransactionEntity): Completable =
+		dao.deleteTransaction(transactionEntity)
+
+	override fun getTransactionsByAccountIdAndTime(
+		accountId: Long,
+		startTime: Long,
+		endTime: Long
+	): Single<List<TransactionEntity>> = dao.getTransactionsByAccountIdAndTime(accountId, startTime, endTime)
+
+	override fun getLastTransactionDateByAccountId(accountId: Long): Maybe<Long> =
+		dao.getLastTransactionDateByAccountId(accountId)
 }

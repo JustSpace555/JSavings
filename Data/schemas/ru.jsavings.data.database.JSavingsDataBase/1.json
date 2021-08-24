@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f1bfe51ff5ffcf1d629f0c03fa902197",
+    "identityHash": "16aeb5eef7fba4abbd6b2839f2fce343",
     "entities": [
       {
         "tableName": "account_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`account_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_name` TEXT NOT NULL, `main_currency_code` TEXT NOT NULL, `balance_in_main_currency` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`account_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_name` TEXT NOT NULL, `main_currency` TEXT NOT NULL, `balance_in_main_currency` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "accountId",
@@ -22,7 +22,7 @@
           },
           {
             "fieldPath": "mainCurrencyCode",
-            "columnName": "main_currency_code",
+            "columnName": "main_currency",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -43,18 +43,18 @@
         "foreignKeys": []
       },
       {
-        "tableName": "purse_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`purse_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `purse_name` TEXT NOT NULL, `account_fk_id` INTEGER NOT NULL, `balance` REAL NOT NULL, `currency` TEXT NOT NULL, `category` TEXT NOT NULL, `credit_limit` REAL NOT NULL, `interest_rate` REAL NOT NULL, `payment_day` INTEGER NOT NULL, `grace_period` INTEGER NOT NULL, `color` INTEGER NOT NULL, `icon_path` TEXT NOT NULL, FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "wallet_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wallet_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `wallet_name` TEXT NOT NULL, `account_fk_id` INTEGER NOT NULL, `currencyCode` TEXT NOT NULL, `balance` REAL NOT NULL, `category` TEXT NOT NULL, `creditLimit` REAL NOT NULL, `interestRate` REAL NOT NULL, `paymentDay` INTEGER NOT NULL, `gracePeriod` INTEGER NOT NULL, `color` INTEGER NOT NULL, `icon_path` TEXT NOT NULL, FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "purseId",
-            "columnName": "purse_id",
+            "fieldPath": "walletId",
+            "columnName": "wallet_id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "purseName",
-            "columnName": "purse_name",
+            "fieldPath": "walletName",
+            "columnName": "wallet_name",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -65,15 +65,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "balance",
-            "columnName": "balance",
-            "affinity": "REAL",
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "currency",
-            "columnName": "currency",
-            "affinity": "TEXT",
+            "fieldPath": "balance",
+            "columnName": "balance",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -84,25 +84,25 @@
           },
           {
             "fieldPath": "creditLimit",
-            "columnName": "credit_limit",
+            "columnName": "creditLimit",
             "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "interestRate",
-            "columnName": "interest_rate",
+            "columnName": "interestRate",
             "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "paymentDay",
-            "columnName": "payment_day",
+            "columnName": "paymentDay",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "gracePeriod",
-            "columnName": "grace_period",
+            "columnName": "gracePeriod",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -121,18 +121,18 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "purse_id"
+            "wallet_id"
           ],
           "autoGenerate": true
         },
         "indices": [
           {
-            "name": "index_purse_table_account_fk_id",
+            "name": "index_wallet_table_account_fk_id",
             "unique": false,
             "columnNames": [
               "account_fk_id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_purse_table_account_fk_id` ON `${TABLE_NAME}` (`account_fk_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_wallet_table_account_fk_id` ON `${TABLE_NAME}` (`account_fk_id`)"
           }
         ],
         "foreignKeys": [
@@ -151,7 +151,7 @@
       },
       {
         "tableName": "transaction_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `purse_fk_id` INTEGER NOT NULL, `category_fk_id` INTEGER NOT NULL, `total_sum` REAL NOT NULL, `date` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT, FOREIGN KEY(`purse_fk_id`) REFERENCES `purse_table`(`purse_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `wallet_fk_id` INTEGER NOT NULL, `category_fk_id` INTEGER NOT NULL, `account_fk_id` INTEGER NOT NULL, `total_sum` REAL NOT NULL, `date` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT, FOREIGN KEY(`wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "transactionId",
@@ -160,8 +160,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "purseFkId",
-            "columnName": "purse_fk_id",
+            "fieldPath": "walletFkId",
+            "columnName": "wallet_fk_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -172,7 +172,13 @@
             "notNull": true
           },
           {
-            "fieldPath": "totalSum",
+            "fieldPath": "accountFkId",
+            "columnName": "account_fk_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sum",
             "columnName": "total_sum",
             "affinity": "REAL",
             "notNull": true
@@ -204,12 +210,12 @@
         },
         "indices": [
           {
-            "name": "index_transaction_table_purse_fk_id",
+            "name": "index_transaction_table_wallet_fk_id",
             "unique": false,
             "columnNames": [
-              "purse_fk_id"
+              "wallet_fk_id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_purse_fk_id` ON `${TABLE_NAME}` (`purse_fk_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_wallet_fk_id` ON `${TABLE_NAME}` (`wallet_fk_id`)"
           },
           {
             "name": "index_transaction_table_category_fk_id",
@@ -218,18 +224,26 @@
               "category_fk_id"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_category_fk_id` ON `${TABLE_NAME}` (`category_fk_id`)"
+          },
+          {
+            "name": "index_transaction_table_account_fk_id",
+            "unique": false,
+            "columnNames": [
+              "account_fk_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_account_fk_id` ON `${TABLE_NAME}` (`account_fk_id`)"
           }
         ],
         "foreignKeys": [
           {
-            "table": "purse_table",
+            "table": "wallet_table",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "purse_fk_id"
+              "wallet_fk_id"
             ],
             "referencedColumns": [
-              "purse_id"
+              "wallet_id"
             ]
           },
           {
@@ -242,12 +256,23 @@
             "referencedColumns": [
               "category_id"
             ]
+          },
+          {
+            "table": "account_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "account_fk_id"
+            ],
+            "referencedColumns": [
+              "account_id"
+            ]
           }
         ]
       },
       {
         "tableName": "transaction_category_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER NOT NULL, `category_name` TEXT NOT NULL, `account_fk_id` INTEGER NOT NULL, `type` TEXT NOT NULL, `color` TEXT NOT NULL, `icon_path` TEXT NOT NULL, PRIMARY KEY(`category_id`), FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_name` TEXT NOT NULL, `account_fk_id` INTEGER NOT NULL, `type` TEXT NOT NULL, `color` INTEGER NOT NULL, `icon_path` TEXT NOT NULL, FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "categoryId",
@@ -276,7 +301,7 @@
           {
             "fieldPath": "color",
             "columnName": "color",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -290,7 +315,7 @@
           "columnNames": [
             "category_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [
           {
@@ -320,7 +345,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f1bfe51ff5ffcf1d629f0c03fa902197')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16aeb5eef7fba4abbd6b2839f2fce343')"
     ]
   }
 }

@@ -51,8 +51,8 @@
 
 	<Button
 		android:id="@+id/button_new_account_next"
-		style="@style/ButtonTextStyle.Outlined"
-		android:layout_width="wrap_content"
+		style="@style/ButtonTextStyle.Filled"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
 		android:text="@string/next"

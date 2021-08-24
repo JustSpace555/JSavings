@@ -1,35 +1,94 @@
 package ru.jsavings.presentation.ui.fragments.common
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/dev
-import ru.jsavings.data.repository.cache.CacheKeys
-import ru.jsavings.domain.usecase.cache.CacheUseCase
-=======
->>>>>>> Rework started
-=======
->>>>>>> main
-import ru.jsavings.domain.usecase.common.BaseUseCase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-abstract class BaseViewModel (vararg val useCases: BaseUseCase) : ViewModel() {
+/**
+ * Base class of all ViewModels in JSavings app
+ *
+ * @author JustSpace
+ */
+abstract class BaseViewModel(
+	private val disposeBag: CompositeDisposable,
+	private val threadProvider: ThreadProvider
+) : ViewModel() {
 
-	fun <T: Any> putToCache(key: CacheKeys, value: T) =
-		useCases.filterIsInstance<CacheUseCase>().first().put(key, value)
-
-	inline fun <reified T: Any> getFromCache(key: CacheKeys, defaultValue: T) =
-		useCases.filterIsInstance<CacheUseCase>().first().get(key, defaultValue)
-
-	fun removeFromCache(key: CacheKeys) =
-		useCases.filterIsInstance<CacheUseCase>().first().remove(key)
-
+	/**
+	 * Class of request's state to api or database
+	 *
+	 * @author JustSpace
+	 */
 	sealed class RequestState {
+
+		/**
+		 * Sending state
+		 *
+		 * @author JustSpace
+		 */
 		object SendingState : RequestState()
+
+		/**
+		 * Error state
+		 * @param t [Throwable] instance of error
+		 *
+		 * @author JustSpace
+		 */
 		class ErrorState<T : Throwable> (val t: T): RequestState()
+
+		/**
+		 * Success state
+		 * @param data Request answer data
+		 *
+		 * @author JustSpace
+		 */
 		class SuccessState<T> (val data: T): RequestState()
+	}
+
+	/**
+	 * Execute usecase with return type [Single]
+	 * @param liveData [LiveData] where to post state
+	 *
+	 * @author JustSpace
+	 */
+	protected fun <T> Single<T>.executeUseCase(liveData: MutableLiveData<RequestState>) {
+		liveData.postValue(RequestState.SendingState)
+		this.subscribeOn(threadProvider.backgroundThread)
+			.observeOn(threadProvider.uiThread)
+			.subscribe(
+				{ successElement -> liveData.postValue(RequestState.SuccessState(successElement)) },
+				{ t -> liveData.postValue(RequestState.ErrorState(t)) }
+			)
+			.also { disposeBag.add(it) }
+	}
+
+	/**
+	 * Execute usecase with return type [Completable]
+	 * @param liveData [LiveData] where to post state
+	 *
+	 * @author JustSpace
+	 */
+	protected fun Completable.executeUseCase(liveData: MutableLiveData<RequestState>) {
+		liveData.postValue(RequestState.SendingState)
+		this.subscribeOn(threadProvider.backgroundThread)
+			.observeOn(threadProvider.uiThread)
+			.subscribe(
+				{ liveData.postValue(RequestState.SuccessState(Unit)) },
+				{ t -> liveData.postValue(RequestState.ErrorState(t)) }
+			)
+			.also { disposeBag.add(it) }
 	}
 
 	override fun onCleared() {
 		super.onCleared()
-		useCases.onEach { it.dispose() }
+		disposeBag.dispose()
 	}
 }

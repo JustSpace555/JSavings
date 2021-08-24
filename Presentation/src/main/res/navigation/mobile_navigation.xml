@@ -37,9 +37,6 @@
 		android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
 		android:label="@string/title_transactions"
 		tools:layout="@layout/main_fragment_transactions">
-		<argument
-			android:name="account_id"
-			app:argType="long" />
 	</fragment>
 
 	<fragment
@@ -56,13 +53,13 @@
 
 
 	<fragment
-		android:id="@+id/purses_fragment"
-		android:name="ru.jsavings.presentation.ui.fragments.purses.allpurses.PursesFragment"
-		android:label="@string/title_purses"
-		tools:layout="@layout/main_fragment_purses" >
+		android:id="@+id/wallets_fragment"
+		android:name="ru.jsavings.presentation.ui.fragments.wallet.allwallets.WalletsFragment"
+		android:label="@string/title_wallets"
+		tools:layout="@layout/main_fragment_wallets" >
 		<action
-			android:id="@+id/action_purses_fragment_to_newPurseFragment"
-			app:destination="@id/newPurseFragment" />
+			android:id="@+id/action_wallets_fragment_to_newWalletFragment"
+			app:destination="@id/newWalletFragment" />
 	</fragment>
 
 	<fragment
@@ -90,7 +87,7 @@
 
 	<fragment
 		android:id="@+id/addNewAccountName"
-		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountName"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountNameFragment"
 		android:label="AddNewAccountName"
 		tools:layout="@layout/new_account_fragment_add_name">
 
@@ -118,15 +115,15 @@
 			android:name="is_education_needed"
 			app:argType="boolean" />
 		<action
-			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_createFirstPurseFragment"
-			app:destination="@id/createFirstPurseFragment"
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_createFirstWalletFragment"
+			app:destination="@id/createFirstWalletFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right"
 			app:exitAnim="@anim/anim_slide_out_to_left"
 			app:popEnterAnim="@anim/anim_slide_in_from_left"
 			app:popExitAnim="@anim/anim_slide_out_to_right"/>
 		<action
-			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_newPurseFragment"
-			app:destination="@id/newPurseFragment"
+			android:id="@+id/action_chooseCurrencyNewAccountFragment_to_newWalletFragment"
+			app:destination="@id/newWalletFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right"
 			app:exitAnim="@anim/anim_slide_out_to_left"
 			app:popEnterAnim="@anim/anim_slide_in_from_left"
@@ -137,58 +134,44 @@
 	</fragment>
 
 	<fragment
-		android:id="@+id/createFirstPurseFragment"
-		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.firstpurse.CreateFirstPurseFragment"
-		android:label="CreateFirstPurseFragment"
-		tools:layout="@layout/new_account_fragment_create_purse">
+		android:id="@+id/createFirstWalletFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.CreateFirstWalletFragment"
+		android:label="CreateFirstWalletFragment"
+		tools:layout="@layout/new_account_fragment_create_wallet">
 		<argument
 			android:name="is_education_needed"
 			app:argType="boolean" />
 		<action
-			android:id="@+id/action_createFirstPurseFragment_to_newPurseFragment"
+			android:id="@+id/action_createFirstWalletFragment_to_newWalletFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right"
 			app:exitAnim="@anim/anim_slide_out_to_left"
 			app:popEnterAnim="@anim/anim_slide_in_from_left"
 			app:popExitAnim="@anim/anim_slide_out_to_right"
-			app:destination="@id/newPurseFragment" />
-		<argument
-			android:name="new_account_name"
-			app:argType="string" />
-		<argument
-			android:name="new_accoun_main_currency"
-			app:argType="string" />
+			app:destination="@id/newWalletFragment" />
 	</fragment>
 
 	<fragment
-		android:id="@+id/newPurseFragment"
-		android:name="ru.jsavings.presentation.ui.fragments.purses.newpurse.NewPurseFragment"
-		android:label="NewPurseFragment"
-		tools:layout="@layout/purse_fragment_new_purse">
+		android:id="@+id/newWalletFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.wallet.newwallet.NewWalletFragment"
+		android:label="NewWalletFragment"
+		tools:layout="@layout/wallet_fragment_new_wallet">
 		<argument
 			android:name="is_education_needed"
-			app:argType="boolean"
-			android:defaultValue="false" />
-		<argument
-			android:name="new_account_name"
-			app:argType="string"
-			android:defaultValue="" />
-		<argument
-			android:name="new_account_main_currency"
-			app:argType="string"
-			android:defaultValue=""/>
+			app:argType="boolean" />
 		<action
-			android:id="@+id/action_newPurseFragment_to_readyFragment"
+			android:id="@+id/action_newWalletFragment_to_readyFragment"
+			app:enterAnim="@anim/anim_slide_in_from_right"
+			app:exitAnim="@anim/anim_slide_out_to_left"
+			app:popEnterAnim="@anim/anim_slide_in_from_left"
+			app:popExitAnim="@anim/anim_slide_out_to_right"
 			app:destination="@id/readyFragment" />
 	</fragment>
 
 	<fragment
 		android:id="@+id/readyFragment"
-		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.ready.ReadyFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.account.newaccount.ReadyFragment"
 		android:label="ReadyFragment"
 		tools:layout="@layout/new_account_fragment_ready_to_start">
-		<argument
-			android:name="new_account_id"
-			app:argType="long" />
 	</fragment>
 
 </navigation>

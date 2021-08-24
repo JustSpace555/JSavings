@@ -1,30 +1,35 @@
 package ru.jsavings.domain.usecase.network
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.model.network.currency.Currency
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
-import ru.jsavings.domain.usecase.common.SingleUseCase
+import ru.jsavings.domain.model.network.currency.Currency
+import ru.jsavings.domain.usecase.common.BaseUseCase
+import java.util.*
 
-class GetCurrenciesUseCase(
-	override val repository: CurrencyRepository
-) : SingleUseCase<List<Currency>, Unit>() {
+/**
+ * Use case to get all currencies from api and [java.util.Currency]
+ * @param repository [CurrencyRepository] to interact with api
+ *
+ * @author JustSpace
+ */
+class GetCurrenciesUseCase(private val repository: CurrencyRepository) : BaseUseCase {
 
-	private val availableCurrencies = java.util.Currency.getAvailableCurrencies()
+	private val availableCurrenciesCodes = java.util.Currency.getAvailableCurrencies().map { it.currencyCode }
 
-	override fun buildSingleUseCase(params: Unit): Single<List<Currency>> =
-		repository.getAvailableCurrencyList().map { myCurrenciesList ->
-
-			val myCurrenciesCodes = myCurrenciesList.map { it.code.uppercase() }
-
-			availableCurrencies.asSequence()
-				.filter { currency ->
-					myCurrenciesCodes.contains(currency.currencyCode.uppercase())
-				}.map { newCurrency ->
-					Currency(
-						newCurrency.currencyCode,
-						newCurrency.displayName,
-						newCurrency.symbol
-					)
-				}.toList()
-		}
+	/**
+	 * Execute usecase
+	 * @return [Single] source of [Currency] from api matched with [java.util.Currency]
+	 *
+	 * @author JustSpace
+	 */
+	operator fun invoke(): Single<List<Currency>> = repository.getAvailableCurrencies().map { currencyEntity ->
+		availableCurrenciesCodes.intersect(currencyEntity.symbols.keys).map { currencyCode ->
+			val newCurrency = java.util.Currency.getInstance(currencyCode)
+			Currency(
+				code = newCurrency.currencyCode,
+				name = newCurrency.displayName,
+				symbol = newCurrency.symbol
+			)
+		}.sortedBy { it.code }
+	}
 }

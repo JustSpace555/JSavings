@@ -1,18 +1,22 @@
 package ru.jsavings.data.repository.network.currency
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.model.network.ConversionInfo
-import ru.jsavings.data.model.network.currency.Currency
-import ru.jsavings.data.repository.common.BaseRepository
+import ru.jsavings.data.entity.network.ConversionEntity
+import ru.jsavings.data.entity.network.CurrencyEntity
+import ru.jsavings.data.repository.network.common.BaseNetworkRepository
 
-interface CurrencyRepository : BaseRepository {
+/**
+ * Repository for currency from ExchangeRate api
+ * @author JustSpace
+ */
+interface CurrencyRepository : BaseNetworkRepository {
 
-	fun getAvailableCurrencyList(): Single<List<Currency>>
+	fun getAvailableCurrencies(): Single<CurrencyEntity>
 
 	fun getConversion(
 		from: String,
 		to: String,
 		amount: Double,
 		precision: Int,
-	): Single<ConversionInfo>
+	): Single<ConversionEntity>
 }

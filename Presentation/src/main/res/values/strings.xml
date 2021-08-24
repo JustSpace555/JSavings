@@ -1,9 +1,5 @@
 <resources>
 
-	<!--  Shared Preferences  -->
-	<string name="sp_current_account">JS_CURRENT_ACCOUNT</string>
-	<string name="sp_new_account_name">JS_NEW_ACCOUNT_NAME</string>
-
 	<!--  Global  -->
     <string name="app_name">JSavings</string>
 	<string name="save">Save</string>
@@ -12,15 +8,27 @@
 	<string name="ok">OK</string>
 	<string name="no_internet">Ooops, no internet connection</string>
 	<string name="retry">Retry</string>
+	<string name="search">Search</string>
+	<string name="settings">Settings</string>
+	<string name="nothing_here">Ooops, nothing here</string>
 	<!--	-->
 
+
+	<!--  Loading  -->
+	<string name="loading_getting_currencies">Loading currencies</string>
+	<string name="loading_getting_crypto_coins">Loading crypto coins</string>
+	<string name="loading_saving_account">Saving account</string>
+	<string name="loading_saving_wallet">Saving wallet</string>
+	<string name="loading_account">Loading account</string>
+	<string name="loading_wallets">Loading wallets</string>
+	<string name="loading_transactions">Loading transactions</string>
 
 
     <!--  Navigation  -->
     <string name="title_transactions">Transactions</string>
     <string name="title_calendar">Calendar</string>
     <string name="title_graph">Graph</string>
-    <string name="title_purses">Purses</string>
+    <string name="title_wallets">Wallets</string>
     <string name="title_intro">Intro</string>
     <!--    -->
 
@@ -33,7 +41,7 @@
     
     
     <!--  Transaction fragment  -->
-	<string name="total_balance">Total balance</string>
+	<string name="total_balance">Total balance:&#160;</string>
         <!--  End of day  -->
         <string name="income_text">Income:</string>
         <string name="consumption_text">Consumption:</string>
@@ -45,6 +53,7 @@
     
     
     <!--  Account  -->
+		<string name="balance">Balance:&#160;</string>
     <!--  Add new account name fragment  -->
         <string name="add_new_account">Add new account</string>
         <string name="choose_name_for_new_account">Choose a name for your new account</string>
@@ -58,16 +67,15 @@
 		<string name="regular_currency">Regular currency</string>
 		<string name="note">Note: The selected currency will be used as the denomination for this account. For your convenience all your savings will be transferred into this currency according to the current exchange rate. You will be able to change it in the future.</string>
 		<string name="cryptocurrency">Cryptocurrency</string>
-
-		<string name="currency_list_search">Search…</string>
+		<string name="error_new_account_currency_is_invalid">Chosen currency does not match any in available list</string>
 	<!--	-->
 	<!--  Starting balance new account  -->
 		<string name="starting_balance_new_account">Starting balance</string>
 		<string name="how_much_money_new_account">How much money do you have?</string>
 		<string name="skip">Skip</string>
 	<!--	-->
-	<!--  Create new purse  -->
-	<string name="new_account_create_new_purse">Now create your first purse</string>
+	<!--  Create new wallet  -->
+	<string name="new_account_create_new_wallet">Now create your first wallet</string>
 	<!--    -->
 	<!--  Ready  -->
 	<string name="new_account_ready_to_start">Now everything is ready and you can start using JSavings</string>
@@ -75,42 +83,42 @@
 
 
 
-	<!--  Purse  -->
-	<!--  Purse type  -->
-		<string name="purse_type_cash">Cash</string>
-		<string name="purse_type_debit_card">Debit card</string>
-		<string name="purse_type_credit_card">Credit card</string>
-		<string name="purse_type_crypto_currency">Crypto currency</string>
-		<string name="purse_type_precious_metal">Precious metal</string>
-		<string name="purse_type_securities">Securities</string>
+	<!--  wallet  -->
+	<!--  wallet type  -->
+		<string name="wallet_type_cash">Cash</string>
+		<string name="wallet_type_debit_card">Debit card</string>
+		<string name="wallet_type_credit_card">Credit card</string>
+		<string name="wallet_type_crypto_currency">Crypto currency</string>
+		<string name="wallet_type_precious_metal">Precious metal</string>
+		<string name="wallet_type_securities">Securities</string>
 	<!--	-->
-	<!--  Add new purse  -->
-		<string name="new_purse_name">Name</string>
-		<string name="new_purse_name_hint">New purse name</string>
-		<string name="new_purse_type">Type</string>
-		<string name="new_purse_starting_balance">Starting balance</string>
-		<string name="new_purse_color">Color</string>
-		<string name="new_purse_icon">Choose icon</string>
-		<string name="new_purse_currency">Currency</string>
-		<string name="new_purse_choose_color">Choose color</string>
+	<!--  Add new wallet  -->
+		<string name="new_wallet_name">Name</string>
+		<string name="new_wallet_name_hint">New wallet name</string>
+		<string name="new_wallet_type">Type</string>
+		<string name="new_wallet_starting_balance">Starting balance</string>
+		<string name="new_wallet_color">Color</string>
+		<string name="new_wallet_icon">Choose icon</string>
+		<string name="new_wallet_currency">Currency</string>
+		<string name="new_wallet_choose_color">Choose color</string>
 
-		<string name="new_purse_error_name_empty">Purse\'s name must not be empty</string>
-		<string name="new_purse_error_type_empty">Purse\'s type must not be empty</string>
-		<string name="new_purse_error_starting_balance_wrong">Purse\'s starting balance is invalid</string>
-		<string name="new_purse_error_currency_empty">Purse\'s currency must not be empty</string>
-		<string name="new_purse_error_currency_wrong">Purse\'s currency must be valid according to provided list</string>
+		<string name="new_wallet_error_name_empty">Wallet\'s name must not be empty</string>
+		<string name="new_wallet_error_type_empty">Wallet\'s type must not be empty</string>
+		<string name="new_wallet_error_starting_balance_wrong">Wallet\'s starting balance is invalid</string>
+		<string name="new_wallet_error_currency_empty">Wallet\'s currency must not be empty</string>
+		<string name="new_wallet_error_currency_wrong">Wallet\'s currency must be valid according to provided list</string>
 
-		<string name="new_purse_credit_error_limit_empty">Purse\'s credit limit must not be empty</string>
-		<string name="new_purse_credit_error_rate_empty">Purse\'s credit interest rate must not be empty</string>
-		<string name="new_purse_credit_error_payment_day_empty">Purse\'s credit payment day must not be empty</string>
-		<string name="new_purse_credit_error_grace_empty">Purse\'s credit grace must not be empty</string>
+		<string name="new_wallet_credit_error_limit_empty">Wallet\'s credit limit must not be empty</string>
+		<string name="new_wallet_credit_error_rate_empty">Wallet\'s credit interest rate must not be empty</string>
+		<string name="new_wallet_credit_error_payment_day_empty">Wallet\'s credit payment day must not be empty</string>
+		<string name="new_wallet_credit_error_grace_empty">Wallet\'s credit grace must not be empty</string>
 	
-	<!--  Credit purse  -->
-		<string name="new_purse_credit_limit">Credit limit</string>
-		<string name="new_purse_percent">Interest rate</string>
-		<string name="new_purse_payment_day">Day of payment</string>
-		<string name="new_purse_grace_period">Grace period (days)</string>
-		<string name="new_purse_invalid_value_error">Invalid value</string>
+	<!--  Credit wallet  -->
+		<string name="new_wallet_credit_limit">Credit limit</string>
+		<string name="new_wallet_percent">Interest rate</string>
+		<string name="new_wallet_payment_day">Day of payment</string>
+		<string name="new_wallet_grace_period">Grace period (days)</string>
+		<string name="new_wallet_invalid_value_error">Invalid value</string>
 	<!--	-->
 
 </resources>

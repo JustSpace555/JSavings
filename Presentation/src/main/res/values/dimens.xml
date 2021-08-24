@@ -27,9 +27,9 @@
     
 	
 	
-    <!--  Purse  -->
-	<dimen name="add_new_purse_elements_top_margin">48dp</dimen>
-	<dimen name="add_new_purse_elements_side_margin">12dp</dimen>
-    <dimen name="add_new_purse_credit_elements_top_margin">12dp</dimen>
+    <!--  wallet  -->
+	<dimen name="add_new_wallet_elements_top_margin">48dp</dimen>
+	<dimen name="add_new_wallet_elements_side_margin">12dp</dimen>
+    <dimen name="add_new_wallet_credit_elements_top_margin">12dp</dimen>
     
 </resources>

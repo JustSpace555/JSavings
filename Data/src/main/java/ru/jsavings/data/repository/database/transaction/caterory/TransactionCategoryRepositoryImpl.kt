@@ -3,62 +3,23 @@ package ru.jsavings.data.repository.database.transaction.caterory
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionCategoryDao
-<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-<<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-import ru.jsavings.data.mappers.database.transaction.TransactionCategoryMapper
-import ru.jsavings.data.model.database.transaction.TransactionCategory
-=======
-import ru.jsavings.domain.usecase.mappers.transaction.TransactionCategoryMapper
-import ru.jsavings.domain.usecase.model.transaction.TransactionCategory
->>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-=======
-import ru.jsavings.domain.usecase.mappers.transaction.TransactionCategoryMapper
-import ru.jsavings.domain.usecase.model.transaction.TransactionCategory
->>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/caterory/TransactionCategoryRepositoryImpl.kt
+import ru.jsavings.data.entity.database.TransactionCategoryEntity
 
-internal class TransactionCategoryRepositoryImpl (
-	override val dao: TransactionCategoryDao,
-	override val mapper: ru.jsavings.domain.usecase.mappers.transaction.TransactionCategoryMapper
+/**
+ * Implementation of [TransactionCategoryRepository]
+ * @param dao [TransactionCategoryDao] to get data from
+ * @author JustSpace
+ */
+internal class TransactionCategoryRepositoryImpl(
+	override val dao: TransactionCategoryDao
 ) : TransactionCategoryRepository {
 
-<<<<<<< HEAD:Data/src/main/java/ru/jsavings/data/repository/database/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-<<<<<<< refs/remotes/origin/dev:Data/src/main/java/ru/jsavings/data/repository/database/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-	override fun addNewCategory(transactionCategory: TransactionCategory): Single<Long> =
-		Single.create { subscriber ->
-			try {
-				val id = dao.addNewCategory(mapper.mapModelToEntity(transactionCategory))
-				subscriber.onSuccess(id)
-=======
-=======
->>>>>>> main:Data/src/main/java/ru/jsavings/data/repository/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-	override fun addNewCategory(transactionCategory: ru.jsavings.domain.usecase.model.transaction.TransactionCategory): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.insertNewCategory(mapper.mapModelToEntity(transactionCategory))
-				subscriber.onComplete()
->>>>>>> Rework started:Data/src/main/java/ru/jsavings/data/repository/transaction/caterory/TransactionCategoryRepositoryImpl.kt
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun getCategoryById(transactionCategoryId: Long): Single<TransactionCategoryEntity> =
+		dao.getCategoryById(transactionCategoryId)
 
-	override fun updateCategory(transactionCategory: ru.jsavings.domain.usecase.model.transaction.TransactionCategory): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.updateCategory(mapper.mapModelToEntity(transactionCategory))
-				subscriber.onComplete()
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun insertNewCategory(transactionCategoryEntity: TransactionCategoryEntity): Single<Long> =
+		dao.insertNewCategory(transactionCategoryEntity)
 
-	override fun deleteCategory(transactionCategory: ru.jsavings.domain.usecase.model.transaction.TransactionCategory): Completable =
-		Completable.create { subscriber ->
-			try {
-				dao.deleteCategoryById(mapper.mapModelToEntity(transactionCategory))
-				subscriber.onComplete()
-			} catch (e: Exception) {
-				subscriber.onError(e)
-			}
-		}
+	override fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable =
+		dao.deleteCategory(transactionCategoryEntity)
 }

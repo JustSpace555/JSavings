@@ -6,10 +6,10 @@ import ru.jsavings.data.database.dao.AccountDao
 import ru.jsavings.data.database.dao.TransactionCategoryDao
 import ru.jsavings.data.database.dao.WalletDao
 import ru.jsavings.data.database.dao.TransactionDao
-import ru.jsavings.data.entity.AccountEntity
-import ru.jsavings.data.entity.WalletEntity
-import ru.jsavings.data.entity.TransactionEntity
-import ru.jsavings.data.entity.TransactionCategoryEntity
+import ru.jsavings.data.entity.database.AccountEntity
+import ru.jsavings.data.entity.database.WalletEntity
+import ru.jsavings.data.entity.database.TransactionEntity
+import ru.jsavings.data.entity.database.TransactionCategoryEntity
 
 /**
  * Main data base of JSavings app

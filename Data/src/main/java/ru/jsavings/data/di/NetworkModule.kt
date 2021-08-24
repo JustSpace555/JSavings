@@ -10,6 +10,11 @@ import ru.jsavings.data.network.api.exchangerate.ExchangeRateApi
 
 private const val BASE_URL = "https://api.exchangerate.host/"
 
+/**
+ * Koin module for network interaction
+ *
+ * @author JustSpace
+ */
 internal val networkModule = module {
 
 	single {

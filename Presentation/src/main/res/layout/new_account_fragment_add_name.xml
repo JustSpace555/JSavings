@@ -39,7 +39,7 @@
 
 	<Button
 		android:id="@+id/next_button"
-		style="@style/ButtonTextStyle"
+		style="@style/ButtonTextStyle.Filled"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"

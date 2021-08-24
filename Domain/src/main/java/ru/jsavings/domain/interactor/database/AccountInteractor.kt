@@ -2,18 +2,35 @@ package ru.jsavings.domain.interactor.database
 
 import org.koin.java.KoinJavaComponent.inject
 import ru.jsavings.domain.interactor.common.BaseInteractor
-import ru.jsavings.domain.usecase.database.account.AddAccountUseCase
-import ru.jsavings.domain.usecase.database.account.DeleteAccountsUseCase
-import ru.jsavings.domain.usecase.database.account.GetAccountsUseCase
-import ru.jsavings.domain.usecase.database.account.UpdateAccountUseCase
+import ru.jsavings.domain.usecase.database.account.GetAccountByIdUseCase
+import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
+import ru.jsavings.domain.usecase.database.account.InsertAccountUseCase
 
+/**
+ * Interactor for all account usecases
+ *
+ * @author JustSpace
+ */
 class AccountInteractor : BaseInteractor {
 
-	val addAccountUseCase by inject(AddAccountUseCase::class.java)
+	/**
+	 * @see GetAllAccountsUseCase
+	 *
+	 * @author JustSpace
+	 */
+	val getAllAccountsUseCase by inject(GetAllAccountsUseCase::class.java)
 
-	val deleteAccountsUseCase by inject(DeleteAccountsUseCase::class.java)
+	/**
+	 * @see InsertAccountUseCase
+	 *
+	 * @author JustSpace
+	 */
+	val insertAccountUseCase by inject(InsertAccountUseCase::class.java)
 
-	val getAllAccountsUseCase by inject(GetAccountsUseCase::class.java)
-
-	val updateAccountUseCase by inject(UpdateAccountUseCase::class.java)
+	/**
+	 * @see GetAccountByIdUseCase
+	 *
+	 * @author Михаил Мошков
+	 */
+	val getAccountByIdUseCase by inject(GetAccountByIdUseCase::class.java)
 }

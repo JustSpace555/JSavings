@@ -9,6 +9,11 @@ import ru.jsavings.databinding.NoInternetFragmentBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
 
+/**
+ * No internet fragment
+ *
+ * @author JustSpace
+ */
 class NoInternetFragment : BaseFragment() {
 
 	override lateinit var bindingUtil: NoInternetFragmentBinding

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/end_of_day_cl"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginVertical="@dimen/all_elements_separation">
+
+	<TextView
+		android:id="@+id/text_month_day"
+		style="@style/HeaderTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="16pt"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="14" />
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/date_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_marginStart="@dimen/date_elements_separation"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="@+id/text_month_day"
+		app:layout_constraintStart_toEndOf="@+id/text_month_day"
+		app:layout_constraintTop_toTopOf="@+id/text_month_day">
+
+		<TextView
+			android:id="@+id/text_week_day"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="5pt"
+			tools:text="Воскресенье" />
+
+		<TextView
+			android:id="@+id/text_month_and_year"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="5pt"
+			tools:text="Февраль 2021" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/income_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:textAlignment="center"
+		app:layout_constraintBottom_toBottomOf="@+id/text_month_day"
+		app:layout_constraintEnd_toStartOf="@+id/consumption_ll"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/date_ll"
+		app:layout_constraintTop_toTopOf="@+id/text_month_day">
+
+		<TextView
+			android:id="@+id/income"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/income_text"
+			android:textSize="5pt" />
+
+		<TextView
+			android:id="@+id/text_income"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/primary"
+			android:textSize="5pt"
+			tools:text="+0$" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/consumption_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:textAlignment="center"
+		app:layout_constraintBottom_toBottomOf="@+id/text_month_day"
+		app:layout_constraintEnd_toStartOf="@+id/total_ll"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/income_ll"
+		app:layout_constraintTop_toTopOf="@+id/text_month_day">
+
+		<TextView
+			android:id="@+id/consumption"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/consumption_text"
+			android:textSize="5pt" />
+
+		<TextView
+			android:id="@+id/text_consumption"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/red"
+			android:textSize="5pt"
+			tools:text="-0$" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+	<androidx.appcompat.widget.LinearLayoutCompat
+		android:id="@+id/total_ll"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_marginEnd="@dimen/all_elements_separation"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:textAlignment="center"
+		app:layout_constraintBottom_toBottomOf="@+id/text_month_day"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/text_month_day">
+
+		<TextView
+			android:id="@+id/profit"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/profit_text"
+			android:textSize="5pt" />
+
+		<TextView
+			android:id="@+id/text_profit"
+			style="@style/StandardTextStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="5pt"
+			tools:text="-0$" />
+
+	</androidx.appcompat.widget.LinearLayoutCompat>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/rw_transactions_per_day"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintTop_toBottomOf="@+id/text_month_day"
+		tools:itemCount="3"
+		tools:listitem="@layout/item_transaction" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,9 @@ package ru.jsavings.data.database.dao
 
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.entity.TransactionEntity
+import ru.jsavings.data.entity.database.TransactionEntity
 
 /**
  * Data access object to transactions' table
@@ -21,7 +22,7 @@ internal interface TransactionDao : BaseDao {
 	 * @author JustSpace
 	 */
 	@Query("SELECT * FROM transaction_table WHERE transaction_id = :transactionId")
-	fun getTransactionById(transactionId: Int): Single<TransactionEntity>
+	fun getTransactionById(transactionId: Long): Single<TransactionEntity>
 
 	/**
 	 * Insert new transaction to transactions' table
@@ -51,5 +52,27 @@ internal interface TransactionDao : BaseDao {
 	 * @author JustSpace
 	 */
 	@Delete
-	fun deleteTransactionById(transactionEntity: TransactionEntity): Completable
+	fun deleteTransaction(transactionEntity: TransactionEntity): Completable
+
+	/**
+	 * Get transaction from transactions' table by account id to which they belong and in certain time period
+	 * @param accountId Id of account
+	 * @param startTime Start time of time period
+	 * @param endTime End time of start period. Must be less or equal to [startTime]
+	 * @return [Single] source of list with transactions
+	 *
+	 * @author JustSpace
+	 */
+	@Query("SELECT * FROM transaction_table WHERE account_fk_id = :accountId AND date BETWEEN :startTime AND :endTime ORDER BY date DESC")
+	fun getTransactionsByAccountIdAndTime(accountId: Long, startTime: Long, endTime: Long): Single<List<TransactionEntity>>
+
+	/**
+	 * Get date of last transaction by it's account id
+	 * @param accountId Id of Account
+	 * @return [Maybe] source of date's representation in [Long]. Transactions' table may be empty
+	 *
+	 * @author Михаил Мошков
+	 */
+	@Query("SELECT MAX(date) FROM transaction_table WHERE account_fk_id = :accountId")
+	fun getLastTransactionDateByAccountId(accountId: Long): Maybe<Long>
 }

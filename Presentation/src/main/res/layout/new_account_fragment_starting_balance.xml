@@ -23,7 +23,7 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/add_new_account_elements_margin"
 		app:endIconMode="clear_text"
-		app:endIconDrawable="@drawable/ic_baseline_delete_forever_24"
+		app:endIconDrawable="@drawable/ic_delete"
 		app:endIconTint="?colorOnSurface"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

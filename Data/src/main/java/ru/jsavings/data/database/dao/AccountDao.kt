@@ -3,7 +3,7 @@ package ru.jsavings.data.database.dao
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.data.entity.AccountEntity
+import ru.jsavings.data.entity.database.AccountEntity
 
 /**
  * Data access object for accounts' table
@@ -24,13 +24,13 @@ internal interface AccountDao : BaseDao {
 
 	/**
 	 * Get account from accounts' table by it id
-	 * @param id Account id
+	 * @param accountId Account id
 	 * @return [Single] with [AccountEntity] which id is equal to [id]
 	 *
 	 * @author JustSpace
 	 */
-	@Query("SELECT * FROM account_table WHERE account_id = :id")
-	fun getAccountById(id: Long): Single<AccountEntity>
+	@Query("SELECT * FROM account_table WHERE account_id = :accountId")
+	fun getAccountById(accountId: Long): Single<AccountEntity>
 
 	/**
 	 * Insert new account into accounts' table

@@ -3,52 +3,62 @@ package ru.jsavings.data.repository.cache
 import android.content.SharedPreferences
 import ru.jsavings.data.repository.common.BaseRepository
 
-class CacheRepository(val sp: SharedPreferences) : BaseRepository {
+/**
+ * Repository for caching data
+ * @param sp [SharedPreferences] where to store information
+ *
+ * @author JustSpace
+ */
+class CacheRepository(private val sp: SharedPreferences) : BaseRepository {
 
-	@Suppress("UNCHECKED_CAST")
-	fun <T: Any> putValue(key: CacheKeys, value: T) {
-
-		val keyStr = key.toString()
-
-		return with(sp.edit()) {
+	/**
+	 * Put data to cache
+	 * @param key Key to associate value with
+	 * @param value Data to put into cache
+	 *
+	 * @author JustSpace
+	 */
+	fun <T: Any> putValue(key: String, value: T) =
+		with(sp.edit()) {
 			when (value) {
-				is Boolean -> putBoolean(keyStr, value)
-				is String -> putString(keyStr, value)
-				is Int -> putInt(keyStr, value)
-				is Long -> putLong(keyStr, value)
-				is Float -> putFloat(keyStr, value)
-				is Set<*> -> putStringSet(keyStr, value as Set<String>)
+				is Boolean -> putBoolean(key, value)
+				is String -> putString(key, value)
+				is Int -> putInt(key, value)
+				is Long -> putLong(key, value)
+				is Float -> putFloat(key, value)
 				else -> throw IllegalArgumentException("Illegal argument type for caching")
 			}
 			apply()
 		}
-	}
 
+	/**
+	 * Get data from cache
+	 * @param key Key of value
+	 * @param defaultValue Default value to return if there is no data by [key]
+	 *
+	 * @author JustSpace
+	 */
 	@Suppress("UNCHECKED_CAST")
-	inline fun <reified T: Any> getValue(key: CacheKeys, defaultValue: T): T {
-
-		val keyStr = key.toString()
-
-		return with(sp) {
-			when (T::class) {
-				Boolean::class -> getBoolean(keyStr, defaultValue as Boolean) as T
-				String::class -> getString(keyStr, defaultValue as String) as T
-				Int::class -> getInt(keyStr, defaultValue as Int) as T
-				Long::class -> getLong(keyStr, defaultValue as Long) as T
-				Float::class -> getFloat(keyStr, defaultValue as Float) as T
-				Set::class -> getStringSet(keyStr, defaultValue as Set<String>) as T
+	fun <T: Any> getValue(key: String, defaultValue: T): T = with(sp) {
+			when (defaultValue) {
+				is Boolean -> getBoolean(key, defaultValue) as T
+				is String -> getString(key, defaultValue) as T
+				is Int -> getInt(key, defaultValue) as T
+				is Long -> getLong(key, defaultValue) as T
+				is Float -> getFloat(key, defaultValue) as T
 				else -> throw IllegalArgumentException("Illegal argument type for getting from cache")
 			}
 		}
-	}
 
-	fun deleteValue(key: CacheKeys) =
+	/**
+	 * Delete data from cache
+	 * @param key Key of value
+	 *
+	 * @author JustSpace
+	 */
+	fun deleteValue(key: String) =
 		with(sp.edit()) {
-			remove(key.toString())
+			remove(key)
 			apply()
 		}
-}
-
-enum class CacheKeys {
-	JS_CURRENT_ACCOUNT
 }
