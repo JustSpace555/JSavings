@@ -37,4 +37,13 @@ interface TransactionCategoryRepository : BaseDbRepository {
 	 * @author JustSpace
 	 */
 	fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable
+
+	/**
+	 * Get all transaction categories from database by account id to which they belongs
+	 * @param accountId Id of account
+	 * @return [Single] source with list of [TransactionCategoryEntity]
+	 *
+	 * @author Михаил Мошков
+	 */
+	fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>>
 }

@@ -2,16 +2,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    
-	<!--  Global  -->
-		<dimen name="global_heading_text_size">12pt</dimen>
-		<dimen name="global_plain_text_size">6pt</dimen>
 
-
+	<dimen name="all_elements_separation">12dp</dimen>
+	<dimen name="all_elements_large_separation">48dp</dimen>
 
     <!--  Transaction fragment  -->
-        <!--  Items  -->
-        <dimen name="all_elements_separation">12dp</dimen>
 
             <!--  End of day item  -->
             <dimen name="date_elements_separation">6dp</dimen>

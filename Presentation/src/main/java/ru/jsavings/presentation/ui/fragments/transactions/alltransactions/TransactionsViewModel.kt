@@ -1,4 +1,4 @@
-package ru.jsavings.presentation.ui.fragments.transactions
+package ru.jsavings.presentation.ui.fragments.transactions.alltransactions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +26,13 @@ class TransactionsViewModel(
 	 * @author Михаил Мошков
 	 */
 	lateinit var account: Account
+
+	/**
+	 * List of wallets in account
+	 *
+	 * @author Михаил Мошков
+	 */
+	val wallets = mutableListOf<Wallet>()
 
 	private val _requestAccountState = MutableLiveData<RequestState>()
 	/**

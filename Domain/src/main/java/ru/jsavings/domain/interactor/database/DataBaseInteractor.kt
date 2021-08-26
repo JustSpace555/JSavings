@@ -30,4 +30,11 @@ class DataBaseInteractor : BaseInteractor {
 	 * @author JustSpace
 	 */
 	val transactionInteractor by inject(TransactionInteractor::class.java)
+
+	/**
+	 * @see TransactionCategoryInteractor
+	 *
+	 * @author Михаил Мошков
+	 */
+	val categoriesInteractor by inject(TransactionCategoryInteractor::class.java)
 }

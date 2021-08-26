@@ -48,8 +48,8 @@ class ChooseCurrencyFragment : BaseFragment() {
 			if (viewModel.newAccountCurrency.isNotEmpty() && viewModel.validateNewAccountCurrency())
 				buttonNewAccountNext.isEnabled = true
 
-			actvNewAccountCurrency.setOnItemClickListener { _, _, i, _ ->
-				viewModel.setCurrency(i)
+			actvNewAccountCurrency.setOnItemClickListener { parent, _, i, _ ->
+				viewModel.newAccountCurrency = parent.getItemAtPosition(i).toString()
 				buttonNewAccountNext.isEnabled = true
 			}
 
@@ -72,7 +72,7 @@ class ChooseCurrencyFragment : BaseFragment() {
 					state.data as List<Currency>
 
 					val stringRepresentation = state.data.map { currency -> currency.toString() }
-					viewModel.setListOfCurrencies(stringRepresentation)
+					viewModel.listOfCurrencies.addAll(stringRepresentation)
 					bindingUtil.actvNewAccountCurrency.setAdapter(
 						ArrayAdapter(requireContext(), R.layout.item_dropdown_item, stringRepresentation)
 					)

@@ -22,4 +22,7 @@ internal class TransactionCategoryRepositoryImpl(
 
 	override fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable =
 		dao.deleteCategory(transactionCategoryEntity)
+
+	override fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>> =
+		dao.getCategoriesByAccountId(accountId)
 }

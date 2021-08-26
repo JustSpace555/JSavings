@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.fragments.transactions.TransactionsFragment">
+    tools:context=".presentation.ui.fragments.transactions.alltransactions.TransactionsFragment">
 
 	<HorizontalScrollView
 		android:id="@+id/hsv_chips"

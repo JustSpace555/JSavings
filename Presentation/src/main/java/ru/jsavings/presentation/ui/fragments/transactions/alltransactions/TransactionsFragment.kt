@@ -1,11 +1,10 @@
-package ru.jsavings.presentation.ui.fragments.transactions
+package ru.jsavings.presentation.ui.fragments.transactions.alltransactions
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import com.google.android.material.chip.Chip
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
@@ -59,32 +58,42 @@ class TransactionsFragment : BaseFragment() {
 	@SuppressLint("SetTextI18n")
 	@Suppress("UNCHECKED_CAST")
 	private fun observeWalletsRequest() = viewModel.requestWalletsState.observe(viewLifecycleOwner) { state ->
-	    when (state) {
-	        is BaseViewModel.RequestState.SuccessState<*> -> {
+		when (state) {
+			is BaseViewModel.RequestState.SuccessState<*> -> {
 
-	        	val accountBalanceChip = Chip(requireContext()).apply {
-			        id = ViewCompat.generateViewId()
-	        		text = getString(R.string.total_balance) +
-					        viewModel.account.balanceInMainCurrency +
-					        " " +
-					        Currency.getInstance(viewModel.account.mainCurrencyCode).symbol
-			        isCheckable = true
-			        isChecked = true
-		        }
-		        bindingUtil.chipGroup.addView(accountBalanceChip)
+				state.data as List<Wallet>
+				if (viewModel.wallets.isEmpty())
+					viewModel.wallets.addAll(state.data)
+				bindingUtil.chipGroup.removeAllViews()
+				val accountBalanceChip = (
+						layoutInflater.inflate(R.layout.item_wallet_chip, bindingUtil.chipGroup, false) as Chip
+					).apply {
+						text = getString(R.string.total_balance) +
+								viewModel.account.balanceInMainCurrency +
+								" " +
+								Currency.getInstance(viewModel.account.mainCurrencyCode).symbol
+						isCheckable = true
+						isChecked = true
+					}
+				bindingUtil.chipGroup.addView(accountBalanceChip)
 
-		        (state.data as List<Wallet>).forEach {
-		        	bindingUtil.chipGroup.addView(Chip(requireContext()).apply {
-				        id = ViewCompat.generateViewId()
-		        		text = "${it.name}: ${it.balance} ${it.currency}"
-				        //chipBackgroundColor = it.color TODO
-				        isCheckable = true
-			        })
-		        }
-		        viewModel.requestLastTransactionDate()
+				state.data.forEach {
+					val walletChip = (
+							layoutInflater.inflate(R.layout.item_wallet_chip, bindingUtil.chipGroup, false) as Chip
+						).apply {
+							val symbol = Currency.getAvailableCurrencies()
+								.find { currency -> currency.currencyCode == it.currency }?.symbol ?: it.currency
+
+							text = "${it.name}: ${it.balance} $symbol"
+							//chipBackgroundColor = it.color TODO
+							isCheckable = true
+						}
+					bindingUtil.chipGroup.addView(walletChip)
+				}
+				viewModel.requestLastTransactionDate()
 			}
 			is BaseViewModel.RequestState.ErrorState<*> -> {
-			    showTextSnackBar(state.t.getErrorString())
+				showTextSnackBar(state.t.getErrorString())
 				hideLoading()
 			}
 			else -> setLoadingText(getString(R.string.loading_wallets))

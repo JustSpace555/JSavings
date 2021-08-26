@@ -3,7 +3,10 @@ package ru.jsavings.presentation.ui.activities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.fragment.app.findFragment
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,6 +22,8 @@ import org.koin.core.context.stopKoin
 import ru.jsavings.R
 import ru.jsavings.databinding.ActivityMainBinding
 import ru.jsavings.presentation.di.presentationModule
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragment
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragmentDirections
 
 /**
  * Main activity of JSavings app
@@ -63,7 +68,9 @@ class MainActivity : AppCompatActivity() {
 		bindingUtil = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(bindingUtil.root)
 
-		navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!.findNavController()
+		val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+		navController = navHostFragment.navController
 
 		val appBarConfiguration = AppBarConfiguration(
 			setOf(
@@ -81,7 +88,12 @@ class MainActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 
 		bindingUtil.addTransactionFab.setOnClickListener {
-//			TODO navController.navigate()
+			val fragment = navHostFragment.childFragmentManager.fragments.first()
+			if (fragment is TransactionsFragment && fragment.isVisible) {
+				navController.navigate(
+					TransactionsFragmentDirections.actionTransactionsFragmentToNewTransactionFragment()
+				)
+			}
 		}
 	}
 
@@ -109,4 +121,14 @@ class MainActivity : AppCompatActivity() {
 	fun setAccountName(name: String) {
 		bindingUtil.materialTopBar.title = name
 	}
+
+//	/**
+//	 * Set visil
+//	 * @author Михаил Мошков
+//	 */
+//	fun setVisibilityToInterface(isVisible: Boolean) {
+//		bindingUtil.topBar.isVisible = isVisible
+//		bindingUtil.addTransactionFab.isVisible = isVisible
+//		bindingUtil.bottomAppBar.isVisible = isVisible
+//	}
 }

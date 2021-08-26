@@ -34,9 +34,12 @@
 
 	<fragment
 		android:id="@+id/transactions_fragment"
-		android:name="ru.jsavings.presentation.ui.fragments.transactions.TransactionsFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragment"
 		android:label="@string/title_transactions"
 		tools:layout="@layout/main_fragment_transactions">
+		<action
+			android:id="@+id/action_transactions_fragment_to_newTransactionFragment"
+			app:destination="@id/newTransactionFragment" />
 	</fragment>
 
 	<fragment
@@ -173,5 +176,28 @@
 		android:label="ReadyFragment"
 		tools:layout="@layout/new_account_fragment_ready_to_start">
 	</fragment>
+	<fragment
+		android:id="@+id/newTransactionFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.transactions.newtransaction.NewTransactionFragment"
+		android:label="NewTransactionFragment"
+		tools:layout="@layout/new_transaction_fragment">
+		<action
+			android:id="@+id/action_newTransactionFragment_to_categoriesListFragment"
+			app:destination="@id/categoriesListFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/categoriesListFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListFragment"
+		android:label="CategoriesListFragment"
+		tools:layout="@layout/fragment_list_categories">
+		<action
+			android:id="@+id/action_categoriesListFragment_to_addNewCategoryFragment"
+			app:destination="@id/addNewCategoryFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/addNewCategoryFragment"
+		android:name="ru.jsavings.presentation.ui.fragments.categories.newcategory.AddNewCategoryFragment"
+		android:label="AddNewCategoryFragment"
+		tools:layout="@layout/new_category_fragment"/>
 
 </navigation>

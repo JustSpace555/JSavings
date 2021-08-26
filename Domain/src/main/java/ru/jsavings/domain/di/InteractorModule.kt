@@ -1,10 +1,7 @@
 package ru.jsavings.domain.di
 
 import org.koin.dsl.module
-import ru.jsavings.domain.interactor.database.AccountInteractor
-import ru.jsavings.domain.interactor.database.DataBaseInteractor
-import ru.jsavings.domain.interactor.database.TransactionInteractor
-import ru.jsavings.domain.interactor.database.WalletInteractor
+import ru.jsavings.domain.interactor.database.*
 import ru.jsavings.domain.interactor.network.NetworkInteractor
 
 /**
@@ -19,6 +16,7 @@ internal val interactorModule = module {
 	single { DataBaseInteractor() }
 	single { WalletInteractor() }
 	single { TransactionInteractor() }
+	single { TransactionCategoryInteractor() }
 
 	//Network
 	single { NetworkInteractor() }

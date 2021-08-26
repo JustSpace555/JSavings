@@ -45,4 +45,14 @@ internal interface TransactionCategoryDao : BaseDao {
 	 */
 	@Delete
 	fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable
+
+	/**
+	 * Get all transaction categories from database by account id to which they belongs
+	 * @param accountId Id of account
+	 * @return [Single] source with list of [TransactionCategoryEntity]
+	 *
+	 * @author Михаил Мошков
+	 */
+	@Query("SELECT * FROM transaction_category_table WHERE account_fk_id = :accountId")
+	fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>>
 }

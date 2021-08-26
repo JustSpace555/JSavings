@@ -34,23 +34,7 @@ class ChooseCurrencyViewModel(
 	 */
 	var newAccountCurrency: String = ""
 
-	private val listOfCurrencies = mutableListOf<String>()
-
-	/**
-	 * Set currencies' list to ViewModel variable [listOfCurrencies]
-	 * @param list List of String representation of [ru.jsavings.domain.model.network.currency.Currency]
-	 *
-	 * @author JustSpace
-	 */
-	fun setListOfCurrencies(list: List<String>) = listOfCurrencies.addAll(list)
-
-	/**
-	 * Set currency by it's index in list of [listOfCurrencies]
-	 * @param index Index in list
-	 *
-	 * @author JustSpace
-	 */
-	fun setCurrency(index: Int) { newAccountCurrency = listOfCurrencies[index] }
+	val listOfCurrencies = mutableListOf<String>()
 
 	private val _allCurrenciesRequestStateLiveData = MutableLiveData<RequestState>()
 	/**

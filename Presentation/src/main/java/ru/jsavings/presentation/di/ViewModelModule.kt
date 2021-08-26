@@ -5,9 +5,12 @@ import org.koin.dsl.module
 import ru.jsavings.presentation.ui.fragments.account.newaccount.currency.ChooseCurrencyViewModel
 import ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountNameViewModel
 import ru.jsavings.presentation.ui.fragments.calendar.CalendarViewModel
+import ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListViewModel
+import ru.jsavings.presentation.ui.fragments.categories.newcategory.AddNewCategoryViewModel
 import ru.jsavings.presentation.ui.fragments.graph.GraphViewModel
 import ru.jsavings.presentation.ui.fragments.intro.IntroViewModel
-import ru.jsavings.presentation.ui.fragments.transactions.TransactionsViewModel
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsViewModel
+import ru.jsavings.presentation.ui.fragments.transactions.newtransaction.NewTransactionViewModel
 import ru.jsavings.presentation.ui.fragments.wallet.allwallets.WalletsViewModel
 import ru.jsavings.presentation.ui.fragments.wallet.newwallet.NewWalletViewModel
 
@@ -26,6 +29,11 @@ internal val viewModelModule = module {
 
 	//Transaction
 	viewModel { TransactionsViewModel(get(), get()) }
+	viewModel { NewTransactionViewModel(get(), get()) }
+
+	//Transaction categories
+	viewModel { CategoriesListViewModel(get(), get()) }
+	viewModel { AddNewCategoryViewModel(get(), get()) }
 
 	//Calendar
 	viewModel { CalendarViewModel() }

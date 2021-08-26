@@ -19,9 +19,11 @@
 	<string name="loading_getting_crypto_coins">Loading crypto coins</string>
 	<string name="loading_saving_account">Saving account</string>
 	<string name="loading_saving_wallet">Saving wallet</string>
+	<string name="loading_saving_category">Saving transaction category</string>
 	<string name="loading_account">Loading account</string>
 	<string name="loading_wallets">Loading wallets</string>
 	<string name="loading_transactions">Loading transactions</string>
+	<string name="loading_transaction_categories">Loading transaction categories</string>
 
 
     <!--  Navigation  -->
@@ -50,7 +52,20 @@
 	<string name="text_description_fab">Add transaction</string>
 	<!--	-->
 
-    
+	<!--  New transaction  -->
+	<string name="new_transaction_hint_day">Day of transaction</string>
+	<string name="new_transaction_hint_time">Time of transaction</string>
+	<string name="new_transaction_hint_sum">Sum of transaction</string>
+	<string name="new_transaction_hint_type">Type of transaction</string>
+	<string name="new_transaction_hint_category">Category of transaction</string>
+	<string name="new_transaction_hint_from_wallet">From wallet</string>
+	<string name="new_transaction_hint_to_wallet">To wallet</string>
+	<string name="new_transaction_hint_commission">Commission</string>
+	<string name="new_transaction_hint_description">Description</string>
+	<string name="new_transaction_save">Save</string>
+	<string name="transaction_type_income">Income</string>
+	<string name="transaction_type_consumption">Consumption</string>
+	<string name="transaction_type_transfer">Transfer</string>
     
     <!--  Account  -->
 		<string name="balance">Balance:&#160;</string>
@@ -119,6 +134,16 @@
 		<string name="new_wallet_payment_day">Day of payment</string>
 		<string name="new_wallet_grace_period">Grace period (days)</string>
 		<string name="new_wallet_invalid_value_error">Invalid value</string>
+	<!--	-->
+
+	<!--  New transaction category  -->
+	<string name="create_new_category">Create new category</string>
+	<string name="new_category_name">Name</string>
+	<string name="new_category_color">Color</string>
+	<string name="new_category_type">Type</string>
+	<string name="new_category_error_name_is_empty">Category name can not be empty</string>
+	<string name="new_category_error_name_is_taken">Category with this name already exists</string>
+	<string name="new_category_error_type_is_empty">Category type can not be empty</string>
 	<!--	-->
 
 </resources>

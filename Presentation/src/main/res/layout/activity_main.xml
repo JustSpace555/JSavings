@@ -24,10 +24,10 @@
 			app:layout_scrollFlags="scroll"
 			app:titleTextColor="?android:attr/textColorPrimary">
 
-			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:src="@drawable/ic_arrow_down" />
+<!--			<ImageView-->
+<!--				android:layout_width="wrap_content"-->
+<!--				android:layout_height="wrap_content"-->
+<!--				android:src="@drawable/ic_arrow_down" />-->
 
 		</com.google.android.material.appbar.MaterialToolbar>
 

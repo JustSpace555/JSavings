@@ -213,7 +213,7 @@ class NewWalletViewModel(
 	 * Check if certain check is valid
 	 * @param validationResult Result of all validation
 	 * @param validationCode Code of instance to check
-	 * @return True if validation is valid, false otherwise
+	 * @return True if validation is INVALID, false otherwise
 	 * @see validateInputData
 	 * @see INVALID_WALLET_BALANCE
 	 * @see INVALID_WALLET_CURRENCY
