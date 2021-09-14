@@ -18,8 +18,7 @@ import ru.jsavings.data.repository.database.wallet.WalletRepository
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.mappers.database.WalletMapper
 import ru.jsavings.domain.model.database.wallet.Wallet
-import ru.jsavings.domain.model.database.wallet.WalletCategoryType
-import ru.jsavings.domain.model.network.ConversionInfo
+import ru.jsavings.domain.model.database.wallet.WalletType
 
 class InsertNewWalletUseCaseTest {
 
@@ -30,7 +29,7 @@ class InsertNewWalletUseCaseTest {
 		private const val ACCOUNT_BALANCE = 20.0
 
 		private const val BALANCE = 25.0
-		private val CATEGORY = WalletCategoryType.CASH
+		private val CATEGORY = WalletType.CASH
 		private const val COLOR = 0
 		private const val CREDIT_LIMIT = 0.0
 		private const val GRACE_PERIOD = 0
@@ -58,7 +57,7 @@ class InsertNewWalletUseCaseTest {
 	private val someWalletModel = Wallet(
 		accountId = ACCOUNT_ID,
 		balance = BALANCE,
-		category = CATEGORY,
+		type = CATEGORY,
 		color = COLOR,
 		creditLimit = CREDIT_LIMIT,
 		gracePeriod = GRACE_PERIOD,

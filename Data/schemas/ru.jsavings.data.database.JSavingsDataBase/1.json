@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "16aeb5eef7fba4abbd6b2839f2fce343",
+    "identityHash": "f0bac084ccfbf1efed4df771e699fbab",
     "entities": [
       {
         "tableName": "account_table",
@@ -151,7 +151,7 @@
       },
       {
         "tableName": "transaction_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `wallet_fk_id` INTEGER NOT NULL, `category_fk_id` INTEGER NOT NULL, `account_fk_id` INTEGER NOT NULL, `total_sum` REAL NOT NULL, `date` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT, FOREIGN KEY(`wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `from_wallet_fk_id` INTEGER, `to_wallet_fk_id` INTEGER, `category_fk_id` INTEGER, `account_fk_id` INTEGER NOT NULL, `wallet_currency_su,` REAL NOT NULL, `transfer_sum` REAL, `main_currency_sum` REAL NOT NULL, `date_day` INTEGER NOT NULL, `date_time` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT NOT NULL, FOREIGN KEY(`from_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`to_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "transactionId",
@@ -160,16 +160,22 @@
             "notNull": true
           },
           {
-            "fieldPath": "walletFkId",
-            "columnName": "wallet_fk_id",
+            "fieldPath": "fromWalletFkId",
+            "columnName": "from_wallet_fk_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
+          },
+          {
+            "fieldPath": "toWalletFkId",
+            "columnName": "to_wallet_fk_id",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "categoryFkId",
             "columnName": "category_fk_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "accountFkId",
@@ -178,14 +184,32 @@
             "notNull": true
           },
           {
-            "fieldPath": "sum",
-            "columnName": "total_sum",
+            "fieldPath": "sumInWalletCurrency",
+            "columnName": "wallet_currency_su,",
             "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "date",
-            "columnName": "date",
+            "fieldPath": "transferSum",
+            "columnName": "transfer_sum",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sumInAccountCurrency",
+            "columnName": "main_currency_sum",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateDay",
+            "columnName": "date_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateTime",
+            "columnName": "date_time",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -199,7 +223,7 @@
             "fieldPath": "describePicturePath",
             "columnName": "describe_picture_path",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -210,12 +234,20 @@
         },
         "indices": [
           {
-            "name": "index_transaction_table_wallet_fk_id",
+            "name": "index_transaction_table_from_wallet_fk_id",
             "unique": false,
             "columnNames": [
-              "wallet_fk_id"
+              "from_wallet_fk_id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_wallet_fk_id` ON `${TABLE_NAME}` (`wallet_fk_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_from_wallet_fk_id` ON `${TABLE_NAME}` (`from_wallet_fk_id`)"
+          },
+          {
+            "name": "index_transaction_table_to_wallet_fk_id",
+            "unique": false,
+            "columnNames": [
+              "to_wallet_fk_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_transaction_table_to_wallet_fk_id` ON `${TABLE_NAME}` (`to_wallet_fk_id`)"
           },
           {
             "name": "index_transaction_table_category_fk_id",
@@ -240,7 +272,18 @@
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "wallet_fk_id"
+              "from_wallet_fk_id"
+            ],
+            "referencedColumns": [
+              "wallet_id"
+            ]
+          },
+          {
+            "table": "wallet_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "to_wallet_fk_id"
             ],
             "referencedColumns": [
               "wallet_id"
@@ -345,7 +388,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16aeb5eef7fba4abbd6b2839f2fce343')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f0bac084ccfbf1efed4df771e699fbab')"
     ]
   }
 }

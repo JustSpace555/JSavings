@@ -11,6 +11,8 @@
 	<string name="search">Search</string>
 	<string name="settings">Settings</string>
 	<string name="nothing_here">Ooops, nothing here</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
 	<!--	-->
 
 
@@ -20,11 +22,16 @@
 	<string name="loading_saving_account">Saving account</string>
 	<string name="loading_saving_wallet">Saving wallet</string>
 	<string name="loading_saving_category">Saving transaction category</string>
+	<string name="loading_saving_transaction">Saving transaction</string>
 	<string name="loading_account">Loading account</string>
 	<string name="loading_wallets">Loading wallets</string>
 	<string name="loading_transactions">Loading transactions</string>
+	<string name="loading_transaction_category">Loading transaction category</string>
 	<string name="loading_transaction_categories">Loading transaction categories</string>
-
+	<string name="loading_deleting_category">Deleting transaction category</string>
+	<string name="loading_updating_category">Updating category</string>
+	<string name="loading_getting_transactions">Loading transactions</string>
+	<string name="loading_getting_transaction">Loading transaction</string>
 
     <!--  Navigation  -->
     <string name="title_transactions">Transactions</string>
@@ -66,6 +73,22 @@
 	<string name="transaction_type_income">Income</string>
 	<string name="transaction_type_consumption">Consumption</string>
 	<string name="transaction_type_transfer">Transfer</string>
+	<string name="new_transaction_error_future_time">Transaction can not be in future</string>
+	<string name="new_transaction_error_category_empty">Category must be chosen</string>
+	<string name="new_transaction_error_wallet_empty">Wallet was not selected</string>
+	<string name="new_transaction_error_sum_empty">Transaction sum must not be empty</string>
+	<string name="new_transaction_error_sum_invalid">Transaction sum is in invalid format</string>
+	<string name="new_transaction_error_low_balance">The balance on the wallet is not enough to record this transaction</string>
+
+	<!--  Transaction info  -->
+	<string name="transaction_date">Date</string>
+	<string name="transaction_category">Category</string>
+	<string name="transaction_to_wallet">To wallet</string>
+	<string name="transaction_from_wallet">From wallet</string>
+	<string name="transaction_sum">Sum</string>
+	<string name="transaction_type">Type</string>
+	<string name="edit_transaction">Edit transaction</string>
+	<string name="delete_transaction">Delete transaction</string>
     
     <!--  Account  -->
 		<string name="balance">Balance:&#160;</string>
@@ -74,7 +97,6 @@
         <string name="choose_name_for_new_account">Choose a name for your new account</string>
         <string name="hint_input_new_account_name">Name</string>
 		<string name="error_new_account_name_is_exists">Account with the same name already exists</string>
-		<string name="error_new_account_name_is_empty">Account\'s name can not be blank or empty</string>
     <!--    -->
 	<!--  Choose currency for new account fragment  -->
 		<string name="choose_preferred_currency_new_account">Choose currency</string>
@@ -117,9 +139,12 @@
 		<string name="new_wallet_currency">Currency</string>
 		<string name="new_wallet_choose_color">Choose color</string>
 
+		<string name="new_wallet_error_currencies_load">Currencies was not loaded</string>
+		<string name="new_wallet_error_crypto_coins_load">Crypto coins was not loaded</string>
+
 		<string name="new_wallet_error_name_empty">Wallet\'s name must not be empty</string>
 		<string name="new_wallet_error_type_empty">Wallet\'s type must not be empty</string>
-		<string name="new_wallet_error_starting_balance_wrong">Wallet\'s starting balance is invalid</string>
+		<string name="new_wallet_error_starting_balance_invalid">Wallet\'s starting balance is invalid</string>
 		<string name="new_wallet_error_currency_empty">Wallet\'s currency must not be empty</string>
 		<string name="new_wallet_error_currency_wrong">Wallet\'s currency must be valid according to provided list</string>
 
@@ -137,7 +162,10 @@
 	<!--	-->
 
 	<!--  New transaction category  -->
-	<string name="create_new_category">Create new category</string>
+	<string name="create_new_income_category">Create new income category</string>
+	<string name="create_new_consumption_category">Create new consumption category</string>
+	<string name="delete_category_question">Are you sure you want to delete this category?</string>
+	<string name="update_category">Update category</string>
 	<string name="new_category_name">Name</string>
 	<string name="new_category_color">Color</string>
 	<string name="new_category_type">Type</string>

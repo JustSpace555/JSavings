@@ -17,7 +17,8 @@ import ru.jsavings.domain.model.database.Account
 import ru.jsavings.domain.usecase.cache.CacheKeys
 import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
-import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
+import ru.jsavings.presentation.viewmodels.IntroViewModel
+import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 
 class IntroViewModelTest {
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/rw_transaction_categories"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		tools:listitem="@layout/item_transaction_category"
+		tools:itemCount="3" />
+
+	<ImageView
+		android:id="@+id/iv_no_categories"
+		android:layout_width="250dp"
+		android:layout_height="250dp"
+		android:src="@drawable/ic_no_data"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+		android:id="@+id/text_no_categories"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/nothing_here"
+		android:visibility="gone"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/iv_no_categories" />
+
+	<Button
+		android:id="@+id/button_add_new_category"
+		style="@style/Widget.MaterialComponents.Button"
+		android:textAppearance="@style/ButtonTextStyle"
+		android:textColor="@null"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"
+		android:layout_marginBottom="@dimen/all_elements_separation"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

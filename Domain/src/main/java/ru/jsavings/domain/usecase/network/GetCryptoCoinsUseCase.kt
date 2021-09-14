@@ -1,9 +1,9 @@
 package ru.jsavings.domain.usecase.network
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.domain.model.network.crypto.CryptoCoin
 import ru.jsavings.data.repository.network.crypto.CryptoRepository
 import ru.jsavings.domain.mappers.network.CryptoCoinsMapper
+import ru.jsavings.domain.model.network.crypto.CryptoCoin
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
 /**

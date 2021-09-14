@@ -5,8 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import ru.jsavings.data.entity.common.BaseEntity
-import ru.jsavings.data.entity.database.AccountEntity
+import ru.jsavings.data.entity.database.common.BaseDbEntity
 
 /**
  * Entity of transaction category in database
@@ -50,4 +49,4 @@ data class TransactionCategoryEntity (
 	@ColumnInfo(name = "icon_path")
 	val iconPath: String
 
-) : BaseEntity
+) : BaseDbEntity

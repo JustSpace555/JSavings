@@ -1,9 +1,9 @@
 package ru.jsavings.domain.usecase.network
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.domain.model.network.ConversionInfo
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.mappers.network.ConversionMapper
+import ru.jsavings.domain.model.network.ConversionInfo
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
 /**

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import ru.jsavings.databinding.NoInternetFragmentBinding
+import ru.jsavings.databinding.FragmentNoInternetBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
+import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 
 /**
  * No internet fragment
@@ -16,7 +16,7 @@ import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
  */
 class NoInternetFragment : BaseFragment() {
 
-	override lateinit var bindingUtil: NoInternetFragmentBinding
+	override lateinit var bindingUtil: FragmentNoInternetBinding
 	override lateinit var viewModel: BaseViewModel
 
 	override fun onCreateView(
@@ -24,7 +24,7 @@ class NoInternetFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		bindingUtil = NoInternetFragmentBinding.inflate(inflater, container, false)
+		bindingUtil = FragmentNoInternetBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

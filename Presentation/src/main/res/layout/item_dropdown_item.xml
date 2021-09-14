@@ -4,11 +4,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 
-	style="@style/StandardTextStyle"
+	android:textAppearance="@style/StandardTextStyle"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:padding="@dimen/all_elements_separation"
 	android:ellipsize="end"
 	android:maxLines="2"
-	android:textAppearance="?attr/textAppearanceSubtitle1"
-	tools:text="something" />
+	tools:text="Something" />

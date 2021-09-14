@@ -1,6 +1,6 @@
 package ru.jsavings.domain.model.network.crypto
 
-import ru.jsavings.domain.model.common.BaseModel
+import ru.jsavings.domain.model.network.common.BaseCurrency
 
 /**
  * Model representation of database [ru.jsavings.data.entity.network.CryptoCoinEntity]
@@ -14,6 +14,6 @@ data class CryptoCoin(
 	val id: String,
 	val symbol: String,
 	val name: String
-) : BaseModel {
+) : BaseCurrency() {
 	override fun toString(): String = "$id $name - $symbol"
 }

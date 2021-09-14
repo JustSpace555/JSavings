@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_new_wallet_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterMaxLength="30"
+            android:layout_marginStart="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:layout_marginEnd="@dimen/add_new_wallet_elements_side_margin"
+            app:errorEnabled="false"
+            app:errorTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_new_wallet_name"
+                android:textAppearance="@style/StandardTextStyle"
+                android:maxLength="30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_wallet_name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_new_wallet_type"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:layout_marginEnd="@dimen/add_new_wallet_elements_side_margin"
+            android:enabled="false"
+            app:errorTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_new_wallet_name">
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_new_wallet_type"
+                android:textAppearance="@style/StandardTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_wallet_type"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_new_wallet_currency"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:layout_marginEnd="@dimen/add_new_wallet_elements_side_margin"
+            app:errorTextAppearance="@style/HintTextStyle"
+            android:enabled="false"
+            android:focusableInTouchMode="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_new_wallet_type">
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_new_wallet_currency"
+                android:textAppearance="@style/StandardTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_wallet_currency"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_new_wallet_starting_balance"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:layout_marginEnd="@dimen/add_new_wallet_elements_side_margin"
+            app:errorTextAppearance="@style/HintTextStyle"
+            app:endIconDrawable="@drawable/ic_delete"
+            app:endIconMode="clear_text"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_new_wallet_currency">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_new_wallet_starting_balance"
+                android:textAppearance="@style/StandardTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_wallet_starting_balance"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/hsv_credit_wallet_elements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/til_new_wallet_starting_balance"
+            tools:layout_editor_absoluteX="12dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/cl_credit_wallet_elements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_wallet_credit_limit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/add_new_wallet_elements_side_margin"
+                    app:helperText="@string/new_wallet_credit_limit"
+                    app:errorTextAppearance="@style/HintTextStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textAppearance="@style/StandardTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_wallet_credit_percent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/add_new_wallet_elements_side_margin"
+                    app:helperText="@string/new_wallet_percent"
+                    app:helperTextEnabled="true"
+                    app:errorTextAppearance="@style/HintTextStyle"
+                    app:suffixText="%">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textAppearance="@style/StandardTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_wallet_credit_payment_day"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/add_new_wallet_elements_side_margin"
+                    app:helperText="@string/new_wallet_payment_day"
+                    app:helperTextEnabled="true"
+                    app:errorTextAppearance="@style/HintTextStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textAppearance="@style/StandardTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_new_wallet_credit_grace"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/add_new_wallet_elements_side_margin"
+                    app:helperText="@string/new_wallet_grace_period"
+                    app:errorTextAppearance="@style/HintTextStyle"
+                    app:helperTextEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textAppearance="@style/StandardTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/button_new_wallet_choose_color"
+            style="@style/Widget.MaterialComponents.Button"
+            android:textAppearance="@style/ButtonTextStyle"
+            android:textColor="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginTop="@dimen/add_new_wallet_elements_top_margin"
+            android:text="@string/new_wallet_choose_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hsv_credit_wallet_elements" />
+
+        <Button
+            android:id="@+id/button_new_wallet_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/ButtonTextStyle"
+            android:textColor="@null"
+            android:layout_marginHorizontal="@dimen/add_new_wallet_elements_side_margin"
+            android:layout_marginVertical="@dimen/add_new_wallet_elements_top_margin"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_new_wallet_choose_color" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

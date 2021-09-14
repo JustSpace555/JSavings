@@ -1,132 +1,131 @@
 package ru.jsavings.presentation.ui.fragments.transactions.alltransactions
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import ru.jsavings.R
-import ru.jsavings.databinding.MainFragmentTransactionsBinding
-import ru.jsavings.domain.model.database.Account
+import ru.jsavings.databinding.FragmentTransactionsBinding
+import ru.jsavings.domain.model.database.transaction.BaseTransactionData
 import ru.jsavings.domain.model.database.wallet.Wallet
-import ru.jsavings.presentation.ui.activities.MainActivity
+import ru.jsavings.presentation.extension.getCurrencySymbol
+import ru.jsavings.presentation.extension.isTextBlack
+import ru.jsavings.presentation.extension.toUiView
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.TransactionAnimator
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.TransactionListAdapter
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.TransactionListDiffUtil
+import ru.jsavings.presentation.viewmodels.MainSharedViewModel
 import java.util.*
 
 class TransactionsFragment : BaseFragment() {
 
-	override val viewModel by viewModel<TransactionsViewModel>()
-
-	override lateinit var bindingUtil: MainFragmentTransactionsBinding
+	override val viewModel by sharedViewModel<MainSharedViewModel>()
+	override lateinit var bindingUtil: FragmentTransactionsBinding
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = MainFragmentTransactionsBinding.inflate(inflater, container, false)
+		bindingUtil = FragmentTransactionsBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		requestAndSetData()
-	}
-
-	private fun requestAndSetData() {
-		observeAccountRequest()
 		observeWalletsRequest()
-		observeTransactionsDateRequest()
-		viewModel.requestAccount()
-	}
-
-	private fun observeAccountRequest() = viewModel.requestAccountState.observe(viewLifecycleOwner) { state ->
-		when (state) {
-			is BaseViewModel.RequestState.SuccessState<*> -> {
-				viewModel.account = state.data as Account
-				(requireActivity() as? MainActivity)?.setAccountName(state.data.name)
-				viewModel.requestWallets()
-			}
-			is BaseViewModel.RequestState.ErrorState<*> -> {
-				hideLoading()
-				showTextSnackBar(state.t.getErrorString())
-				//TODO подумать над навигацией на экран создания нового аккаунта
-			}
-			is BaseViewModel.RequestState.SendingState -> showLoading(getString(R.string.loading_account))
-		}
+		observeTransactionRequest()
+		viewModel.requestWallets()
 	}
 
 	@SuppressLint("SetTextI18n")
-	@Suppress("UNCHECKED_CAST")
-	private fun observeWalletsRequest() = viewModel.requestWalletsState.observe(viewLifecycleOwner) { state ->
-		when (state) {
-			is BaseViewModel.RequestState.SuccessState<*> -> {
+	private fun observeWalletsRequest() = viewModel.requestWalletsState.subscribe<List<Wallet>>(
+		hideLoading = false,
+		onSuccess = { if (it.isEmpty()) {
+			hideLoading()
+			findNavController().navigate(
+				TransactionsFragmentDirections.actionTransactionsFragmentToCreateFirstWalletFragment(true)
+			)
+		} else {
+			setUpWallets(it)
+			viewModel.requestTransactions()
+		}},
+		onError = { showTextSnackBar(
+			text = it.getErrorString(),
+			actionText = getString(R.string.retry),
+			action = { viewModel.requestWallets() }
+		)},
+		onSending = { showLoading(R.string.loading_wallets) }
+	)
 
-				state.data as List<Wallet>
-				if (viewModel.wallets.isEmpty())
-					viewModel.wallets.addAll(state.data)
-				bindingUtil.chipGroup.removeAllViews()
-				val accountBalanceChip = (
-						layoutInflater.inflate(R.layout.item_wallet_chip, bindingUtil.chipGroup, false) as Chip
-					).apply {
-						text = getString(R.string.total_balance) +
-								viewModel.account.balanceInMainCurrency +
-								" " +
-								Currency.getInstance(viewModel.account.mainCurrencyCode).symbol
-						isCheckable = true
-						isChecked = true
-					}
-				bindingUtil.chipGroup.addView(accountBalanceChip)
+	@SuppressLint("SetTextI18n")
+	private fun setUpWallets(walletsList: List<Wallet>) {
+		if (walletsList.isEmpty()) {
+			findNavController().navigate(
+				TransactionsFragmentDirections.actionTransactionsFragmentToCreateFirstWalletFragment(true)
+			)
+			return
+		}
+		bindingUtil.chipGroup.removeAllViews()
+		val accountBalanceChip = Chip(requireContext()).apply {
+			text = getString(R.string.total_balance) +
+					viewModel.currentAccount.balanceInMainCurrency.toUiView() +
+					" " +
+					Currency.getInstance(viewModel.currentAccount.mainCurrencyCode).symbol
+			isCheckable = true
+			isChecked = true
+		}
+		bindingUtil.chipGroup.addView(accountBalanceChip)
 
-				state.data.forEach {
-					val walletChip = (
-							layoutInflater.inflate(R.layout.item_wallet_chip, bindingUtil.chipGroup, false) as Chip
-						).apply {
-							val symbol = Currency.getAvailableCurrencies()
-								.find { currency -> currency.currencyCode == it.currency }?.symbol ?: it.currency
-
-							text = "${it.name}: ${it.balance} $symbol"
-							//chipBackgroundColor = it.color TODO
-							isCheckable = true
-						}
-					bindingUtil.chipGroup.addView(walletChip)
-				}
-				viewModel.requestLastTransactionDate()
+		walletsList.forEach {
+			val walletChip = Chip(requireContext()).apply {
+				text = "${it.name}: ${it.balance.toUiView()} ${it.currency.getCurrencySymbol()}"
+				setTextColor(AppCompatResources.getColorStateList(
+					requireContext(),
+					if (it.color.isTextBlack()) R.color.black else R.color.white
+				))
+				chipBackgroundColor = ColorStateList.valueOf(it.color)
+				isCheckable = true
 			}
-			is BaseViewModel.RequestState.ErrorState<*> -> {
-				showTextSnackBar(state.t.getErrorString())
-				hideLoading()
-			}
-			else -> setLoadingText(getString(R.string.loading_wallets))
+			bindingUtil.chipGroup.addView(walletChip)
 		}
 	}
 
-	private fun observeTransactionsDateRequest() =
-		viewModel.requestLastTransactionDateState.observe(viewLifecycleOwner) { state ->
-			when (state) {
-				is BaseViewModel.RequestState.SuccessState<*> -> {
-					state.data as Date
-					if (state.data.time == 0L) {
-						bindingUtil.textNothingHere.visibility = View.VISIBLE
-						bindingUtil.ivNothingHere.visibility = View.VISIBLE
-						hideLoading()
-					} else {
-						val calendar = Calendar.getInstance(locale).apply {
-							time = state.data
-							set(Calendar.HOUR_OF_DAY, 0)
-							set(Calendar.MINUTE, 0)
-							set(Calendar.SECOND, 0)
-							set(Calendar.MILLISECOND, 0)
-							add(Calendar.MONTH, -1)
-						}
-						//viewModel.requestTransactions(Pair(state.data, calendar.time))
-						//TODO RecyclerView
-					}
-				}
-				is BaseViewModel.RequestState.ErrorState<*> -> {
-					hideLoading()
-					showTextSnackBar(state.t.getErrorString())
-				}
-				else -> setLoadingText(getString(R.string.loading_transactions))
+	private fun observeTransactionRequest() = viewModel.requestTransactionsState.subscribe<List<BaseTransactionData>>(
+		hideLoading = true,
+		onSuccess = { setUpTransactionAdapter(it) },
+		onError = { showTextSnackBar(
+			text = it.getErrorString(),
+			actionText = getString(R.string.retry),
+			action = { viewModel.requestTransactions() }
+		)},
+		onSending = { showLoading(R.string.loading_getting_transactions) }
+	)
+
+	private fun setUpTransactionAdapter(transactions: List<BaseTransactionData>) {
+		if (transactions.isEmpty()) {
+			with(bindingUtil) {
+				rwTransactions.isVisible = false
+				ivNothingHere.isVisible = true
+				textNothingHere.isVisible = true
 			}
 		}
+
+		if (bindingUtil.rwTransactions.adapter == null) {
+			bindingUtil.rwTransactions.apply {
+				adapter = TransactionListAdapter(transactions, locale)
+				itemAnimator = TransactionAnimator(500)
+			}
+		} else {
+			(bindingUtil.rwTransactions.adapter as? TransactionListAdapter)?.let {
+				DiffUtil.calculateDiff(TransactionListDiffUtil(it.transactionDataList, transactions))
+					.dispatchUpdatesTo(it)
+			}
+		}
+	}
 }

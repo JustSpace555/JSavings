@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<com.google.android.material.tabs.TabLayout
+		android:id="@+id/tab_layout_new_transaction_type"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:backgroundTint="?android:attr/statusBarColor"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:tabTextColor="?android:attr/textColorPrimary">
+
+		<com.google.android.material.tabs.TabItem
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/transaction_type_income" />
+
+		<com.google.android.material.tabs.TabItem
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/transaction_type_consumption" />
+
+		<com.google.android.material.tabs.TabItem
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/transaction_type_transfer" />
+
+	</com.google.android.material.tabs.TabLayout>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_date_day"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_day"
+				app:layout_constraintEnd_toStartOf="@+id/til_new_transaction_date_time"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/tiet_new_transaction_date_day"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:focusable="false"
+					android:inputType="none"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_date_time"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_time"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/til_new_transaction_date_day"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/tiet_new_transaction_date_time"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:focusable="false"
+					android:inputType="none"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_category"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_category"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_date_day">
+
+				<AutoCompleteTextView
+					android:id="@+id/actv_new_transaction_category"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:focusable="false"
+					android:inputType="none"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_from_wallet"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_from_wallet"
+				android:visibility="gone"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_category">
+
+				<AutoCompleteTextView
+					android:id="@+id/actv_new_transaction_from_wallet"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="none"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_to_wallet"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_to_wallet"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_from_wallet">
+
+				<AutoCompleteTextView
+					android:id="@+id/actv_new_transaction_to_wallet"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="none"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_sum"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_sum"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_to_wallet">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/tiet_new_transaction_sum"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="numberDecimal"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_new_transaction_description"
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:hint="@string/new_transaction_hint_description"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_sum">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/tiet_new_transaction_description"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/StandardTextStyle" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<Button
+				android:id="@+id/button_new_transaction_save"
+				style="@style/Widget.MaterialComponents.Button"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/all_elements_separation"
+				android:layout_marginTop="@dimen/all_elements_large_separation"
+				android:text="@string/save"
+				android:textColor="@null"
+				android:textAppearance="@style/ButtonTextStyle"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_new_transaction_description" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</ScrollView>
+</LinearLayout>

@@ -55,9 +55,9 @@ class TransactionDaoTest {
 		date = 0,
 		describePicturePath = "",
 		description = "",
-		sum = 0.0,
+		sumInWalletCurrency = 0.0,
 		transactionId = 1,
-		walletFkId = 1
+		fromWalletFkId = 1
 	)
 
 	@Before

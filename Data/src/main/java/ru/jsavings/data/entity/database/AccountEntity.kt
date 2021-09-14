@@ -3,7 +3,6 @@ package ru.jsavings.data.entity.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.jsavings.data.entity.common.BaseEntity
 import ru.jsavings.data.entity.database.common.BaseDbEntity
 
 /**

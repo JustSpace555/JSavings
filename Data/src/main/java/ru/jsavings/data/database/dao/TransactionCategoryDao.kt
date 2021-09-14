@@ -1,9 +1,9 @@
 package ru.jsavings.data.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.TransactionCategoryEntity
@@ -38,13 +38,13 @@ internal interface TransactionCategoryDao : BaseDao {
 
 	/**
 	 * Delete transaction category from transaction categories' table
-	 * @param transactionCategoryEntity [TransactionCategoryEntity] which must be deleted
+	 * @param transactionCategoryId Id of category that must be deleted
 	 * @return [Completable] source of action
 	 *
 	 * @author JustSpace
 	 */
-	@Delete
-	fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable
+	@Query("DELETE FROM transaction_category_table WHERE category_id = :transactionCategoryId")
+	fun deleteCategoryById(transactionCategoryId: Long): Completable
 
 	/**
 	 * Get all transaction categories from database by account id to which they belongs
@@ -55,4 +55,14 @@ internal interface TransactionCategoryDao : BaseDao {
 	 */
 	@Query("SELECT * FROM transaction_category_table WHERE account_fk_id = :accountId")
 	fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>>
+
+	/**
+	 * Update transaction category
+	 * @param transactionCategory [TransactionCategoryEntity] to update with new values except for transaction category id
+	 * @return [Completable] source of action
+	 *
+	 * @author JustSpace
+	 */
+	@Update
+	fun updateCategory(transactionCategory: TransactionCategoryEntity): Completable
 }

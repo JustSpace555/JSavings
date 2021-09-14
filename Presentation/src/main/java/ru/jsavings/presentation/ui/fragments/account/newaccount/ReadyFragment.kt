@@ -7,27 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import org.koin.android.viewmodel.ext.android.viewModel
-import ru.jsavings.R
-import ru.jsavings.databinding.NewAccountFragmentReadyToStartBinding
+import ru.jsavings.databinding.FragmentNewAccountReadyToStartBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.ui.fragments.common.BaseViewModel
+import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 
 class ReadyFragment : BaseFragment() {
 
 	override lateinit var viewModel: BaseViewModel
 
-	override val bindingUtil by lazy { NewAccountFragmentReadyToStartBinding.inflate(layoutInflater) }
+	override lateinit var bindingUtil: FragmentNewAccountReadyToStartBinding
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		return inflater.inflate(R.layout.new_account_fragment_ready_to_start, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+		bindingUtil = FragmentNewAccountReadyToStartBinding.inflate(inflater, container, false)
+		return bindingUtil.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		bindingUtil.textIntroReadyToStart.alpha = 0f
 		bindingUtil.textIntroReadyToStart
 			.animate()
 			.alpha(1f)

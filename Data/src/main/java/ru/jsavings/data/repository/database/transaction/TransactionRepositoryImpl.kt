@@ -1,10 +1,13 @@
 package ru.jsavings.data.repository.database.transaction
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.TransactionDao
 import ru.jsavings.data.entity.database.TransactionEntity
+import ru.jsavings.data.entity.database.TransactionGroupEntity
+import java.util.*
 
 /**
  * Implementation of [TransactionRepository]
@@ -14,7 +17,7 @@ import ru.jsavings.data.entity.database.TransactionEntity
  */
 internal class TransactionRepositoryImpl(override val dao: TransactionDao) : TransactionRepository {
 
-	override fun getTransactionById(transactionId: Long): Single<TransactionEntity> =
+	override fun getTransactionById(transactionId: Long): Single<TransactionGroupEntity> =
 		dao.getTransactionById(transactionId)
 
 	override fun insertNewTransaction(transactionEntity: TransactionEntity): Single<Long> =
@@ -26,12 +29,6 @@ internal class TransactionRepositoryImpl(override val dao: TransactionDao) : Tra
 	override fun deleteTransaction(transactionEntity: TransactionEntity): Completable =
 		dao.deleteTransaction(transactionEntity)
 
-	override fun getTransactionsByAccountIdAndTime(
-		accountId: Long,
-		startTime: Long,
-		endTime: Long
-	): Single<List<TransactionEntity>> = dao.getTransactionsByAccountIdAndTime(accountId, startTime, endTime)
-
-	override fun getLastTransactionDateByAccountId(accountId: Long): Maybe<Long> =
-		dao.getLastTransactionDateByAccountId(accountId)
+	override fun getAllTransactionsByAccountId(accountId: Long): Flowable<List<TransactionGroupEntity>> =
+		dao.getAllTransactionsByAccountId(accountId)
 }

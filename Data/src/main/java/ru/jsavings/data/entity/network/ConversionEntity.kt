@@ -1,7 +1,7 @@
 package ru.jsavings.data.entity.network
 
 import com.google.gson.annotations.SerializedName
-import ru.jsavings.data.entity.common.BaseEntity
+import ru.jsavings.data.entity.network.common.BaseNetworkEntity
 
 /**
  * Entity of conversion request / answer from api
@@ -26,7 +26,7 @@ data class ConversionEntity(
 	@SerializedName("result")
 	val result: Double
 
-) : BaseEntity
+) : BaseNetworkEntity
 
 /**
  * Request / answer info about conversion

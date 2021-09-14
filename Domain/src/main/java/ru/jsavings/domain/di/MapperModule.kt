@@ -1,9 +1,7 @@
 package ru.jsavings.domain.di
 
 import org.koin.dsl.module
-import ru.jsavings.domain.mappers.database.AccountMapper
-import ru.jsavings.domain.mappers.database.TransactionMapper
-import ru.jsavings.domain.mappers.database.WalletMapper
+import ru.jsavings.domain.mappers.database.*
 import ru.jsavings.domain.mappers.network.ConversionMapper
 import ru.jsavings.domain.mappers.network.CryptoCoinsMapper
 
@@ -18,6 +16,7 @@ internal val mapperModule = module {
 	factory { AccountMapper() }
 	factory { WalletMapper() }
 	factory { TransactionMapper(get(), get()) }
+	factory { TransactionCategoryMapper() }
 
 	//Network
 	factory { CryptoCoinsMapper() }

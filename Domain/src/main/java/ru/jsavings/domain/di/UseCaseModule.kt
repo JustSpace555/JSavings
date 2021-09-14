@@ -2,11 +2,13 @@ package ru.jsavings.domain.di
 
 import org.koin.dsl.module
 import ru.jsavings.domain.usecase.cache.CacheUseCase
-import ru.jsavings.domain.usecase.database.account.*
-import ru.jsavings.domain.usecase.database.transaction.GetLastTransactionTimeUseCase
-import ru.jsavings.domain.usecase.database.transaction.GetTransactionsByAccountIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.category.GetAllCategoriesByAccountIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.category.InsertNewCategoryUseCase
+import ru.jsavings.domain.usecase.database.account.GetAccountByIdUseCase
+import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
+import ru.jsavings.domain.usecase.database.account.InsertAccountUseCase
+import ru.jsavings.domain.usecase.database.category.*
+import ru.jsavings.domain.usecase.database.transaction.GetAllTransactionsByAccountIdUseCase
+import ru.jsavings.domain.usecase.database.transaction.GetTransactionByIdUseCase
+import ru.jsavings.domain.usecase.database.transaction.SaveNewTransactionUseCase
 import ru.jsavings.domain.usecase.database.wallet.GetWalletByIdUseCase
 import ru.jsavings.domain.usecase.database.wallet.GetWalletsByAccountIdUseCase
 import ru.jsavings.domain.usecase.database.wallet.InsertNewWalletUseCase
@@ -32,12 +34,16 @@ internal val useCaseModule = module {
 	factory { GetWalletByIdUseCase(get(), get()) }
 
 	//Transaction
-	factory { GetLastTransactionTimeUseCase(get()) }
-	factory { GetTransactionsByAccountIdUseCase(get(), get(), get(), get()) }
+	factory { SaveNewTransactionUseCase(get(), get(), get(), get(), get(), get()) }
+	factory { GetAllTransactionsByAccountIdUseCase(get(), get()) }
+	factory { GetTransactionByIdUseCase(get(), get()) }
 
 	//TransactionCategory
 	factory { GetAllCategoriesByAccountIdUseCase(get(), get()) }
 	factory { InsertNewCategoryUseCase(get(), get()) }
+	factory { GetTransactionCategoryByIdUseCase(get(), get()) }
+	factory { DeleteTransactionCategoryUseCase(get()) }
+	factory { UpdateTransactionCategoryUseCase(get(), get()) }
 
 	//Cache
 	factory { CacheUseCase(get()) }

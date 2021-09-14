@@ -7,6 +7,7 @@ import ru.jsavings.data.repository.database.common.BaseDbRepository
 
 /**
  * Repository that implements all [ru.jsavings.data.database.dao.WalletDao] requests
+ *
  * @author JustSpace
  */
 interface WalletRepository : BaseDbRepository {

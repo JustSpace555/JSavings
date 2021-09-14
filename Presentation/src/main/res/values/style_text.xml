@@ -10,19 +10,33 @@
 		<item name="fontFamily">@font/rubik_regular</item>
 	</style>
 
+	<style name="StandardTextStyle.Bold" parent="StandardTextStyle">
+		<item name="fontFamily">@font/rubik_semi_bold</item>
+	</style>
+
+	<style name="ButtonTextStyle" parent="StandardTextStyle">
+		<item name="android:textColor">@color/white</item>
+	</style>
+
+
+
 	<style name="HeaderTextStyle" parent="BaseTextStyle">
 		<item name="android:textSize">24sp</item>
 		<item name="fontFamily">@font/rubik_semi_bold</item>
 	</style>
 
+
+
 	<style name="AdditionalTextStyle" parent="BaseTextStyle">
-		<item name="android:textSize">10sp</item>
-		<item name="fontFamily">@font/rubik_light_italic</item>
-		<item name="android:textColor">@color/grey</item>
+		<item name="android:textSize">11sp</item>
 	</style>
 
-	<style name="StandardTextStyle.Bold" parent="StandardTextStyle">
-		<item name="fontFamily">@font/rubik_semi_bold</item>
+	<style name="AdditionalTextStyle.Italic" parent="AdditionalTextStyle">
+		<item name="fontFamily">@font/rubik_light_italic</item>
+	</style>
+
+	<style name="HintTextStyle" parent="AdditionalTextStyle.Italic">
+		<item name="android:textColor">@color/grey</item>
 	</style>
 
 </resources>

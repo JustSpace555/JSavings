@@ -3,19 +3,13 @@ package ru.jsavings.presentation.ui.activities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.fragment.app.findFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -24,6 +18,7 @@ import ru.jsavings.databinding.ActivityMainBinding
 import ru.jsavings.presentation.di.presentationModule
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragment
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragmentDirections
+import ru.jsavings.presentation.viewmodels.MainSharedViewModel
 
 /**
  * Main activity of JSavings app
@@ -32,6 +27,7 @@ import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.Transa
  */
 class MainActivity : AppCompatActivity() {
 
+	private val viewModel by viewModel<MainSharedViewModel>()
 	private lateinit var bindingUtil: ActivityMainBinding
 	private lateinit var navController: NavController
 	private val navigationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -87,11 +83,13 @@ class MainActivity : AppCompatActivity() {
 
 		supportActionBar?.hide()
 
+
+		viewModel.requestAccount()
 		bindingUtil.addTransactionFab.setOnClickListener {
 			val fragment = navHostFragment.childFragmentManager.fragments.first()
 			if (fragment is TransactionsFragment && fragment.isVisible) {
-				navController.navigate(
-					TransactionsFragmentDirections.actionTransactionsFragmentToNewTransactionFragment()
+				navController.navigate(TransactionsFragmentDirections
+					.actionTransactionsFragmentToNewTransactionFragment(viewModel.currentAccount.accountId)
 				)
 			}
 		}

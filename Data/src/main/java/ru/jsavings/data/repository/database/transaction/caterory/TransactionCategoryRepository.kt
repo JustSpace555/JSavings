@@ -31,12 +31,12 @@ interface TransactionCategoryRepository : BaseDbRepository {
 
 	/**
 	 * Delete transaction category from transaction categories' table
-	 * @param transactionCategoryEntity [TransactionCategoryEntity] which must be deleted
+	 * @param transactionCategoryId Id of category that must be deleted
 	 * @return [Completable] source of action
 	 *
 	 * @author JustSpace
 	 */
-	fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable
+	fun deleteCategoryById(transactionCategoryId: Long): Completable
 
 	/**
 	 * Get all transaction categories from database by account id to which they belongs
@@ -46,4 +46,13 @@ interface TransactionCategoryRepository : BaseDbRepository {
 	 * @author Михаил Мошков
 	 */
 	fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>>
+
+	/**
+	 * Update transaction category
+	 * @param transactionCategory [TransactionCategoryEntity] to update with new values except for transaction category id
+	 * @return [Completable] source of action
+	 *
+	 * @author JustSpace
+	 */
+	fun updateCategory(transactionCategory: TransactionCategoryEntity): Completable
 }

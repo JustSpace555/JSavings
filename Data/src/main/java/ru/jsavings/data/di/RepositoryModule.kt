@@ -7,11 +7,11 @@ import ru.jsavings.data.repository.cache.CacheRepository
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.data.repository.database.account.AccountRepositoryImpl
 import ru.jsavings.data.repository.database.transaction.TransactionRepository
-import ru.jsavings.data.repository.database.wallet.WalletRepositoryImpl
 import ru.jsavings.data.repository.database.transaction.TransactionRepositoryImpl
 import ru.jsavings.data.repository.database.transaction.caterory.TransactionCategoryRepository
 import ru.jsavings.data.repository.database.transaction.caterory.TransactionCategoryRepositoryImpl
 import ru.jsavings.data.repository.database.wallet.WalletRepository
+import ru.jsavings.data.repository.database.wallet.WalletRepositoryImpl
 import ru.jsavings.data.repository.network.crypto.CryptoRepository
 import ru.jsavings.data.repository.network.crypto.CryptoRepositoryImpl
 import ru.jsavings.data.repository.network.currency.CurrencyRepository

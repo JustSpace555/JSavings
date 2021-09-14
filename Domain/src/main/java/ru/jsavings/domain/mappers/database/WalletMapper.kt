@@ -3,7 +3,7 @@ package ru.jsavings.domain.mappers.database
 import ru.jsavings.data.entity.database.WalletEntity
 import ru.jsavings.domain.mappers.common.DataBaseMapper
 import ru.jsavings.domain.model.database.wallet.Wallet
-import ru.jsavings.domain.model.database.wallet.WalletCategoryType
+import ru.jsavings.domain.model.database.wallet.WalletType
 
 /**
  * Mapper for [WalletEntity] and [Wallet]
@@ -22,7 +22,7 @@ class WalletMapper : DataBaseMapper<WalletEntity, Wallet> {
 		paymentDay = entity.paymentDay,
 		gracePeriod = entity.gracePeriod,
 		interestRate = entity.interestRate,
-		category = WalletCategoryType.valueOf(entity.category),
+		type = WalletType.valueOf(entity.category),
 		color = entity.color,
 		iconPath = entity.iconPath
 	)
@@ -33,7 +33,7 @@ class WalletMapper : DataBaseMapper<WalletEntity, Wallet> {
 		accountFkId = model.accountId,
 		balance = model.balance,
 		currencyCode = model.currency,
-		category = model.category.toString(),
+		category = model.type.toString(),
 		creditLimit = model.creditLimit,
 		paymentDay = model.paymentDay,
 		gracePeriod = model.gracePeriod,

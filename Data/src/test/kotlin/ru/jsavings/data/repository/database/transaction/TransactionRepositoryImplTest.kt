@@ -20,9 +20,13 @@ class TransactionRepositoryImplTest {
 		date = 0,
 		describePicturePath = "",
 		description = "",
-		sum = 0.0,
+		sumInWalletCurrency = 0.0,
 		transactionId = 0,
-		walletFkId = 0
+		fromWalletFkId = 0,
+		accountFkId = 0,
+		sumInAccountCurrency = 0.0,
+		toWalletFkId = null,
+		transferSum = null
 	)
 
 	@Before

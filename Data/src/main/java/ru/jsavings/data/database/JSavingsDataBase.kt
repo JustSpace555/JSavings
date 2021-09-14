@@ -4,12 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import ru.jsavings.data.database.dao.AccountDao
 import ru.jsavings.data.database.dao.TransactionCategoryDao
-import ru.jsavings.data.database.dao.WalletDao
 import ru.jsavings.data.database.dao.TransactionDao
+import ru.jsavings.data.database.dao.WalletDao
 import ru.jsavings.data.entity.database.AccountEntity
-import ru.jsavings.data.entity.database.WalletEntity
-import ru.jsavings.data.entity.database.TransactionEntity
 import ru.jsavings.data.entity.database.TransactionCategoryEntity
+import ru.jsavings.data.entity.database.TransactionEntity
+import ru.jsavings.data.entity.database.WalletEntity
 
 /**
  * Main data base of JSavings app

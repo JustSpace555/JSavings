@@ -1,9 +1,9 @@
 package ru.jsavings.domain.usecase.database.account
 
 import io.reactivex.rxjava3.core.Single
-import ru.jsavings.domain.model.database.Account
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.domain.mappers.database.AccountMapper
+import ru.jsavings.domain.model.database.Account
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
 /**

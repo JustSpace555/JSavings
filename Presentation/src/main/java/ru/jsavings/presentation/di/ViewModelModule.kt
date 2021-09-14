@@ -2,17 +2,18 @@ package ru.jsavings.presentation.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import ru.jsavings.presentation.ui.fragments.account.newaccount.currency.ChooseCurrencyViewModel
-import ru.jsavings.presentation.ui.fragments.account.newaccount.name.AddNewAccountNameViewModel
-import ru.jsavings.presentation.ui.fragments.calendar.CalendarViewModel
-import ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListViewModel
-import ru.jsavings.presentation.ui.fragments.categories.newcategory.AddNewCategoryViewModel
-import ru.jsavings.presentation.ui.fragments.graph.GraphViewModel
-import ru.jsavings.presentation.ui.fragments.intro.IntroViewModel
-import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsViewModel
-import ru.jsavings.presentation.ui.fragments.transactions.newtransaction.NewTransactionViewModel
-import ru.jsavings.presentation.ui.fragments.wallet.allwallets.WalletsViewModel
-import ru.jsavings.presentation.ui.fragments.wallet.newwallet.NewWalletViewModel
+import ru.jsavings.presentation.viewmodels.account.newaccount.ChooseCurrencyViewModel
+import ru.jsavings.presentation.viewmodels.account.newaccount.AddNewAccountNameViewModel
+import ru.jsavings.presentation.viewmodels.CalendarViewModel
+import ru.jsavings.presentation.viewmodels.categories.CategoriesListViewModel
+import ru.jsavings.presentation.ui.fragments.categories.categorieslist.viewpageritem.ItemCategoryListViewModel
+import ru.jsavings.presentation.viewmodels.categories.AddNewCategoryViewModel
+import ru.jsavings.presentation.viewmodels.GraphViewModel
+import ru.jsavings.presentation.viewmodels.IntroViewModel
+import ru.jsavings.presentation.viewmodels.MainSharedViewModel
+import ru.jsavings.presentation.viewmodels.transactions.NewTransactionViewModel
+import ru.jsavings.presentation.viewmodels.wallets.WalletsViewModel
+import ru.jsavings.presentation.viewmodels.wallets.NewWalletViewModel
 
 /**
  * Koin module of all ViewModels in [ru.jsavings.presentation] module
@@ -20,6 +21,10 @@ import ru.jsavings.presentation.ui.fragments.wallet.newwallet.NewWalletViewModel
  * @author JustSpace
  */
 internal val viewModelModule = module {
+
+	//Main
+	viewModel { MainSharedViewModel(get(), get()) }
+
 	//Into
 	viewModel { IntroViewModel(get(), get()) }
 
@@ -28,12 +33,12 @@ internal val viewModelModule = module {
 	viewModel { ChooseCurrencyViewModel(get(), get(), get()) }
 
 	//Transaction
-	viewModel { TransactionsViewModel(get(), get()) }
-	viewModel { NewTransactionViewModel(get(), get()) }
+	viewModel { NewTransactionViewModel(get()) }
 
 	//Transaction categories
-	viewModel { CategoriesListViewModel(get(), get()) }
-	viewModel { AddNewCategoryViewModel(get(), get()) }
+	viewModel { CategoriesListViewModel(get()) }
+	viewModel { AddNewCategoryViewModel(get()) }
+	viewModel { ItemCategoryListViewModel(get()) }
 
 	//Calendar
 	viewModel { CalendarViewModel() }

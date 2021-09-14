@@ -5,14 +5,14 @@ import org.junit.Before
 import org.junit.Test
 import ru.jsavings.data.entity.database.WalletEntity
 import ru.jsavings.domain.model.database.wallet.Wallet
-import ru.jsavings.domain.model.database.wallet.WalletCategoryType
+import ru.jsavings.domain.model.database.wallet.WalletType
 
 class WalletMapperTest {
 
 	companion object {
 		private const val ACCOUNT_ID = 1L
 		private const val BALANCE = 25.0
-		private val CATEGORY = WalletCategoryType.CASH
+		private val CATEGORY = WalletType.CASH
 		private const val COLOR = 0
 		private const val CREDIT_LIMIT = 0.0
 		private const val GRACE_PERIOD = 0
@@ -27,7 +27,7 @@ class WalletMapperTest {
 	private val someWalletModel = Wallet(
 		accountId = ACCOUNT_ID,
 		balance = BALANCE,
-		category = CATEGORY,
+		type = CATEGORY,
 		color = COLOR,
 		creditLimit = CREDIT_LIMIT,
 		gracePeriod = GRACE_PERIOD,

@@ -2,14 +2,17 @@ package ru.jsavings.data.repository.database.transaction
 
 import androidx.room.Query
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.TransactionEntity
+import ru.jsavings.data.entity.database.TransactionGroupEntity
 import ru.jsavings.data.repository.database.common.BaseDbRepository
+import java.util.*
 
 /**
  * Repository that implements all [ru.jsavings.data.database.dao.TransactionDao] requests
+ *
  * @author JustSpace
  */
 interface TransactionRepository : BaseDbRepository {
@@ -17,11 +20,11 @@ interface TransactionRepository : BaseDbRepository {
 	/**
 	 * Get [TransactionEntity] by id
 	 * @param transactionId id of transaction to get
-	 * @return [Single] source with [TransactionEntity]
+	 * @return [Single] source with [TransactionGroupEntity]
 	 *
 	 * @author JustSpace
 	 */
-	fun getTransactionById(transactionId: Long): Single<TransactionEntity>
+	fun getTransactionById(transactionId: Long): Single<TransactionGroupEntity>
 
 	/**
 	 * Insert new transaction to transactions' table
@@ -51,27 +54,11 @@ interface TransactionRepository : BaseDbRepository {
 	fun deleteTransaction(transactionEntity: TransactionEntity): Completable
 
 	/**
-	 * Get transaction from transactions' table by account id to which they belong and in certain time period
+	 * Get all transactions from database by account id
 	 * @param accountId Id of account
-	 * @param startTime Start time of time period
-	 * @param endTime End time of start period. Must be less or equal to [startTime]
-	 * @return [Single] source of list with transactions
+	 * @return [Flowable] source of action with list of [TransactionGroupEntity]
 	 *
 	 * @author JustSpace
 	 */
-	fun getTransactionsByAccountIdAndTime(
-		accountId: Long,
-		startTime: Long,
-		endTime: Long
-	): Single<List<TransactionEntity>>
-
-	/**
-	 * Get date of last transaction by it's account id
-	 * @param accountId Id of Account
-	 * @return [Maybe] source of date's representation in [Long]. Transactions' table may be empty
-	 *
-	 * @author Михаил Мошков
-	 */
-	@Query("SELECT MAX(date) FROM transaction_table WHERE account_fk_id = :accountId")
-	fun getLastTransactionDateByAccountId(accountId: Long): Maybe<Long>
+	fun getAllTransactionsByAccountId(accountId: Long): Flowable<List<TransactionGroupEntity>>
 }

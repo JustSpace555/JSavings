@@ -50,7 +50,7 @@ internal interface WalletDao : BaseDao {
 	 *
 	 * @author JustSpace
 	 */
-	@Update
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun updateWallet(walletEntity: WalletEntity): Completable
 
 	/**

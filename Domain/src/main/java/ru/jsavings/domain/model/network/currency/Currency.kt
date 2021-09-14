@@ -1,6 +1,7 @@
 package ru.jsavings.domain.model.network.currency
 
 import ru.jsavings.domain.model.common.BaseModel
+import ru.jsavings.domain.model.network.common.BaseCurrency
 
 /**
  * Model representation of database [ru.jsavings.data.entity.network.CurrencyEntity]
@@ -14,6 +15,6 @@ data class Currency(
 	val code: String,
 	val name: String,
 	val symbol: String
-) : BaseModel {
+) : BaseCurrency() {
 	override fun toString(): String = "$code $name - $symbol"
 }

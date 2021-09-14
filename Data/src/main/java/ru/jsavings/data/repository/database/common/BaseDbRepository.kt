@@ -5,6 +5,7 @@ import ru.jsavings.data.repository.common.BaseRepository
 
 /**
  * Interface for all database repositories
+ *
  * @author JustSpace
  */
 interface BaseDbRepository : BaseRepository {

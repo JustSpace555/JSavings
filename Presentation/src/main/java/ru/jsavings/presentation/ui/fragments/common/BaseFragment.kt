@@ -12,9 +12,11 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import ru.jsavings.R
+import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 import java.util.*
 
 /**
@@ -33,6 +35,7 @@ abstract class BaseFragment : Fragment() {
 
 	/**
 	 * ViewBindingUtil for fragment
+	 *
 	 * @author JustSpace
 	 */
 	protected abstract val bindingUtil: ViewBinding
@@ -40,23 +43,30 @@ abstract class BaseFragment : Fragment() {
 	private var dialog: Dialog? = null
 
 	/**
-	 * Hide keyboard on root touch
-	 * @param root Root [View]
+	 * Hide keyboard
+	 *
+	 * @author JustSpace
+	 */
+	protected fun hideKeyBoard() {
+		val inputMethodManager = requireContext()
+			.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+
+		inputMethodManager.hideSoftInputFromWindow(bindingUtil.root.windowToken, 0)
+
+		requireActivity().window.currentFocus?.clearFocus()
+	}
+
+	/**
+	 * Set hide keyboard on root touch click listener
 	 *
 	 * @author JustSpace
 	 */
 	@SuppressLint("ClickableViewAccessibility")
-	protected fun hideKeyBoardOnRootTouchClick(root: View) {
-		root.setOnTouchListener { v, _ ->
-			val inputMethodManager = requireContext()
-				.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-
-			inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
-
-			requireActivity().window.currentFocus?.clearFocus()
+	protected fun hideKeyBoardOnRootTouchClick() =
+		bindingUtil.root.setOnTouchListener { _, _ ->
+			hideKeyBoard()
 			false
 		}
-	}
 
 	/**
 	 * Show text snack bar
@@ -73,7 +83,7 @@ abstract class BaseFragment : Fragment() {
 		actionText: String = "",
 		action: (View) -> Unit = {},
 	) {
-		val snackBar = Snackbar.make(requireView(), text, length)
+		val snackBar = Snackbar.make(bindingUtil.root, text, length)
 		if (actionText.isNotEmpty())
 			snackBar.setAction(actionText, action)
 		snackBar.show()
@@ -86,11 +96,16 @@ abstract class BaseFragment : Fragment() {
 	 * @author JustSpace
 	 */
 	protected fun showLoading(text: String = "") {
-		if (dialog != null) return
+		dialog?.let {
+			val textLoading = it.findViewById<TextView>(R.id.text_loading)
+			textLoading.text = text
+			textLoading.visibility = View.VISIBLE
+			return
+		}
 
 		dialog = Dialog(requireContext()).apply {
 			requestWindowFeature(Window.FEATURE_NO_TITLE)
-			setContentView(R.layout.common_loading_dialog)
+			setContentView(R.layout.dialog_loading)
 
 			val textLoading = findViewById<TextView>(R.id.text_loading)
 			if (text.isNotEmpty())
@@ -106,18 +121,12 @@ abstract class BaseFragment : Fragment() {
 	}
 
 	/**
-	 * Set text to loading dialog if it is on screen
-	 * @param text Text of loading
+	 * Show loading dialog
+	 * @param textId Id of string in res/strings
 	 *
 	 * @author JustSpace
 	 */
-	protected fun setLoadingText(text: String) {
-		dialog?.let {
-			val textLoading = it.findViewById<TextView>(R.id.text_loading)
-			textLoading.text = text
-			textLoading.visibility = View.VISIBLE
-		}
-	}
+	protected fun showLoading(textId: Int) = showLoading(getString(textId))
 
 	/**
 	 * Hide loading dialog
@@ -156,4 +165,32 @@ abstract class BaseFragment : Fragment() {
 		Locale.US
 	else
 		Locale("ru", "RU")
+
+	/**
+	 *
+	 * @author JustSpace
+	 */
+	protected fun <T> LiveData<BaseViewModel.RequestState>.subscribe(
+		hideLoading: Boolean,
+		onSuccess: (T) -> Unit,
+		onError: (Throwable) -> Unit,
+		onSending: () -> Unit = {},
+	) = observe(viewLifecycleOwner) { state ->
+		when (state) {
+			is BaseViewModel.RequestState.SuccessState<*> -> {
+				try {
+					onSuccess(state.data as T)
+				} catch (e: TypeCastException) {
+					onError(e)
+				} finally {
+					if (hideLoading) hideLoading()
+				}
+			}
+			is BaseViewModel.RequestState.ErrorState<*> -> {
+				hideLoading()
+				onError(state.t)
+			}
+			is BaseViewModel.RequestState.SendingState -> onSending()
+		}
+	}
 }

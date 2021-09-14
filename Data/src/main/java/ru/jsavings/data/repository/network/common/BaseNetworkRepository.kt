@@ -9,6 +9,5 @@ import ru.jsavings.data.repository.common.BaseRepository
  * @author JustSpace
  */
 interface BaseNetworkRepository : BaseRepository {
-
 	val api: BaseApi
 }

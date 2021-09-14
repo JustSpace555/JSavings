@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ImageView
+		android:id="@+id/iv_transaction_image"
+		android:layout_width="75dp"
+		android:layout_height="75dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		android:layout_marginTop="@dimen/all_elements_large_separation"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"/>
+
+	<TextView
+		android:id="@+id/text_transaction_name"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintTop_toTopOf="@+id/iv_transaction_image"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"/>
+
+	<TextView
+		android:id="@+id/text_transaction_date"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_large_separation"
+		android:text="@string/transaction_date"
+		android:textColor="@color/grey"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/iv_transaction_image" />
+
+	<TextView
+		android:id="@+id/text_transaction_date_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_date"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_date"
+		tools:text="Some date" />
+
+	<TextView
+		android:id="@+id/text_transaction_category"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="@string/transaction_category"
+		android:textColor="@color/grey"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_date" />
+
+	<TextView
+		android:id="@+id/text_transaction_category_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_category"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_category"
+		tools:text="Some category" />
+
+	<TextView
+		android:id="@+id/text_transaction_from_wallet"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="@string/transaction_from_wallet"
+		android:textColor="@color/grey"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_category" />
+
+	<TextView
+		android:id="@+id/text_transaction_from_wallet_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintBottom_toBottomOf="@+id/text_transaction_from_wallet"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_from_wallet"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_from_wallet"
+		tools:text="Some wallet" />
+
+	<TextView
+		android:id="@+id/text_transaction_to_wallet"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="@string/transaction_to_wallet"
+		android:textColor="@color/grey"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_from_wallet" />
+
+	<TextView
+		android:id="@+id/text_transaction_to_wallet_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_to_wallet"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_to_wallet"
+		tools:text="Some wallet" />
+
+	<TextView
+		android:id="@+id/text_transaction_sum"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="@string/transaction_sum"
+		android:textColor="@color/grey"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_to_wallet" />
+
+	<TextView
+		android:id="@+id/text_transaction_sum_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_sum"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_sum"
+		tools:text="Some sum" />
+
+	<TextView
+		android:id="@+id/text_transaction_type"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		android:text="@string/transaction_type"
+		android:textColor="@color/grey"
+		app:layout_constraintEnd_toEndOf="@+id/iv_transaction_image"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_sum" />
+
+	<TextView
+		android:id="@+id/text_transaction_type_data"
+		android:textAppearance="@style/StandardTextStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/all_elements_separation"
+		app:layout_constraintStart_toEndOf="@+id/text_transaction_type"
+		app:layout_constraintTop_toTopOf="@+id/text_transaction_type"
+		tools:text="Some type" />
+
+	<Button
+		android:id="@+id/button_edit_transaction"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_large_separation"
+		style="@style/Widget.MaterialComponents.Button"
+		android:textAppearance="@style/ButtonTextStyle"
+		android:textColor="@null"
+		android:text="@string/edit_transaction"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_transaction_type" />
+
+	<Button
+		android:id="@+id/button_delete_transaction"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		style="@style/Widget.MaterialComponents.Button"
+		android:textAppearance="@style/ButtonTextStyle"
+		android:textColor="@null"
+		android:layout_marginHorizontal="@dimen/all_elements_separation"
+		android:layout_marginTop="@dimen/all_elements_separation"
+		android:backgroundTint="@color/red"
+		android:text="@string/delete_transaction"
+		app:layout_constraintTop_toBottomOf="@+id/button_edit_transaction" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,6 @@ import ru.jsavings.data.entity.network.CurrencyEntity
 import ru.jsavings.data.entity.network.CurrencyInfoEntity
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.model.network.currency.Currency
-import java.util.*
 import java.util.Currency as StandardCurrency
 
 class GetCurrenciesUseCaseTest {

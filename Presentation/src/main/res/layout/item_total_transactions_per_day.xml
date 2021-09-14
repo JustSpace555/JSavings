@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/end_of_day_cl"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_marginVertical="@dimen/all_elements_separation">
+	android:layout_height="wrap_content">
 
 	<TextView
 		android:id="@+id/text_month_day"
-		style="@style/HeaderTextStyle"
+		android:textAppearance="@style/HeaderTextStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="16pt"
@@ -29,18 +29,16 @@
 
 		<TextView
 			android:id="@+id/text_week_day"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="5pt"
 			tools:text="Воскресенье" />
 
 		<TextView
 			android:id="@+id/text_month_and_year"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="5pt"
 			tools:text="Февраль 2021" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -60,19 +58,17 @@
 
 		<TextView
 			android:id="@+id/income"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/income_text"
-			android:textSize="5pt" />
+			android:text="@string/income_text" />
 
 		<TextView
 			android:id="@+id/text_income"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/primary"
-			android:textSize="5pt"
 			tools:text="+0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -92,19 +88,17 @@
 
 		<TextView
 			android:id="@+id/consumption"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/consumption_text"
-			android:textSize="5pt" />
+			android:text="@string/consumption_text" />
 
 		<TextView
 			android:id="@+id/text_consumption"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/red"
-			android:textSize="5pt"
 			tools:text="-0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
@@ -123,30 +117,18 @@
 
 		<TextView
 			android:id="@+id/profit"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/profit_text"
-			android:textSize="5pt" />
+			android:text="@string/profit_text" />
 
 		<TextView
 			android:id="@+id/text_profit"
-			style="@style/StandardTextStyle"
+			android:textAppearance="@style/AdditionalTextStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textSize="5pt"
 			tools:text="-0$" />
 
 	</androidx.appcompat.widget.LinearLayoutCompat>
-
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/rw_transactions_per_day"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-		app:layout_constraintTop_toBottomOf="@+id/text_month_day"
-		tools:itemCount="3"
-		tools:listitem="@layout/item_transaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

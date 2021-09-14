@@ -8,6 +8,7 @@ import ru.jsavings.data.entity.database.TransactionCategoryEntity
 /**
  * Implementation of [TransactionCategoryRepository]
  * @param dao [TransactionCategoryDao] to get data from
+ *
  * @author JustSpace
  */
 internal class TransactionCategoryRepositoryImpl(
@@ -20,9 +21,12 @@ internal class TransactionCategoryRepositoryImpl(
 	override fun insertNewCategory(transactionCategoryEntity: TransactionCategoryEntity): Single<Long> =
 		dao.insertNewCategory(transactionCategoryEntity)
 
-	override fun deleteCategory(transactionCategoryEntity: TransactionCategoryEntity): Completable =
-		dao.deleteCategory(transactionCategoryEntity)
+	override fun deleteCategoryById(transactionCategoryId: Long): Completable =
+		dao.deleteCategoryById(transactionCategoryId)
 
 	override fun getCategoriesByAccountId(accountId: Long): Single<List<TransactionCategoryEntity>> =
 		dao.getCategoriesByAccountId(accountId)
+
+	override fun updateCategory(transactionCategory: TransactionCategoryEntity): Completable =
+		dao.updateCategory(transactionCategory)
 }

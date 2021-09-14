@@ -1,6 +1,5 @@
 package ru.jsavings.domain.usecase.database.wallet
 
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.AccountEntity
 import ru.jsavings.data.repository.database.account.AccountRepository
@@ -9,6 +8,7 @@ import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.mappers.database.WalletMapper
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.domain.usecase.common.BaseUseCase
+import kotlin.properties.Delegates
 
 /**
  * Use case for adding new wallet to database
@@ -35,17 +35,19 @@ class InsertNewWalletUseCase(
 	/**
 	 * Executing usecase
 	 * @param wallet [Wallet] model to insert
-	 * @return [Completable] source of action
+	 * @return [Single] source of action with new wallet id in database
 	 *
 	 * @author JustSpace
 	 */
-	operator fun invoke(wallet: Wallet): Completable {
+	operator fun invoke(wallet: Wallet): Single<Long> {
 		lateinit var accountEntity: AccountEntity
+		var newWalletId by Delegates.notNull<Long>()
 
-		return walletRepository
-			.insertNewWallet(mapper.mapModelToEntity(wallet))
-			.flatMap { accountRepository.getAccountById(wallet.accountId) }
-			.flatMap { account ->
+		return walletRepository.insertNewWallet(mapper.mapModelToEntity(wallet))
+			.flatMap {
+				newWalletId = it
+				accountRepository.getAccountById(wallet.accountId)
+			}.flatMap { account ->
 				accountEntity = account
 				getConversion(wallet.currency, account.mainCurrencyCode, wallet.balance)
 			}.flatMapCompletable { conversionResult ->
@@ -53,6 +55,6 @@ class InsertNewWalletUseCase(
 				accountRepository.updateAccount(
 					accountEntity.copy(balanceInMainCurrency = startingBalance + conversionResult)
 				)
-			}
+			}.andThen(Single.just(newWalletId))
 	}
 }

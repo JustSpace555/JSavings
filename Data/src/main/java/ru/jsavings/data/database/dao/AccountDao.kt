@@ -25,7 +25,7 @@ internal interface AccountDao : BaseDao {
 	/**
 	 * Get account from accounts' table by it id
 	 * @param accountId Account id
-	 * @return [Single] with [AccountEntity] which id is equal to [id]
+	 * @return [Single] with [AccountEntity] which id is equal to [accountId]
 	 *
 	 * @author JustSpace
 	 */

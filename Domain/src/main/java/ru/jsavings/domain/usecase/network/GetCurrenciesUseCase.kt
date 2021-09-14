@@ -4,7 +4,6 @@ import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.model.network.currency.Currency
 import ru.jsavings.domain.usecase.common.BaseUseCase
-import java.util.*
 
 /**
  * Use case to get all currencies from api and [java.util.Currency]

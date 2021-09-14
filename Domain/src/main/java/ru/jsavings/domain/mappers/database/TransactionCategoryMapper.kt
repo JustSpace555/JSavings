@@ -2,8 +2,8 @@ package ru.jsavings.domain.mappers.database
 
 import ru.jsavings.data.entity.database.TransactionCategoryEntity
 import ru.jsavings.domain.mappers.common.DataBaseMapper
-import ru.jsavings.domain.model.database.transaction.category.TransactionCategory
-import ru.jsavings.domain.model.database.transaction.category.TransactionCategoryType
+import ru.jsavings.domain.model.database.category.TransactionCategory
+import ru.jsavings.domain.model.database.category.TransactionCategoryType
 
 /**
  * Mapper for [TransactionCategoryEntity] and [TransactionCategory]
