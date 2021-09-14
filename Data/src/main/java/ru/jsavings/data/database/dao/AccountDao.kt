@@ -2,6 +2,7 @@ package ru.jsavings.data.database.dao
 
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.AccountEntity
 
@@ -25,12 +26,23 @@ internal interface AccountDao : BaseDao {
 	/**
 	 * Get account from accounts' table by it id
 	 * @param accountId Account id
-	 * @return [Single] with [AccountEntity] which id is equal to [accountId]
+	 * @return [Flowable] with [AccountEntity] which id is equal to [accountId]. [Flowable] is needed for live updates
+	 * of current account in app
 	 *
 	 * @author JustSpace
 	 */
 	@Query("SELECT * FROM account_table WHERE account_id = :accountId")
-	fun getAccountById(accountId: Long): Single<AccountEntity>
+	fun getAccountByIdFlowable(accountId: Long): Flowable<AccountEntity>
+
+	/**
+	 * Get account from account's table by it id. This method must be used only for DOMAIN layer to get one time info
+	 * about account with id = [accountId]
+	 * @param accountId
+	 * @return [Single] source with [AccountEntity].
+	 * @author JustSpace
+	 */
+	@Query("SELECT * FROM account_table WHERE account_id = :accountId")
+	fun getAccountByIdSingle(accountId: Long): Single<AccountEntity>
 
 	/**
 	 * Insert new account into accounts' table

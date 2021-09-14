@@ -172,6 +172,9 @@
 		<argument
 			android:name="is_education_needed"
 			app:argType="boolean" />
+		<argument
+			android:name="new_account_id"
+			app:argType="long" />
 		<action
 			android:id="@+id/action_createFirstWalletFragment_to_newWalletFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right"
@@ -191,6 +194,9 @@
 		<argument
 			android:name="is_education_needed"
 			app:argType="boolean" />
+		<argument
+			android:name="new_account_id"
+			app:argType="long" />
 		<action
 			android:id="@+id/action_newWalletFragment_to_readyFragment"
 			app:enterAnim="@anim/anim_slide_in_from_right"

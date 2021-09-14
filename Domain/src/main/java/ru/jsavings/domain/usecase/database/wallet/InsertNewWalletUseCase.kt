@@ -8,7 +8,6 @@ import ru.jsavings.data.repository.network.currency.CurrencyRepository
 import ru.jsavings.domain.mappers.database.WalletMapper
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.domain.usecase.common.BaseUseCase
-import kotlin.properties.Delegates
 
 /**
  * Use case for adding new wallet to database
@@ -41,20 +40,14 @@ class InsertNewWalletUseCase(
 	 */
 	operator fun invoke(wallet: Wallet): Single<Long> {
 		lateinit var accountEntity: AccountEntity
-		var newWalletId by Delegates.notNull<Long>()
 
-		return walletRepository.insertNewWallet(mapper.mapModelToEntity(wallet))
-			.flatMap {
-				newWalletId = it
-				accountRepository.getAccountById(wallet.accountId)
-			}.flatMap { account ->
+		return accountRepository.getAccountByIdSingle(wallet.accountId)
+			.flatMap { account ->
 				accountEntity = account
 				getConversion(wallet.currency, account.mainCurrencyCode, wallet.balance)
 			}.flatMapCompletable { conversionResult ->
-				val startingBalance = accountEntity.balanceInMainCurrency
-				accountRepository.updateAccount(
-					accountEntity.copy(balanceInMainCurrency = startingBalance + conversionResult)
-				)
-			}.andThen(Single.just(newWalletId))
+				val oldBalance = accountEntity.balanceInMainCurrency
+				accountRepository.updateAccount(accountEntity.copy(balanceInMainCurrency = oldBalance + conversionResult))
+			}.andThen(walletRepository.insertNewWallet(mapper.mapModelToEntity(wallet)))
 	}
 }

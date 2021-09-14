@@ -1,7 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.account.newaccount
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +62,7 @@ class ChooseCurrencyFragment : BaseFragment() {
 			hideLoading = true,
 			onSuccess = {
 				hideKeyBoard()
-				navigateToNextFragment(args.isEducationNeeded)
+				navigateToNextFragment(args.isEducationNeeded, it)
 			},
 			onError = {
 				hideKeyBoard()
@@ -123,13 +122,13 @@ class ChooseCurrencyFragment : BaseFragment() {
 		viewModel.requestSaveAccount(newAccountName)
 	}
 
-	private fun navigateToNextFragment(isEducationNeeded: Boolean) =
+	private fun navigateToNextFragment(isEducationNeeded: Boolean, accountId: Long) =
 		findNavController().navigate(
 			if (isEducationNeeded)
 				ChooseCurrencyFragmentDirections
-					.actionChooseCurrencyNewAccountFragmentToCreateFirstWalletFragment(true)
+					.actionChooseCurrencyNewAccountFragmentToCreateFirstWalletFragment(true, accountId)
 			else
 				ChooseCurrencyFragmentDirections
-					.actionChooseCurrencyNewAccountFragmentToNewWalletFragment(false)
+					.actionChooseCurrencyNewAccountFragmentToNewWalletFragment(false, accountId)
 		)
 }

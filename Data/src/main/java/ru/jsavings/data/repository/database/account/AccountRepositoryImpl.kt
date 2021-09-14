@@ -1,6 +1,7 @@
 package ru.jsavings.data.repository.database.account
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.database.dao.AccountDao
 import ru.jsavings.data.entity.database.AccountEntity
@@ -15,7 +16,9 @@ internal class AccountRepositoryImpl(override val dao: AccountDao) : AccountRepo
 
 	override fun getAllAccounts(): Single<List<AccountEntity>> = dao.getAllAccounts()
 
-	override fun getAccountById(accountId: Long): Single<AccountEntity> = dao.getAccountById(accountId)
+	override fun getAccountByIdFlowable(accountId: Long): Flowable<AccountEntity> = dao.getAccountByIdFlowable(accountId)
+
+	override fun getAccountByIdSingle(accountId: Long): Single<AccountEntity> = dao.getAccountByIdSingle(accountId)
 
 	override fun insertNewAccount(accountEntity: AccountEntity): Single<Long> = dao.insertNewAccount(accountEntity)
 

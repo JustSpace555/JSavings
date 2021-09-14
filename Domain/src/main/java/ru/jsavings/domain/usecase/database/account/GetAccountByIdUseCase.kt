@@ -1,6 +1,6 @@
 package ru.jsavings.domain.usecase.database.account
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Flowable
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.domain.mappers.database.AccountMapper
 import ru.jsavings.domain.model.database.Account
@@ -21,11 +21,11 @@ class GetAccountByIdUseCase(
 	/**
 	 * Invoke usecase
 	 * @param accountId Id of account to get
-	 * @return [Single] source of [Account]
+	 * @return [Flowable] source of [Account]. Flowable is needed for live updates of current account
 	 *
 	 * @author Михаил Мошков
 	 */
-	operator fun invoke(accountId: Long): Single<Account> = repository.getAccountById(accountId).map { entity ->
-		mapper.mapEntityToModel(entity)
+	operator fun invoke(accountId: Long): Flowable<Account> = repository.getAccountByIdFlowable(accountId).map {
+			entity -> mapper.mapEntityToModel(entity)
 	}
 }

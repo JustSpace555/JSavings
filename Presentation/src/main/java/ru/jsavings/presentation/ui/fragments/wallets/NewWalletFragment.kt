@@ -2,7 +2,7 @@ package ru.jsavings.presentation.ui.fragments.wallets
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +35,7 @@ class NewWalletFragment : BaseFragment() {
 
 	override val viewModel by viewModel<NewWalletViewModel>()
 	override lateinit var bindingUtil: FragmentNewWalletBinding
+	private val args by navArgs<NewWalletFragmentArgs>()
 
 	private lateinit var currenciesList: List<Currency>
 	private lateinit var cryptoCoinsList: List<CryptoCoin>
@@ -83,6 +84,7 @@ class NewWalletFragment : BaseFragment() {
 			// Type
 			tilNewWalletType.editText?.addTextChangedListener { tilNewWalletType.isErrorEnabled = false }
 
+			val currencyAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_item, chosenCurrencyList)
 			actvNewWalletType.apply {
 				setAdapter(setupWalletTypeAdapter())
 				setOnItemClickListener { parent, _, i, _ -> (parent.getItemAtPosition(i) as? WalletTypeObject)?.let {
@@ -91,23 +93,28 @@ class NewWalletFragment : BaseFragment() {
 
 					hsvCreditWalletElements.isVisible = it.type == WalletType.CREDIT_CARD
 
+					//TODO Баг. Если Выбрать тип, затем какую - либо валюту, а затем поменять тип кошелька, то адаптер не обновляет данные
 					chosenCurrencyList.clear()
-					chosenCurrencyList.addAll(when(it.type) {
+					val newList = when(it.type) {
 						WalletType.CASH, WalletType.DEBIT_CARD, WalletType.CREDIT_CARD -> currenciesList
 						WalletType.CRYPTO_CURRENCY -> cryptoCoinsList
 						else -> emptyList()
-					})
+					}
+					chosenCurrencyList.addAll(newList)
+					Log.d("ChosenCurrencyList", "size = ${chosenCurrencyList.size}")
+					currencyAdapter.notifyDataSetChanged()
 				}}
 			}
 
 			// Currency
 			tilNewWalletCurrency.editText?.addTextChangedListener { it?.toString()?.let { currency ->
+				tilNewWalletStartingBalance.isEnabled = currency.isNotEmpty() && currency.isNotBlank()
 				tilNewWalletCurrency.isErrorEnabled = false
 				viewModel.walletCurrency = currency
 			}}
 
 			actvNewWalletCurrency.apply {
-				setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_item, chosenCurrencyList))
+				setAdapter(currencyAdapter)
 				setOnItemClickListener { parent, _, i, _ ->
 					val item = parent.getItemAtPosition(i).toString()
 					viewModel.walletCurrency = item
@@ -165,15 +172,11 @@ class NewWalletFragment : BaseFragment() {
 
 		viewModel.saveWalletRequestState.subscribe<Long>(
 			hideLoading = true,
-			onSuccess = {
-				val args by navArgs<NewWalletFragmentArgs>()
-				if (args.isEducationNeeded)
-					findNavController().navigate(
-						NewWalletFragmentDirections.actionNewWalletFragmentToReadyFragment()
-					)
-				else
-					findNavController().popBackStack()
-			},
+			onSuccess = { if (args.isEducationNeeded) {
+				findNavController().navigate(NewWalletFragmentDirections.actionNewWalletFragmentToReadyFragment())
+			} else {
+				findNavController().popBackStack()
+			}},
 			onError = { showTextSnackBar(
 				text = it.getErrorString(),
 				actionText = getString(R.string.retry),
@@ -259,7 +262,7 @@ class NewWalletFragment : BaseFragment() {
 			return
 		}
 
-		viewModel.requestSaveWallet()
+		viewModel.requestSaveWallet(args.newAccountId)
 	}
 
 	private fun requestCurrencies() {

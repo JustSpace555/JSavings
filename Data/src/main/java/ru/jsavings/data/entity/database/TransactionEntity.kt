@@ -59,7 +59,7 @@ data class TransactionEntity (
 
 	@PrimaryKey(autoGenerate = true)
 	@ColumnInfo(name = "transaction_id")
-	val transactionId: Long,
+	val transactionId: Long = 0,
 
 	@ColumnInfo(name = "from_wallet_fk_id", index = true)
 	val fromWalletFkId: Long?,

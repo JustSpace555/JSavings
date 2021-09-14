@@ -8,14 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.databinding.FragmentIntroBinding
 import ru.jsavings.domain.model.database.Account
 import ru.jsavings.presentation.ui.activities.MainActivity
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.viewmodels.IntroViewModel
 import ru.jsavings.presentation.viewmodels.MainSharedViewModel
-import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 
 class IntroFragment : BaseFragment() {
 

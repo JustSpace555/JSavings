@@ -62,11 +62,10 @@ abstract class BaseFragment : Fragment() {
 	 * @author JustSpace
 	 */
 	@SuppressLint("ClickableViewAccessibility")
-	protected fun hideKeyBoardOnRootTouchClick() =
-		bindingUtil.root.setOnTouchListener { _, _ ->
-			hideKeyBoard()
-			false
-		}
+	protected fun hideKeyBoardOnRootTouchClick() = bindingUtil.root.setOnTouchListener { _, _ ->
+		hideKeyBoard()
+		false
+	}
 
 	/**
 	 * Show text snack bar

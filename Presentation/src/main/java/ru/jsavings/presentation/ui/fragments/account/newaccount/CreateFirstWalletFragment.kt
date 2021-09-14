@@ -31,7 +31,7 @@ class CreateFirstWalletFragment : BaseFragment() {
 		val args by navArgs<CreateFirstWalletFragmentArgs>()
 		bindingUtil.buttonOk.setOnClickListener {
 			findNavController().navigate(CreateFirstWalletFragmentDirections
-				.actionCreateFirstWalletFragmentToNewWalletFragment(args.isEducationNeeded)
+				.actionCreateFirstWalletFragmentToNewWalletFragment(args.isEducationNeeded, args.newAccountId)
 			)
 		}
 	}

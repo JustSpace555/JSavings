@@ -1,13 +1,13 @@
 package ru.jsavings.presentation.ui.fragments
 
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import ru.jsavings.databinding.FragmentCalendarBinding
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.viewmodels.CalendarViewModel
+import ru.jsavings.presentation.viewmodels.MainSharedViewModel
 
 class CalendarFragment : BaseFragment() {
 
-	override val viewModel by viewModel<CalendarViewModel>()
+	override val viewModel by sharedViewModel<MainSharedViewModel>()
 
 	override lateinit var bindingUtil: FragmentCalendarBinding
 }

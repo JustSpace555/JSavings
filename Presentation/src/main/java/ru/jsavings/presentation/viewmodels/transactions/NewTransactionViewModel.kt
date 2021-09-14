@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.jsavings.domain.interactor.database.DataBaseInteractor
-import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.model.database.category.TransactionCategory
 import ru.jsavings.domain.model.database.category.TransactionCategoryType
+import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.presentation.extension.ThreadProvider
 import ru.jsavings.presentation.viewmodels.common.BaseViewModel
-import java.lang.NullPointerException
 import java.util.*
 
 /**

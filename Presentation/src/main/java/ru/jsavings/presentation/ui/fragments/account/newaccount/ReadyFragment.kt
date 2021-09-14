@@ -33,8 +33,7 @@ class ReadyFragment : BaseFragment() {
 				override fun onAnimationEnd(animation: Animator?) {
 					super.onAnimationEnd(animation)
 					findNavController().navigate(
-						ReadyFragmentDirections
-							.actionGlobalFragmentToTransactionsFragment()
+						ReadyFragmentDirections.actionGlobalFragmentToTransactionsFragment()
 					)
 				}
 			})

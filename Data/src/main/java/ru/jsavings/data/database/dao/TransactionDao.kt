@@ -3,11 +3,9 @@ package ru.jsavings.data.database.dao
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.TransactionEntity
 import ru.jsavings.data.entity.database.TransactionGroupEntity
-import java.util.*
 
 /**
  * Data access object to transactions' table
@@ -18,9 +16,9 @@ import java.util.*
 internal interface TransactionDao : BaseDao {
 
 	/**
-	 * Get [TransactionEntity] by id
+	 * Get [TransactionGroupEntity] by [TransactionEntity.transactionId]
 	 * @param transactionId id of transaction to get
-	 * @return [Single] source with [TransactionEntity]
+	 * @return [Single] source with [TransactionGroupEntity]
 	 *
 	 * @author JustSpace
 	 */
@@ -61,7 +59,8 @@ internal interface TransactionDao : BaseDao {
 	/**
 	 * Get all transactions from database by account id sorted by date
 	 * @param accountId Id of account
-	 * @return [Flowable] source of action with list of [TransactionGroupEntity]
+	 * @return [Flowable] source of action with list of [TransactionGroupEntity]. [Flowable] is needed for live updates
+	 * of transactions list
 	 *
 	 * @author JustSpace
 	 */

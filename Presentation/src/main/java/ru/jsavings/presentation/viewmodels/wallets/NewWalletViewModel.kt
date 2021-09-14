@@ -7,8 +7,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.jsavings.domain.interactor.network.NetworkInteractor
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.domain.model.database.wallet.WalletType
-import ru.jsavings.domain.usecase.cache.CacheKeys
-import ru.jsavings.domain.usecase.cache.CacheUseCase
 import ru.jsavings.domain.usecase.database.wallet.InsertNewWalletUseCase
 import ru.jsavings.presentation.extension.ThreadProvider
 import ru.jsavings.presentation.viewmodels.common.BaseViewModel
@@ -16,14 +14,12 @@ import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 /**
  * ViewModel for [ru.jsavings.presentation.ui.fragments.wallets.NewWalletFragment] fragment
  * @param insertNewWalletUseCase [InsertNewWalletUseCase] to interact with wallets' table in database
- * @param cacheUseCase [CacheUseCase] To get [ru.jsavings.domain.usecase.cache.CacheKeys.JS_CURRENT_ACCOUNT] id
  * @param networkInteractor [NetworkInteractor] to get all available data from api
  *
  * @author JustSpace
  */
 class NewWalletViewModel(
 	private val insertNewWalletUseCase: InsertNewWalletUseCase,
-	private val cacheUseCase: CacheUseCase,
 	private val networkInteractor: NetworkInteractor
 ) : BaseViewModel(CompositeDisposable(), ThreadProvider()) {
 
@@ -123,9 +119,7 @@ class NewWalletViewModel(
 	 *
 	 * @author JustSpace
 	 */
-	fun requestSaveWallet() {
-		val accountId = cacheUseCase.get(CacheKeys.JS_CURRENT_ACCOUNT, 0L)
-
+	fun requestSaveWallet(accountId: Long) {
 		val newWallet = Wallet(
 			accountId = accountId,
 			balance = if (walletStartingBalance.isEmpty()) 0.0 else walletStartingBalance.toDouble(),

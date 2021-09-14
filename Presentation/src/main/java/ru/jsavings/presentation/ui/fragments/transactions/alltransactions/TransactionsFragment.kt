@@ -24,12 +24,20 @@ import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycl
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.TransactionListAdapter
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.TransactionListDiffUtil
 import ru.jsavings.presentation.viewmodels.MainSharedViewModel
+import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 import java.util.*
 
 class TransactionsFragment : BaseFragment() {
 
 	override val viewModel by sharedViewModel<MainSharedViewModel>()
 	override lateinit var bindingUtil: FragmentTransactionsBinding
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		observeAccountRequest()
+		observeTransactionRequest()
+		viewModel.requestAccount()
+	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 		bindingUtil = FragmentTransactionsBinding.inflate(inflater, container, false)
@@ -39,38 +47,65 @@ class TransactionsFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		observeWalletsRequest()
-		observeTransactionRequest()
 		viewModel.requestWallets()
+	}
+
+	//TODO баг. При первом заходе в приложение не успевает инициализироваться currentAccount в MainSharedViewModel, либо снова выкидывает на экран создания нового кошелька
+	private fun observeAccountRequest() = viewModel.requestAccountState.observe(this) { state ->
+		when(state) {
+			is BaseViewModel.RequestState.SuccessState<*> -> {}
+			is BaseViewModel.RequestState.ErrorState<*> -> {
+				hideLoading()
+				showTextSnackBar(state.t.getErrorString())
+			}
+			is BaseViewModel.RequestState.SendingState -> { showLoading(R.string.loading_account) }
+		}
 	}
 
 	@SuppressLint("SetTextI18n")
 	private fun observeWalletsRequest() = viewModel.requestWalletsState.subscribe<List<Wallet>>(
 		hideLoading = false,
-		onSuccess = { if (it.isEmpty()) {
-			hideLoading()
-			findNavController().navigate(
-				TransactionsFragmentDirections.actionTransactionsFragmentToCreateFirstWalletFragment(true)
+		onSuccess = {
+			if (it.isEmpty()) {
+				hideLoading()
+				findNavController().navigate(
+					TransactionsFragmentDirections.actionTransactionsFragmentToCreateFirstWalletFragment(
+						true,
+						viewModel.currentAccount.accountId
+					)
+				)
+			} else {
+				setUpWallets(it)
+				viewModel.requestTransactions()
+			}
+		},
+		onError = {
+			showTextSnackBar(
+				text = it.getErrorString(),
+				actionText = getString(R.string.retry),
+				action = { viewModel.requestWallets() }
 			)
-		} else {
-			setUpWallets(it)
-			viewModel.requestTransactions()
-		}},
-		onError = { showTextSnackBar(
-			text = it.getErrorString(),
-			actionText = getString(R.string.retry),
-			action = { viewModel.requestWallets() }
-		)},
+		},
 		onSending = { showLoading(R.string.loading_wallets) }
 	)
 
+	@Suppress("UNCHECKED_CAST")
+	private fun observeTransactionRequest() = viewModel.requestTransactionsState.observe(this) { state ->
+		when(state) {
+			is BaseViewModel.RequestState.SuccessState<*> -> {
+				hideLoading()
+				setUpTransactionAdapter(state.data as List<BaseTransactionData>)
+			}
+			is BaseViewModel.RequestState.ErrorState<*> -> {
+				hideLoading()
+				showTextSnackBar(state.t.getErrorString())
+			}
+			is BaseViewModel.RequestState.SendingState -> { showLoading(R.string.loading_transactions) }
+		}
+	}
+
 	@SuppressLint("SetTextI18n")
 	private fun setUpWallets(walletsList: List<Wallet>) {
-		if (walletsList.isEmpty()) {
-			findNavController().navigate(
-				TransactionsFragmentDirections.actionTransactionsFragmentToCreateFirstWalletFragment(true)
-			)
-			return
-		}
 		bindingUtil.chipGroup.removeAllViews()
 		val accountBalanceChip = Chip(requireContext()).apply {
 			text = getString(R.string.total_balance) +
@@ -85,27 +120,18 @@ class TransactionsFragment : BaseFragment() {
 		walletsList.forEach {
 			val walletChip = Chip(requireContext()).apply {
 				text = "${it.name}: ${it.balance.toUiView()} ${it.currency.getCurrencySymbol()}"
-				setTextColor(AppCompatResources.getColorStateList(
-					requireContext(),
-					if (it.color.isTextBlack()) R.color.black else R.color.white
-				))
+				setTextColor(
+					AppCompatResources.getColorStateList(
+						requireContext(),
+						if (it.color.isTextBlack()) R.color.black else R.color.white
+					)
+				)
 				chipBackgroundColor = ColorStateList.valueOf(it.color)
 				isCheckable = true
 			}
 			bindingUtil.chipGroup.addView(walletChip)
 		}
 	}
-
-	private fun observeTransactionRequest() = viewModel.requestTransactionsState.subscribe<List<BaseTransactionData>>(
-		hideLoading = true,
-		onSuccess = { setUpTransactionAdapter(it) },
-		onError = { showTextSnackBar(
-			text = it.getErrorString(),
-			actionText = getString(R.string.retry),
-			action = { viewModel.requestTransactions() }
-		)},
-		onSending = { showLoading(R.string.loading_getting_transactions) }
-	)
 
 	private fun setUpTransactionAdapter(transactions: List<BaseTransactionData>) {
 		if (transactions.isEmpty()) {
@@ -114,6 +140,7 @@ class TransactionsFragment : BaseFragment() {
 				ivNothingHere.isVisible = true
 				textNothingHere.isVisible = true
 			}
+			return
 		}
 
 		if (bindingUtil.rwTransactions.adapter == null) {
