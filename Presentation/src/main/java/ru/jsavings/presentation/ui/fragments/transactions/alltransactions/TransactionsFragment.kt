@@ -52,13 +52,16 @@ class TransactionsFragment : BaseFragment() {
 
 	//TODO баг. При первом заходе в приложение не успевает инициализироваться currentAccount в MainSharedViewModel, либо снова выкидывает на экран создания нового кошелька
 	private fun observeAccountRequest() = viewModel.requestAccountState.observe(this) { state ->
-		when(state) {
-			is BaseViewModel.RequestState.SuccessState<*> -> {}
+		when (state) {
+			is BaseViewModel.RequestState.SuccessState<*> -> {
+			}
 			is BaseViewModel.RequestState.ErrorState<*> -> {
 				hideLoading()
 				showTextSnackBar(state.t.getErrorString())
 			}
-			is BaseViewModel.RequestState.SendingState -> { showLoading(R.string.loading_account) }
+			is BaseViewModel.RequestState.SendingState -> {
+				showLoading(R.string.loading_account)
+			}
 		}
 	}
 
@@ -91,7 +94,7 @@ class TransactionsFragment : BaseFragment() {
 
 	@Suppress("UNCHECKED_CAST")
 	private fun observeTransactionRequest() = viewModel.requestTransactionsState.observe(this) { state ->
-		when(state) {
+		when (state) {
 			is BaseViewModel.RequestState.SuccessState<*> -> {
 				hideLoading()
 				setUpTransactionAdapter(state.data as List<BaseTransactionData>)
@@ -100,7 +103,9 @@ class TransactionsFragment : BaseFragment() {
 				hideLoading()
 				showTextSnackBar(state.t.getErrorString())
 			}
-			is BaseViewModel.RequestState.SendingState -> { showLoading(R.string.loading_transactions) }
+			is BaseViewModel.RequestState.SendingState -> {
+				showLoading(R.string.loading_transactions)
+			}
 		}
 	}
 
@@ -145,7 +150,15 @@ class TransactionsFragment : BaseFragment() {
 
 		if (bindingUtil.rwTransactions.adapter == null) {
 			bindingUtil.rwTransactions.apply {
-				adapter = TransactionListAdapter(transactions, locale)
+				adapter = TransactionListAdapter(transactions, locale) {
+					findNavController().navigate(
+						TransactionsFragmentDirections
+							.actionTransactionsFragmentToTransactionInfoFragment(
+								it,
+								viewModel.currentAccount.mainCurrencyCode
+							)
+					)
+				}
 				itemAnimator = TransactionAnimator(500)
 			}
 		} else {

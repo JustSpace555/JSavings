@@ -23,6 +23,8 @@ import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.presentation.extension.getCurrencySymbol
+import ru.jsavings.presentation.extension.isNotEmptyAndNotBlank
+import ru.jsavings.presentation.extension.toUiView
 import ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.viewmodels.transactions.NewTransactionViewModel
@@ -73,7 +75,11 @@ class NewTransactionFragment : BaseFragment() {
 			hideLoading = true,
 			onSuccess = {
 				allWallets = it
-				setUpUi()
+				if (args.transactionId != -1L) {
+					viewModel.requestTransactionByIdState(args.transactionId)
+				} else {
+					setUpUi()
+				}
 			},
 			onError = { showTextSnackBar(
 				text = it.getErrorString(),
@@ -83,9 +89,17 @@ class NewTransactionFragment : BaseFragment() {
 			onSending = { showLoading(R.string.loading_wallets) }
 		)
 
-		viewModel.requestSaveTransactionSate.subscribe<Long>(
+		viewModel.requestSaveTransactionSate.subscribe<Any>(
 			hideLoading = true,
-			onSuccess = { findNavController().popBackStack() },
+			onSuccess = {
+				if (args.transactionId != -1L) {
+					findNavController().navigate(
+						NewTransactionFragmentDirections.actionNewTransactionFragmentToTransactionsFragment()
+					)
+				} else {
+					findNavController().popBackStack()
+				}
+			},
 			onError = { showTextSnackBar(
 				text = it.getErrorString(),
 				actionText = getString(R.string.retry),
@@ -99,17 +113,33 @@ class NewTransactionFragment : BaseFragment() {
 			onSuccess = {
 				viewModel.transactionCategory = it
 				bindingUtil.tilNewTransactionCategory.isErrorEnabled = false
-				when (it.categoryType) {
-					TransactionCategoryType.INCOME -> bindingUtil.tabLayoutNewTransactionType.getTabAt(0)
-						?.select()
-					TransactionCategoryType.CONSUMPTION -> bindingUtil.tabLayoutNewTransactionType.getTabAt(1)
-						?.select()
-					else -> {}
-				}
+				transactionTypeTabClick(it.categoryType)
 				bindingUtil.actvNewTransactionCategory.setText(it.name)
 			},
 			onError = { showTextSnackBar(text = it.getErrorString()) },
 			onSending = { showLoading() }
+		)
+
+		viewModel.requestTransactionByIdState.subscribe<Transaction>(
+			hideLoading = true,
+			onSuccess = { transaction ->
+				viewModel.apply {
+					transactionDate = transaction.dateDay.time
+					transactionTime = transaction.dateTime.time
+					transactionType = transaction.category?.categoryType ?: TransactionCategoryType.TRANSFER
+					fromWallet = transaction.fromWallet
+					toWallet = transaction.toWallet
+					transactionSum = transaction.sumInWalletCurrency.toUiView()
+					transactionDescription = transaction.description
+					transactionCategory = transaction.category
+				}
+				setUpUi()
+			},
+			onError = {
+				showTextSnackBar(it.getErrorString())
+				setUpUi()
+			},
+			onSending = { showLoading(R.string.loading_getting_transaction) }
 		)
 	}
 
@@ -121,7 +151,7 @@ class NewTransactionFragment : BaseFragment() {
 		setUpWallets()
 		setUpTransactionSum()
 		setUpTransactionDescription()
-		bindingUtil.buttonNewTransactionSave.setOnClickListener { onSaveButtonClick() }
+		setUpSaveButton()
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -145,8 +175,8 @@ class NewTransactionFragment : BaseFragment() {
 			)
 		}
 
-		updateDateDay(currentDateDay)
-		updateDateTime(currentDateTime)
+		updateDateDay(if (viewModel.transactionDate != -1L) Date(viewModel.transactionDate) else currentDateDay)
+		updateDateTime(if (viewModel.transactionTime != -1L) Date(viewModel.transactionTime) else currentDateTime)
 
 		bindingUtil.tietNewTransactionDateDay.setOnClickListener {
 			val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -205,6 +235,7 @@ class NewTransactionFragment : BaseFragment() {
 							viewModel.transactionType = TransactionCategoryType.CONSUMPTION
 						}
 						2 -> {
+							bindingUtil.tilNewTransactionFromWallet.isVisible = true
 							bindingUtil.tilNewTransactionToWallet.isVisible = true
 							bindingUtil.tilNewTransactionCategory.isVisible = false
 							viewModel.transactionType = TransactionCategoryType.TRANSFER
@@ -216,9 +247,21 @@ class NewTransactionFragment : BaseFragment() {
 			override fun onTabUnselected(tab: TabLayout.Tab?) {}
 			override fun onTabReselected(tab: TabLayout.Tab?) {}
 		})
+
+		if (viewModel.transactionType != TransactionCategoryType.INCOME) {
+			transactionTypeTabClick(viewModel.transactionType)
+		}
 	}
 
 	private fun setUpTransactionCategory() {
+
+		if (viewModel.transactionCategory != null ||
+			viewModel.transactionCategory == null && viewModel.fromWallet != null && viewModel.toWallet != null
+		) {
+			transactionTypeTabClick(viewModel.transactionCategory?.categoryType)
+			viewModel.transactionCategory?.let { bindingUtil.actvNewTransactionCategory.setText(it.name) }
+		}
+
 		requireActivity().supportFragmentManager
 			.setFragmentResultListener(CategoriesListFragment.CATEGORY_CHOSEN, viewLifecycleOwner) { _, bundle ->
 				val id = bundle.getLong(CategoriesListFragment.CHOSEN_CATEGORY_ID_KEY, -1L)
@@ -244,6 +287,13 @@ class NewTransactionFragment : BaseFragment() {
 
 		val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_item, listOfWalletsView)
 
+		viewModel.fromWallet?.let {
+			val symbol = it.currency.getCurrencySymbol()
+			bindingUtil.actvNewTransactionFromWallet.setText(
+				WalletsAdapterView(it, symbol).toString()
+			)
+			bindingUtil.tilNewTransactionSum.suffixText = symbol
+		}
 		bindingUtil.actvNewTransactionFromWallet.apply {
 			setAdapter(adapter)
 			setOnItemClickListener { _, _, position, _ ->
@@ -253,6 +303,11 @@ class NewTransactionFragment : BaseFragment() {
 			}
 		}
 
+		viewModel.toWallet?.let {
+			val symbol = it.currency.getCurrencySymbol()
+			bindingUtil.actvNewTransactionToWallet.setText(WalletsAdapterView(it, symbol).toString())
+			bindingUtil.tilNewTransactionSum.suffixText = symbol
+		}
 		bindingUtil.actvNewTransactionToWallet.apply {
 			setAdapter(adapter)
 			setOnItemClickListener { _, _, position, _ ->
@@ -264,6 +319,9 @@ class NewTransactionFragment : BaseFragment() {
 	}
 
 	private fun setUpTransactionSum() {
+		if (viewModel.transactionSum.isNotEmptyAndNotBlank()) {
+			bindingUtil.tietNewTransactionSum.setText(viewModel.transactionSum)
+		}
 		bindingUtil.tietNewTransactionSum.addTextChangedListener {
 			it?.let { sumString ->
 				bindingUtil.tilNewTransactionSum.isErrorEnabled = false
@@ -273,13 +331,33 @@ class NewTransactionFragment : BaseFragment() {
 	}
 
 	private fun setUpTransactionDescription() {
+		if (viewModel.transactionDescription.isNotEmptyAndNotBlank()) {
+			bindingUtil.tietNewTransactionDescription.setText(viewModel.transactionDescription)
+		}
 		bindingUtil.tietNewTransactionDescription.addTextChangedListener {
 			it?.let { description -> viewModel.transactionDescription = description.toString() }
 		}
 	}
 
+	private fun setUpSaveButton() {
+		if (args.transactionId != -1L) bindingUtil.buttonNewTransactionSave.setText(R.string.update_transaction)
+		bindingUtil.buttonNewTransactionSave.setOnClickListener { onSaveButtonClick() }
+	}
+
+	private fun transactionTypeTabClick(transactionCategoryType: TransactionCategoryType?) {
+		when(transactionCategoryType) {
+			TransactionCategoryType.INCOME -> bindingUtil.tabLayoutNewTransactionType.getTabAt(0)
+			TransactionCategoryType.CONSUMPTION -> bindingUtil.tabLayoutNewTransactionType.getTabAt(1)
+			else -> bindingUtil.tabLayoutNewTransactionType.getTabAt(2)
+		}?.select()
+	}
+
 	private fun onSaveButtonClick() {
-		showLoading(getString(R.string.loading_saving_transaction))
+		if (args.transactionId != -1L) {
+			showLoading(R.string.loading_updating_transaction)
+		} else {
+			showLoading(getString(R.string.loading_saving_transaction))
+		}
 
 		val validateResult = viewModel.validateInputData()
 		if (validateResult != NewTransactionViewModel.DATA_VALID) {
@@ -324,6 +402,9 @@ class NewTransactionFragment : BaseFragment() {
 			return
 		}
 
-		viewModel.requestSaveTransaction(args.accountId)
+		if (args.transactionId != -1L)
+			viewModel.requestUpdateTransaction(args.accountId, args.transactionId)
+		else
+			viewModel.requestSaveTransaction(args.accountId)
 	}
 }

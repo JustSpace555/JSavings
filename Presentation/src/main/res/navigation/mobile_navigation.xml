@@ -231,6 +231,9 @@
 			android:name="transactionId"
 			app:argType="long"
 			android:defaultValue="-1L" />
+		<action
+			android:id="@+id/action_newTransactionFragment_to_transactions_fragment"
+			app:destination="@id/transactions_fragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/categoriesListFragment"
@@ -279,6 +282,9 @@
 		<argument
 			android:name="transactionId"
 			app:argType="long" />
+		<argument
+			android:name="account_currency_code"
+			app:argType="string" />
 	</fragment>
 
 </navigation>

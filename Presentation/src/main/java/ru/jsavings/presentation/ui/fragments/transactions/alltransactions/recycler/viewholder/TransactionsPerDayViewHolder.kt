@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.jsavings.databinding.ItemTotalTransactionsPerDayBinding
 import ru.jsavings.domain.model.database.transaction.TemporalTransactions
 import ru.jsavings.presentation.extension.toUiView
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -20,6 +21,10 @@ class TransactionsPerDayViewHolder(
 	private val locale: Locale
 ) : RecyclerView.ViewHolder(bindingUtil.root) {
 
+	private val calendar = Calendar.getInstance(locale)
+	private val weekDaySDF = SimpleDateFormat("EEEE", locale)
+	private val monthAndYearSDF = SimpleDateFormat("LLLL yyyy", locale)
+
 	/**
 	 * Set up view holder with information
 	 * @param temporalTransactions [TemporalTransactions] to display
@@ -28,11 +33,15 @@ class TransactionsPerDayViewHolder(
 	 */
 	@SuppressLint("SetTextI18n")
 	fun setUpViewHolder(temporalTransactions: TemporalTransactions) {
-		val dayCal = Calendar.getInstance(locale).apply { time = temporalTransactions.dayOfTransactions }
 		with(bindingUtil) {
-			textMonthDay.text = dayCal[Calendar.DAY_OF_MONTH].toString()
-			textWeekDay.text = dayCal[Calendar.DAY_OF_WEEK].toString()
-			textMonthAndYear.text = "${dayCal[Calendar.MONTH]} ${dayCal[Calendar.YEAR]}"
+			textMonthDay.text = calendar
+				.apply { time = temporalTransactions.dayOfTransactions }
+				.get(Calendar.DAY_OF_MONTH)
+				.toString()
+			textWeekDay.text = weekDaySDF.format(temporalTransactions.dayOfTransactions)
+				.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
+			textMonthAndYear.text = monthAndYearSDF.format(temporalTransactions.dayOfTransactions)
+				.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
 
 			if (temporalTransactions.totalIncome == 0.0) {
 				incomeLl.isVisible = false

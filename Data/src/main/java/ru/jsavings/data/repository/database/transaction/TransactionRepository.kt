@@ -1,14 +1,11 @@
 package ru.jsavings.data.repository.database.transaction
 
-import androidx.room.Query
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.TransactionEntity
 import ru.jsavings.data.entity.database.TransactionGroupEntity
 import ru.jsavings.data.repository.database.common.BaseDbRepository
-import java.util.*
 
 /**
  * Repository that implements all [ru.jsavings.data.database.dao.TransactionDao] requests
@@ -45,13 +42,13 @@ interface TransactionRepository : BaseDbRepository {
 	fun updateTransaction(transactionEntity: TransactionEntity): Completable
 
 	/**
-	 * Delete transaction from transactions' table
-	 * @param transactionEntity [TransactionEntity] which must be deleted
+	 * Delete transaction from transactions' table by it's id
+	 * @param transactionId Id of transaction that must be deleted
 	 * @return [Completable] source of action
 	 *
 	 * @author JustSpace
 	 */
-	fun deleteTransaction(transactionEntity: TransactionEntity): Completable
+	fun deleteTransactionById(transactionId: Long): Completable
 
 	/**
 	 * Get all transactions from database by account id

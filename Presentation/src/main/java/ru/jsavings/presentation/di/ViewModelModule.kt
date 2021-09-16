@@ -9,6 +9,7 @@ import ru.jsavings.presentation.viewmodels.account.newaccount.ChooseCurrencyView
 import ru.jsavings.presentation.viewmodels.categories.AddNewCategoryViewModel
 import ru.jsavings.presentation.viewmodels.categories.CategoriesListViewModel
 import ru.jsavings.presentation.viewmodels.transactions.NewTransactionViewModel
+import ru.jsavings.presentation.viewmodels.transactions.TransactionInfoViewModel
 import ru.jsavings.presentation.viewmodels.wallets.NewWalletViewModel
 
 /**
@@ -27,6 +28,7 @@ internal val viewModelModule = module {
 
 	//Transaction
 	viewModel { NewTransactionViewModel(get()) }
+	viewModel { TransactionInfoViewModel(get(), get()) }
 
 	//Transaction categories
 	viewModel { CategoriesListViewModel(get()) }

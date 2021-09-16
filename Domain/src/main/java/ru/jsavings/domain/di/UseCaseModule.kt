@@ -6,9 +6,7 @@ import ru.jsavings.domain.usecase.database.account.GetAccountByIdUseCase
 import ru.jsavings.domain.usecase.database.account.GetAllAccountsUseCase
 import ru.jsavings.domain.usecase.database.account.InsertAccountUseCase
 import ru.jsavings.domain.usecase.database.category.*
-import ru.jsavings.domain.usecase.database.transaction.GetAllTransactionsByAccountIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.GetTransactionByIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.SaveNewTransactionUseCase
+import ru.jsavings.domain.usecase.database.transaction.*
 import ru.jsavings.domain.usecase.database.wallet.GetWalletByIdUseCase
 import ru.jsavings.domain.usecase.database.wallet.GetWalletsByAccountIdUseCase
 import ru.jsavings.domain.usecase.database.wallet.InsertNewWalletUseCase
@@ -37,6 +35,8 @@ internal val useCaseModule = module {
 	factory { SaveNewTransactionUseCase(get(), get(), get(), get(), get(), get()) }
 	factory { GetAllTransactionsByAccountIdUseCase(get(), get()) }
 	factory { GetTransactionByIdUseCase(get(), get()) }
+	factory { DeleteTransactionByIdUseCase(get()) }
+	factory { UpdateTransactionUseCase(get(), get()) }
 
 	//TransactionCategory
 	factory { GetAllCategoriesByAccountIdUseCase(get(), get()) }

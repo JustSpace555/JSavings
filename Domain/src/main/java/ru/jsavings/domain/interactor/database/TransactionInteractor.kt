@@ -2,9 +2,7 @@ package ru.jsavings.domain.interactor.database
 
 import org.koin.java.KoinJavaComponent.inject
 import ru.jsavings.domain.interactor.common.BaseInteractor
-import ru.jsavings.domain.usecase.database.transaction.GetAllTransactionsByAccountIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.GetTransactionByIdUseCase
-import ru.jsavings.domain.usecase.database.transaction.SaveNewTransactionUseCase
+import ru.jsavings.domain.usecase.database.transaction.*
 
 /**
  * Interactor for all transaction usecases
@@ -33,4 +31,18 @@ class TransactionInteractor : BaseInteractor {
 	 * @author JustSpace
 	 */
 	val getTransactionByIdUseCase by inject(GetTransactionByIdUseCase::class.java)
+
+	/**
+	 * @see DeleteTransactionByIdUseCase
+	 *
+	 * @author JustSpace
+	 */
+	val deleteTransactionByIdUseCase by inject(DeleteTransactionByIdUseCase::class.java)
+
+	/**
+	 * @see UpdateTransactionUseCase
+	 *
+	 * @author JustSpace
+	 */
+	val updateTransactionUseCase by inject(UpdateTransactionUseCase::class.java)
 }

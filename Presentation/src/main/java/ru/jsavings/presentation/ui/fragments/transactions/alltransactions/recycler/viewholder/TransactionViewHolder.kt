@@ -23,14 +23,20 @@ class TransactionViewHolder(
 			"+ ${transaction.sumInWalletCurrency.toUiView()} ${transaction.toWallet.getCurrencySymbol()}"
 		TransactionCategoryType.CONSUMPTION ->
 			"- ${transaction.sumInWalletCurrency.toUiView()} ${transaction.fromWallet.getCurrencySymbol()}"
-		else -> "${transaction.sumInWalletCurrency.toUiView()} ${transaction.fromWallet.getCurrencySymbol()} \u2192 " +
-				"${transaction.transferSum?.toUiView() ?: "?"} ${transaction.toWallet.getCurrencySymbol()}"
+		else -> if (transaction.fromWallet?.currency == transaction.toWallet?.currency) {
+			"${transaction.sumInWalletCurrency} ${transaction.fromWallet?.currency?.getCurrencySymbol() ?: "?"}"
+		} else {
+			"${transaction.sumInWalletCurrency.toUiView()} ${transaction.fromWallet.getCurrencySymbol()} \u2192 " +
+			"${transaction.transferSum?.toUiView() ?: "?"} ${transaction.toWallet.getCurrencySymbol()}"
+		}
 	}
 
 	@SuppressLint("SetTextI18n", "SimpleDateFormat")
-	fun setUpViewHolder(transaction: Transaction) {
+	fun setUpViewHolder(transaction: Transaction, onTransactionClick: (Long) -> Unit) {
 		val context = itemView.context
 		with(bindingUtil) {
+			root.setOnClickListener { onTransactionClick(transaction.transactionId) }
+
 			ivTransactionIcon.setBackgroundColor(transaction.category?.color ?: R.color.grey) //TODO иконки
 
 			textTransactionDescription.text = if (transaction.description.isNotEmpty()) {

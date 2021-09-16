@@ -117,6 +117,53 @@ class NewTransactionViewModel(
 	}
 
 	/**
+	 * Request update transaction in database by it's id
+	 * @param accountId Id of transaction's account
+	 * @param transactionId Id of transaction to update
+	 *
+	 * @author JustSpace
+	 */
+	fun requestUpdateTransaction(accountId: Long, transactionId: Long) {
+
+		val transaction = Transaction(
+			transactionId = transactionId,
+			accountId = accountId,
+			sumInWalletCurrency = transactionSum.toDouble(),
+			description = transactionDescription,
+			describePicturePath = "", //TODO
+			sumInAccountCurrency = 0.0,
+			transferSum = 0.0,
+			fromWallet = fromWallet,
+			toWallet = toWallet,
+			category = transactionCategory,
+			dateTime = Date(transactionTime),
+			dateDay = Date(transactionDate)
+		)
+
+		dataBaseInteractor.transactionInteractor
+			.updateTransactionUseCase(transaction)
+			.executeUseCase(_requestSaveTransactionState)
+	}
+
+	private val _requestTransactionByIdState = MutableLiveData<RequestState>()
+	/**
+	 * Livedata for getting transaction by id from database if transaction need to be edited
+	 *
+	 * @author JustSpace
+	 */
+	val requestTransactionByIdState: LiveData<RequestState> = _requestTransactionByIdState
+
+	/**
+	 * Request transaction by id from database if transaction need to be edited
+	 * @param transactionId Id of transaction
+	 *
+	 * @author JustSpace
+	 */
+	fun requestTransactionByIdState(transactionId: Long) = dataBaseInteractor.transactionInteractor
+		.getTransactionByIdUseCase(transactionId)
+		.executeUseCase(_requestTransactionByIdState)
+
+	/**
 	 * Checks if all data inputted by user is valid
 	 * @return Result of check
 	 * @see DATA_VALID

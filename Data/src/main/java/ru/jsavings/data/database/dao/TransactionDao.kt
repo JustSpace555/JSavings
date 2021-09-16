@@ -47,14 +47,14 @@ internal interface TransactionDao : BaseDao {
 	fun updateTransaction(transactionEntity: TransactionEntity): Completable
 
 	/**
-	 * Delete transaction from transactions' table
-	 * @param transactionEntity [TransactionEntity] which must be deleted
+	 * Delete transaction from transactions' table by it's id
+	 * @param transactionId Id of transaction that must be deleted
 	 * @return [Completable] source of action
 	 *
 	 * @author JustSpace
 	 */
-	@Delete
-	fun deleteTransaction(transactionEntity: TransactionEntity): Completable
+	@Query("DELETE FROM transaction_table WHERE transaction_id = :transactionId")
+	fun deleteTransactionById(transactionId: Long): Completable
 
 	/**
 	 * Get all transactions from database by account id sorted by date

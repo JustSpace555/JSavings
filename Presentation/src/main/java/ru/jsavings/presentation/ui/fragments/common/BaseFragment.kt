@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
@@ -178,15 +179,16 @@ abstract class BaseFragment : Fragment() {
 		when (state) {
 			is BaseViewModel.RequestState.SuccessState<*> -> {
 				try {
-					onSuccess(state.data as T)
-				} catch (e: TypeCastException) {
-					onError(e)
-				} finally {
 					if (hideLoading) hideLoading()
+					onSuccess(state.data as T)
+				} catch (e: ClassCastException) {
+					hideLoading()
+					onError(e)
 				}
 			}
 			is BaseViewModel.RequestState.ErrorState<*> -> {
 				hideLoading()
+				Log.d("RequestError", state.t.stackTraceToString())
 				onError(state.t)
 			}
 			is BaseViewModel.RequestState.SendingState -> onSending()

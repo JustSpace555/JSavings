@@ -22,6 +22,7 @@ import ru.jsavings.domain.model.database.wallet.WalletType
 import ru.jsavings.domain.model.network.common.BaseCurrency
 import ru.jsavings.domain.model.network.crypto.CryptoCoin
 import ru.jsavings.domain.model.network.currency.Currency
+import ru.jsavings.presentation.extension.isNotEmptyAndNotBlank
 import ru.jsavings.presentation.extension.isTextBlack
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.viewmodels.wallets.NewWalletViewModel
@@ -77,8 +78,7 @@ class NewWalletFragment : BaseFragment() {
 						viewModel.walletName = name
 					}
 				}
-				if (viewModel.walletName.isNotEmpty() && viewModel.walletName.isNotBlank())
-					it.setText(viewModel.walletName)
+				if (viewModel.walletName.isNotEmptyAndNotBlank()) it.setText(viewModel.walletName)
 			}
 
 			// Type

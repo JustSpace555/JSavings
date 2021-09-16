@@ -14,7 +14,8 @@ import java.util.*
 
 class TransactionListAdapter(
 	val transactionDataList: List<BaseTransactionData>,
-	private val locale: Locale
+	private val locale: Locale,
+	private val onTransactionClick: (Long) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	companion object {
@@ -35,7 +36,7 @@ class TransactionListAdapter(
 		if (holder is TransactionsPerDayViewHolder) {
 			holder.setUpViewHolder(transactionDataList[position] as TemporalTransactions)
 		} else if (holder is TransactionViewHolder) {
-			holder.setUpViewHolder(transactionDataList[position] as Transaction)
+			holder.setUpViewHolder(transactionDataList[position] as Transaction, onTransactionClick)
 		}
 	}
 
