@@ -1,10 +1,15 @@
 package ru.jsavings.domain.usecase.database.transaction
 
 import io.reactivex.rxjava3.core.Completable
+import org.koin.core.parameter.emptyParametersHolder
 import ru.jsavings.data.entity.database.AccountEntity
 import ru.jsavings.data.entity.database.TransactionGroupEntity
+import ru.jsavings.data.entity.database.WalletEntity
+import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.data.repository.database.transaction.TransactionRepository
+import ru.jsavings.data.repository.database.wallet.WalletRepository
 import ru.jsavings.domain.mappers.database.TransactionMapper
+import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.usecase.common.BaseUseCase
 
@@ -19,14 +24,6 @@ class UpdateTransactionUseCase(
 	private val transactionRepository: TransactionRepository,
 	private val transactionMapper: TransactionMapper
 ) : BaseUseCase {
-
-	private fun getUpdateCompletable(
-		account: AccountEntity,
-		oldTransaction: TransactionGroupEntity,
-		newTransaction: Transaction
-	): Completable {
-		
-	}
 
 	/**
 	 * Invokes usecase

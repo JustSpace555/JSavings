@@ -50,7 +50,8 @@ class TransactionsFragment : BaseFragment() {
 		viewModel.requestWallets()
 	}
 
-	//TODO баг. При первом заходе в приложение не успевает инициализироваться currentAccount в MainSharedViewModel, либо снова выкидывает на экран создания нового кошелька
+	//TODO баг. При первом заходе в приложение, пройдя через цепочку обучения не успевает инициализироваться
+	// currentAccount в MainSharedViewModel, либо снова выкидывает на экран создания нового кошелька
 	private fun observeAccountRequest() = viewModel.requestAccountState.observe(this) { state ->
 		when (state) {
 			is BaseViewModel.RequestState.SuccessState<*> -> {
@@ -92,6 +93,7 @@ class TransactionsFragment : BaseFragment() {
 		onSending = { showLoading(R.string.loading_wallets) }
 	)
 
+	//TODO баг. При создании самой первой транзакции, она не отображается
 	@Suppress("UNCHECKED_CAST")
 	private fun observeTransactionRequest() = viewModel.requestTransactionsState.observe(this) { state ->
 		when (state) {
