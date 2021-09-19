@@ -30,7 +30,7 @@ import java.util.*
 class TransactionsFragment : BaseFragment() {
 
 	override val viewModel by sharedViewModel<MainSharedViewModel>()
-	override lateinit var bindingUtil: FragmentTransactionsBinding
+	private val bindingUtil get() = binding as FragmentTransactionsBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class TransactionsFragment : BaseFragment() {
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentTransactionsBinding.inflate(inflater, container, false)
+		binding = FragmentTransactionsBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

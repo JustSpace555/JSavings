@@ -35,7 +35,7 @@ import ru.jsavings.presentation.viewmodels.wallets.NewWalletViewModel
 class NewWalletFragment : BaseFragment() {
 
 	override val viewModel by viewModel<NewWalletViewModel>()
-	override lateinit var bindingUtil: FragmentNewWalletBinding
+	private val bindingUtil get() = binding as FragmentNewWalletBinding
 	private val args by navArgs<NewWalletFragmentArgs>()
 
 	private lateinit var currenciesList: List<Currency>
@@ -47,7 +47,7 @@ class NewWalletFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View {
-		bindingUtil = FragmentNewWalletBinding.inflate(inflater, container, false)
+		binding = FragmentNewWalletBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

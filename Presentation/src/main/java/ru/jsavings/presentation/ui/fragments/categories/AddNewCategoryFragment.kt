@@ -24,7 +24,7 @@ import ru.jsavings.presentation.viewmodels.categories.AddNewCategoryViewModel
 class AddNewCategoryFragment : BaseFragment() {
 
 	override val viewModel by viewModel<AddNewCategoryViewModel>()
-	override lateinit var bindingUtil: FragmentNewCategoryBinding
+	private val bindingUtil get() = binding as FragmentNewCategoryBinding
 
 	private val args by navArgs<AddNewCategoryFragmentArgs>()
 
@@ -36,7 +36,7 @@ class AddNewCategoryFragment : BaseFragment() {
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentNewCategoryBinding.inflate(inflater, container, false)
+		binding = FragmentNewCategoryBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

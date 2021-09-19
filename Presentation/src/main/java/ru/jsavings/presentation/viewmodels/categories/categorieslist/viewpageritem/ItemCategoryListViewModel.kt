@@ -1,9 +1,8 @@
-package ru.jsavings.presentation.ui.fragments.categories.categorieslist.viewpageritem
+package ru.jsavings.presentation.viewmodels.categories.categorieslist.viewpageritem
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import ru.jsavings.domain.model.database.category.TransactionCategory
 import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import ru.jsavings.domain.usecase.database.category.DeleteTransactionCategoryUseCase
 import ru.jsavings.presentation.extension.ThreadProvider

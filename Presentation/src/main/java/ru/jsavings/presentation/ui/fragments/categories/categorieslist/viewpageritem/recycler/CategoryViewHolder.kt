@@ -13,7 +13,7 @@ import ru.jsavings.domain.model.database.category.TransactionCategory
  * @author JustSpace
  */
 class CategoryViewHolder(
-	private val bindingUtil: ItemTransactionCategoryBinding
+	private var bindingUtil: ItemTransactionCategoryBinding
 ) : RecyclerView.ViewHolder(bindingUtil.root) {
 
 	/**

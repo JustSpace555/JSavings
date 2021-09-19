@@ -13,15 +13,14 @@ import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 class CreateFirstWalletFragment : BaseFragment() {
 
 	override lateinit var viewModel: BaseViewModel
-
-	override lateinit var bindingUtil: FragmentNewAccountCreateWalletBinding
+	private val bindingUtil get() = binding as FragmentNewAccountCreateWalletBinding
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View {
-		bindingUtil = FragmentNewAccountCreateWalletBinding.inflate(inflater, container, false)
+		binding = FragmentNewAccountCreateWalletBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

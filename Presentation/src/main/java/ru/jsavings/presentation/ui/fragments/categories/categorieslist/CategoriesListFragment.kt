@@ -33,12 +33,12 @@ class CategoriesListFragment : BaseFragment() {
 	}
 
 	override val viewModel by viewModel<CategoriesListViewModel>()
-	override lateinit var bindingUtil: FragmentListCategoriesBinding
+	private val bindingUtil get() = binding as FragmentListCategoriesBinding
 
 	private val args by navArgs<CategoriesListFragmentArgs>()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentListCategoriesBinding.inflate(inflater, container, false)
+		binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

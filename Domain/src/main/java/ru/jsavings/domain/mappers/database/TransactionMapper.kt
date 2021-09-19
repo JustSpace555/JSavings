@@ -47,7 +47,7 @@ class TransactionMapper(
 	 *
 	 * @author JustSpace
 	 */
-	fun mapModelToEntity(model: Transaction): TransactionEntity = TransactionEntity(
+	fun mapModelToTransactionEntity(model: Transaction): TransactionEntity = TransactionEntity(
 		transactionId = model.transactionId,
 		accountFkId = model.accountId,
 		sumInWalletCurrency = model.sumInWalletCurrency,
@@ -60,5 +60,19 @@ class TransactionMapper(
 		toWalletFkId = model.toWallet?.walletId,
 		dateDay = model.dateDay.time,
 		dateTime = model.dateTime.time
+	)
+
+	/**
+	 * Maps [Transaction] to [TransactionGroupEntity]
+	 * @param model [Transaction] to map
+	 * @return [TransactionGroupEntity]
+	 *
+	 * @author JustSpace
+	 */
+	fun mapModelToGroupEntity(model: Transaction) = TransactionGroupEntity(
+		transactionEntity = mapModelToTransactionEntity(model),
+		categoryEntity = model.category?.let { transactionCategoryMapper.mapModelToEntity(it) },
+		fromWalletEntity = model.fromWallet?.let { walletMapper.mapModelToEntity(it) },
+		toWalletEntity = model.toWallet?.let { walletMapper.mapModelToEntity(it) }
 	)
 }

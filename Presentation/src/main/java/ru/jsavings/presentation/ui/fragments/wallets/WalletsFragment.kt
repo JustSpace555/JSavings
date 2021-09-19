@@ -9,5 +9,5 @@ class WalletsFragment : BaseFragment() {
 
     override val viewModel by sharedViewModel<MainSharedViewModel>()
 
-    override lateinit var bindingUtil: FragmentWalletsBinding
+    private val bindingUtil get() = binding as FragmentWalletsBinding
 }

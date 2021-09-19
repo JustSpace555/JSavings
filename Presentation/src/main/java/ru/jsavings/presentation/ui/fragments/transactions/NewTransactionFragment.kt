@@ -46,12 +46,12 @@ class NewTransactionFragment : BaseFragment() {
 	private val args by navArgs<NewTransactionFragmentArgs>()
 
 	override val viewModel by viewModel<NewTransactionViewModel>()
-	override lateinit var bindingUtil: FragmentNewTransactionBinding
+	private val bindingUtil get() = binding as FragmentNewTransactionBinding
 
 	private lateinit var allWallets: List<Wallet>
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentNewTransactionBinding.inflate(inflater, container, false)
+		binding = FragmentNewTransactionBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 
@@ -108,13 +108,18 @@ class NewTransactionFragment : BaseFragment() {
 			onSending = { showLoading(R.string.loading_saving_transaction) }
 		)
 
+		requireActivity().supportFragmentManager
+			.setFragmentResultListener(CategoriesListFragment.CATEGORY_CHOSEN, viewLifecycleOwner) { _, bundle ->
+				val id = bundle.getLong(CategoriesListFragment.CHOSEN_CATEGORY_ID_KEY, -1L)
+				viewModel.requestTransactionCategory(id)
+			}
+
 		viewModel.requestTransactionCategoryState.subscribe<TransactionCategory>(
 			hideLoading = true,
 			onSuccess = {
 				viewModel.transactionCategory = it
-				bindingUtil.tilNewTransactionCategory.isErrorEnabled = false
 				transactionTypeTabClick(it.categoryType)
-				bindingUtil.actvNewTransactionCategory.setText(it.name)
+				bindingUtil.tilNewTransactionCategory.isErrorEnabled = false
 			},
 			onError = { showTextSnackBar(text = it.getErrorString()) },
 			onSending = { showLoading() }
@@ -122,19 +127,7 @@ class NewTransactionFragment : BaseFragment() {
 
 		viewModel.requestTransactionByIdState.subscribe<Transaction>(
 			hideLoading = true,
-			onSuccess = { transaction ->
-				viewModel.apply {
-					transactionDate = transaction.dateDay.time
-					transactionTime = transaction.dateTime.time
-					transactionType = transaction.category?.categoryType ?: TransactionCategoryType.TRANSFER
-					fromWallet = transaction.fromWallet
-					toWallet = transaction.toWallet
-					transactionSum = transaction.sumInWalletCurrency.toUiView()
-					transactionDescription = transaction.description
-					transactionCategory = transaction.category
-				}
-				setUpUi()
-			},
+			onSuccess = { setUpUi() },
 			onError = {
 				showTextSnackBar(it.getErrorString())
 				setUpUi()
@@ -221,30 +214,36 @@ class NewTransactionFragment : BaseFragment() {
 
 			override fun onTabSelected(tab: TabLayout.Tab?) {
 				tab?.let {
-					when (it.position) {
-						0 -> {
-							bindingUtil.tilNewTransactionToWallet.isVisible = true
-							bindingUtil.tilNewTransactionFromWallet.isVisible = false
-							bindingUtil.tilNewTransactionCategory.isVisible = true
-							viewModel.transactionType = TransactionCategoryType.INCOME
-						}
-						1 -> {
-							bindingUtil.tilNewTransactionToWallet.isVisible = false
-							bindingUtil.tilNewTransactionFromWallet.isVisible = true
-							bindingUtil.tilNewTransactionCategory.isVisible = true
-							viewModel.transactionType = TransactionCategoryType.CONSUMPTION
-						}
-						2 -> {
-							bindingUtil.tilNewTransactionFromWallet.isVisible = true
-							bindingUtil.tilNewTransactionToWallet.isVisible = true
-							bindingUtil.tilNewTransactionCategory.isVisible = false
-							viewModel.transactionType = TransactionCategoryType.TRANSFER
+					with(bindingUtil) {
+						when (it.position) {
+							0 -> {
+								tilNewTransactionToWallet.isVisible = true
+								tilNewTransactionFromWallet.isVisible = false
+								bindingUtil.tilNewTransactionCategory.isVisible = true
+								viewModel.transactionType = TransactionCategoryType.INCOME
+							}
+							1 -> {
+								tilNewTransactionToWallet.isVisible = false
+								tilNewTransactionFromWallet.isVisible = true
+								tilNewTransactionCategory.isVisible = true
+								viewModel.transactionType = TransactionCategoryType.CONSUMPTION
+							}
+							2 -> {
+								tilNewTransactionFromWallet.isVisible = true
+								tilNewTransactionToWallet.isVisible = true
+								tilNewTransactionCategory.isVisible = false
+								viewModel.transactionType = TransactionCategoryType.TRANSFER
+							}
 						}
 					}
 				}
 			}
 
-			override fun onTabUnselected(tab: TabLayout.Tab?) {}
+			override fun onTabUnselected(tab: TabLayout.Tab?) {
+				viewModel.transactionCategory = null
+				bindingUtil.actvNewTransactionCategory.setText("")
+			}
+
 			override fun onTabReselected(tab: TabLayout.Tab?) {}
 		})
 
@@ -254,19 +253,7 @@ class NewTransactionFragment : BaseFragment() {
 	}
 
 	private fun setUpTransactionCategory() {
-
-		if (viewModel.transactionCategory != null ||
-			viewModel.transactionCategory == null && viewModel.fromWallet != null && viewModel.toWallet != null
-		) {
-			transactionTypeTabClick(viewModel.transactionCategory?.categoryType)
-			viewModel.transactionCategory?.let { bindingUtil.actvNewTransactionCategory.setText(it.name) }
-		}
-
-		requireActivity().supportFragmentManager
-			.setFragmentResultListener(CategoriesListFragment.CATEGORY_CHOSEN, viewLifecycleOwner) { _, bundle ->
-				val id = bundle.getLong(CategoriesListFragment.CHOSEN_CATEGORY_ID_KEY, -1L)
-				viewModel.requestTransactionCategory(id)
-			}
+		viewModel.transactionCategory?.let { bindingUtil.actvNewTransactionCategory.setText(it.name) }
 
 		bindingUtil.actvNewTransactionCategory.setOnClickListener {
 			findNavController().navigate(
@@ -345,11 +332,14 @@ class NewTransactionFragment : BaseFragment() {
 	}
 
 	private fun transactionTypeTabClick(transactionCategoryType: TransactionCategoryType?) {
+		val oldCategory = viewModel.transactionCategory
 		when(transactionCategoryType) {
 			TransactionCategoryType.INCOME -> bindingUtil.tabLayoutNewTransactionType.getTabAt(0)
 			TransactionCategoryType.CONSUMPTION -> bindingUtil.tabLayoutNewTransactionType.getTabAt(1)
 			else -> bindingUtil.tabLayoutNewTransactionType.getTabAt(2)
 		}?.select()
+		viewModel.transactionCategory = oldCategory
+		viewModel.transactionCategory?.let { bindingUtil.actvNewTransactionCategory.setText(it.name) }
 	}
 
 	private fun onSaveButtonClick() {

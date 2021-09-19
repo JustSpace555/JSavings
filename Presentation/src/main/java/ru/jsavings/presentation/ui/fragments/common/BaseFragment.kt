@@ -35,11 +35,16 @@ abstract class BaseFragment : Fragment() {
 	protected abstract val viewModel: BaseViewModel
 
 	/**
-	 * ViewBindingUtil for fragment
+	 * ViewBindingUtil for fragment. Need to be initialized in [onCreateView] and casted to fragment binding
 	 *
 	 * @author JustSpace
 	 */
-	protected abstract val bindingUtil: ViewBinding
+	protected var binding: ViewBinding? = null
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		binding = null
+	}
 
 	private var dialog: Dialog? = null
 
@@ -48,14 +53,12 @@ abstract class BaseFragment : Fragment() {
 	 *
 	 * @author JustSpace
 	 */
-	protected fun hideKeyBoard() {
-		val inputMethodManager = requireContext()
-			.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-
-		inputMethodManager.hideSoftInputFromWindow(bindingUtil.root.windowToken, 0)
+	protected fun hideKeyBoard() { binding?.let {
+		val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+		inputMethodManager.hideSoftInputFromWindow(it.root.windowToken, 0)
 
 		requireActivity().window.currentFocus?.clearFocus()
-	}
+	}}
 
 	/**
 	 * Set hide keyboard on root touch click listener
@@ -63,10 +66,12 @@ abstract class BaseFragment : Fragment() {
 	 * @author JustSpace
 	 */
 	@SuppressLint("ClickableViewAccessibility")
-	protected fun hideKeyBoardOnRootTouchClick() = bindingUtil.root.setOnTouchListener { _, _ ->
-		hideKeyBoard()
-		false
-	}
+	protected fun hideKeyBoardOnRootTouchClick() { binding?.let {
+		it.root.setOnTouchListener { _, _ ->
+			hideKeyBoard()
+			false
+		}
+	}}
 
 	/**
 	 * Show text snack bar
@@ -82,12 +87,11 @@ abstract class BaseFragment : Fragment() {
 		length: Int = Snackbar.LENGTH_LONG,
 		actionText: String = "",
 		action: (View) -> Unit = {},
-	) {
-		val snackBar = Snackbar.make(bindingUtil.root, text, length)
-		if (actionText.isNotEmpty())
-			snackBar.setAction(actionText, action)
+	) { binding?.let {
+		val snackBar = Snackbar.make(it.root, text, length)
+		if (actionText.isNotEmpty()) snackBar.setAction(actionText, action)
 		snackBar.show()
-	}
+	}}
 
 	/**
 	 * Show loading dialog

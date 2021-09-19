@@ -9,5 +9,5 @@ class CalendarFragment : BaseFragment() {
 
 	override val viewModel by sharedViewModel<MainSharedViewModel>()
 
-	override lateinit var bindingUtil: FragmentCalendarBinding
+	private val bindingUtil get() = binding as FragmentCalendarBinding
 }

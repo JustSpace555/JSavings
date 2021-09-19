@@ -19,7 +19,7 @@ import ru.jsavings.presentation.viewmodels.account.newaccount.ChooseCurrencyView
 class ChooseCurrencyFragment : BaseFragment() {
 
 	override val viewModel by viewModel<ChooseCurrencyViewModel>()
-	override lateinit var bindingUtil: FragmentNewAccountChooseCurrencyBinding
+	private val bindingUtil get() = binding as FragmentNewAccountChooseCurrencyBinding
 	private val args: ChooseCurrencyFragmentArgs by navArgs()
 
 	private val currenciesList = mutableListOf<Currency>()
@@ -29,7 +29,7 @@ class ChooseCurrencyFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View {
-		bindingUtil = FragmentNewAccountChooseCurrencyBinding.inflate(inflater, container, false)
+		binding = FragmentNewAccountChooseCurrencyBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

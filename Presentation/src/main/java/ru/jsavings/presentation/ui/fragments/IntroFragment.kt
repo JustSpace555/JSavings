@@ -17,14 +17,14 @@ import ru.jsavings.presentation.viewmodels.MainSharedViewModel
 class IntroFragment : BaseFragment() {
 
 	override val viewModel by sharedViewModel<MainSharedViewModel>()
-	override lateinit var bindingUtil: FragmentIntroBinding
+	private val bindingUtil get() = binding as FragmentIntroBinding
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View {
-		bindingUtil = FragmentIntroBinding.inflate(inflater, container, false)
+		binding = FragmentIntroBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

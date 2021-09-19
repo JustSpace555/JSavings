@@ -12,13 +12,12 @@ import ru.jsavings.R
 import ru.jsavings.databinding.FragmentNewAccountAddNameBinding
 import ru.jsavings.domain.model.database.Account
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
-import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 import ru.jsavings.presentation.viewmodels.account.newaccount.AddNewAccountNameViewModel
 
 class AddNewAccountNameFragment : BaseFragment() {
 
 	override val viewModel by viewModel<AddNewAccountNameViewModel>()
-	override lateinit var bindingUtil: FragmentNewAccountAddNameBinding
+	private val bindingUtil get() = binding as FragmentNewAccountAddNameBinding
 
 	private val allAccounts = mutableListOf<Account>()
 
@@ -27,7 +26,7 @@ class AddNewAccountNameFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		bindingUtil = FragmentNewAccountAddNameBinding.inflate(inflater, container, false)
+		binding = FragmentNewAccountAddNameBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

@@ -14,11 +14,10 @@ import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 class ReadyFragment : BaseFragment() {
 
 	override lateinit var viewModel: BaseViewModel
-
-	override lateinit var bindingUtil: FragmentNewAccountReadyToStartBinding
+	private val bindingUtil get() = binding as FragmentNewAccountReadyToStartBinding
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentNewAccountReadyToStartBinding.inflate(inflater, container, false)
+		binding = FragmentNewAccountReadyToStartBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

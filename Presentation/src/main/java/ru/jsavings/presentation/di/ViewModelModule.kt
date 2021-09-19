@@ -2,7 +2,7 @@ package ru.jsavings.presentation.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import ru.jsavings.presentation.ui.fragments.categories.categorieslist.viewpageritem.ItemCategoryListViewModel
+import ru.jsavings.presentation.viewmodels.categories.categorieslist.viewpageritem.ItemCategoryListViewModel
 import ru.jsavings.presentation.viewmodels.MainSharedViewModel
 import ru.jsavings.presentation.viewmodels.account.newaccount.AddNewAccountNameViewModel
 import ru.jsavings.presentation.viewmodels.account.newaccount.ChooseCurrencyViewModel

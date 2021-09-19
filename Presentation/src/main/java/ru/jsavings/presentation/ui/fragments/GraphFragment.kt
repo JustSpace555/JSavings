@@ -9,5 +9,5 @@ class GraphFragment : BaseFragment() {
 
     override val viewModel by sharedViewModel<MainSharedViewModel>()
 
-    override lateinit var bindingUtil: FragmentGraphBinding
+    private val bindingUtil get() = binding as FragmentGraphBinding
 }

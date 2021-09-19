@@ -19,6 +19,7 @@ import ru.jsavings.presentation.ui.fragments.categories.categorieslist.Categorie
 import ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListFragmentDirections
 import ru.jsavings.presentation.ui.fragments.categories.categorieslist.viewpageritem.recycler.CategoriesAdapter
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
+import ru.jsavings.presentation.viewmodels.categories.categorieslist.viewpageritem.ItemCategoryListViewModel
 import java.util.*
 
 /**
@@ -57,7 +58,7 @@ class ItemCategoryListFragment : BaseFragment() {
 	}
 
 	override val viewModel by viewModel<ItemCategoryListViewModel>()
-	override lateinit var bindingUtil: ItemFragmentCategoriesListBinding
+	private val bindingUtil get() = binding as ItemFragmentCategoriesListBinding
 
 	private var accountId: Long? = null
 	private val categoriesList = mutableListOf<TransactionCategory>()
@@ -71,7 +72,7 @@ class ItemCategoryListFragment : BaseFragment() {
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = ItemFragmentCategoriesListBinding.inflate(inflater, container, false)
+		binding = ItemFragmentCategoriesListBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

@@ -1,5 +1,6 @@
 package ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,9 +35,13 @@ class TransactionListAdapter(
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 		if (holder is TransactionsPerDayViewHolder) {
-			holder.setUpViewHolder(transactionDataList[position] as TemporalTransactions)
+			val item = transactionDataList[position] as TemporalTransactions
+			Log.d("TransactionListAdapter", "${item.profit}")
+			holder.setUpViewHolder(item)
 		} else if (holder is TransactionViewHolder) {
-			holder.setUpViewHolder(transactionDataList[position] as Transaction, onTransactionClick)
+			val item = transactionDataList[position] as Transaction
+			Log.d("TransactionListAdapter", "${item.category?.name}")
+			holder.setUpViewHolder(item, onTransactionClick)
 		}
 	}
 

@@ -74,19 +74,22 @@ class SaveNewTransactionUseCase(
 			toCurrencyCode = newTransaction.toWallet!!.currency,
 			amount = newTransaction.sumInWalletCurrency
 		).flatMap { conversionResult ->
-			val newFromWalletBalance = newTransaction.fromWallet.balance - newTransaction.sumInWalletCurrency
-			val fromWalletCopy = newTransaction.fromWallet.copy(balance = newFromWalletBalance)
+			if (newTransaction.fromWallet.walletId == newTransaction.toWallet.walletId) {
+				Completable.complete()
+			} else {
+				val newFromWalletBalance = newTransaction.fromWallet.balance - newTransaction.sumInWalletCurrency
+				val fromWalletCopy = newTransaction.fromWallet.copy(balance = newFromWalletBalance)
 
-			val newToWalletBalance = newTransaction.toWallet.balance + conversionResult
-			val toWalletCopy = newTransaction.toWallet.copy(balance = newToWalletBalance)
-
-			Completable.mergeArray(
-				walletRepository.updateWallet(walletMapper.mapModelToEntity(fromWalletCopy)),
-				walletRepository.updateWallet(walletMapper.mapModelToEntity(toWalletCopy))
-			).andThen(Single.defer { Single.just(conversionResult) })
+				val newToWalletBalance = newTransaction.toWallet.balance + conversionResult
+				val toWalletCopy = newTransaction.toWallet.copy(balance = newToWalletBalance)
+					Completable.mergeArray(
+						walletRepository.updateWallet(walletMapper.mapModelToEntity(fromWalletCopy)),
+						walletRepository.updateWallet(walletMapper.mapModelToEntity(toWalletCopy))
+					)
+			}.andThen(Single.defer { Single.just(conversionResult) })
 		}.flatMap { conversionResult ->
 			val transactionCopy = newTransaction.copy(transferSum = conversionResult, sumInAccountCurrency = 0.0)
-			transactionRepository.insertNewTransaction(transactionMapper.mapModelToEntity(transactionCopy))
+			transactionRepository.insertNewTransaction(transactionMapper.mapModelToTransactionEntity(transactionCopy))
 		}
 	} else {
 		val type = newTransaction.category.categoryType
@@ -110,7 +113,7 @@ class SaveNewTransactionUseCase(
 				).andThen(Single.defer { Single.just(pair.second) })
 			}.flatMap { conversionResult ->
 				val transactionCopy = newTransaction.copy(sumInAccountCurrency = conversionResult)
-				transactionRepository.insertNewTransaction(transactionMapper.mapModelToEntity(transactionCopy))
+				transactionRepository.insertNewTransaction(transactionMapper.mapModelToTransactionEntity(transactionCopy))
 			}
 	}
 }

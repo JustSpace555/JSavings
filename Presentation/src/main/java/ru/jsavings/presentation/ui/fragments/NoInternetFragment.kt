@@ -16,7 +16,7 @@ import ru.jsavings.presentation.viewmodels.common.BaseViewModel
  */
 class NoInternetFragment : BaseFragment() {
 
-	override lateinit var bindingUtil: FragmentNoInternetBinding
+	private val bindingUtil get() = binding as FragmentNoInternetBinding
 	override lateinit var viewModel: BaseViewModel
 
 	override fun onCreateView(
@@ -24,7 +24,7 @@ class NoInternetFragment : BaseFragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		bindingUtil = FragmentNoInternetBinding.inflate(inflater, container, false)
+		binding = FragmentNoInternetBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 

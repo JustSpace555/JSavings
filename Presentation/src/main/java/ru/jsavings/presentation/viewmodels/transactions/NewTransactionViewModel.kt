@@ -9,6 +9,7 @@ import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.presentation.extension.ThreadProvider
+import ru.jsavings.presentation.extension.toUiView
 import ru.jsavings.presentation.viewmodels.common.BaseViewModel
 import java.util.*
 
@@ -90,42 +91,15 @@ class NewTransactionViewModel(
 	 */
 	val requestSaveTransactionSate = _requestSaveTransactionState as LiveData<RequestState>
 
-	/**
-	 * Request save new transaction in database
-	 *
-	 * @author JustSpace
-	 */
-	fun requestSaveTransaction(accountId: Long) {
+	private fun makeTransaction(accountId: Long, transactionId: Long): Transaction {
 
-		val transaction = Transaction(
-			accountId = accountId,
-			sumInWalletCurrency = transactionSum.toDouble(),
-			description = transactionDescription,
-			describePicturePath = "", //TODO
-			sumInAccountCurrency = 0.0,
-			transferSum = 0.0,
-			fromWallet = fromWallet,
-			toWallet = toWallet,
-			category = transactionCategory,
-			dateTime = Date(transactionTime),
-			dateDay = Date(transactionDate)
-		)
+		when(transactionType) {
+			TransactionCategoryType.INCOME -> fromWallet = null
+			TransactionCategoryType.CONSUMPTION -> toWallet = null
+			TransactionCategoryType.TRANSFER -> transactionCategory = null
+		}
 
-		dataBaseInteractor.transactionInteractor
-			.saveNewTransactionUseCase(transaction)
-			.executeUseCase(_requestSaveTransactionState)
-	}
-
-	/**
-	 * Request update transaction in database by it's id
-	 * @param accountId Id of transaction's account
-	 * @param transactionId Id of transaction to update
-	 *
-	 * @author JustSpace
-	 */
-	fun requestUpdateTransaction(accountId: Long, transactionId: Long) {
-
-		val transaction = Transaction(
+		return Transaction(
 			transactionId = transactionId,
 			accountId = accountId,
 			sumInWalletCurrency = transactionSum.toDouble(),
@@ -139,11 +113,27 @@ class NewTransactionViewModel(
 			dateTime = Date(transactionTime),
 			dateDay = Date(transactionDate)
 		)
-
-		dataBaseInteractor.transactionInteractor
-			.updateTransactionUseCase(transaction)
-			.executeUseCase(_requestSaveTransactionState)
 	}
+
+	/**
+	 * Request save new transaction in database
+	 *
+	 * @author JustSpace
+	 */
+	fun requestSaveTransaction(accountId: Long) = dataBaseInteractor.transactionInteractor
+		.saveNewTransactionUseCase(makeTransaction(accountId, 0))
+		.executeUseCase(_requestSaveTransactionState)
+
+	/**
+	 * Request update transaction in database by it's id
+	 * @param accountId Id of transaction's account
+	 * @param transactionId Id of transaction to update
+	 *
+	 * @author JustSpace
+	 */
+	fun requestUpdateTransaction(accountId: Long, transactionId: Long) = dataBaseInteractor.transactionInteractor
+		.updateTransactionUseCase(makeTransaction(accountId, transactionId))
+		.executeUseCase(_requestSaveTransactionState)
 
 	private val _requestTransactionByIdState = MutableLiveData<RequestState>()
 	/**
@@ -161,7 +151,18 @@ class NewTransactionViewModel(
 	 */
 	fun requestTransactionByIdState(transactionId: Long) = dataBaseInteractor.transactionInteractor
 		.getTransactionByIdUseCase(transactionId)
-		.executeUseCase(_requestTransactionByIdState)
+		.executeUseCase(_requestTransactionByIdState) { transaction ->
+			transactionDate = transaction.dateDay.time
+			transactionTime = transaction.dateTime.time
+			fromWallet = transaction.fromWallet
+			toWallet = transaction.toWallet
+			transactionSum = transaction.sumInWalletCurrency.toUiView()
+			transactionDescription = transaction.description
+			if (transactionCategory == null && transactionType == TransactionCategoryType.INCOME) {
+				transactionCategory = transaction.category
+				transactionType = transaction.category?.categoryType ?: TransactionCategoryType.TRANSFER
+			}
+		}
 
 	/**
 	 * Checks if all data inputted by user is valid

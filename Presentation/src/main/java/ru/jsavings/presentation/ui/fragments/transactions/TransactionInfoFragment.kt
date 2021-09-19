@@ -24,13 +24,13 @@ import java.text.SimpleDateFormat
 
 class TransactionInfoFragment : BaseFragment() {
 
-	override lateinit var bindingUtil: FragmentTransactionInfoBinding
+	private val bindingUtil get() = binding as FragmentTransactionInfoBinding
 	override val viewModel by viewModel<TransactionInfoViewModel>()
 
 	private val args by navArgs<TransactionInfoFragmentArgs>()
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		bindingUtil = FragmentTransactionInfoBinding.inflate(inflater, container, false)
+		binding = FragmentTransactionInfoBinding.inflate(inflater, container, false)
 		return bindingUtil.root
 	}
 
