@@ -279,10 +279,19 @@ class UpdateTransactionUseCase(
 						toCurrency = toCurrencyCode,
 						amount = newTransaction.sumInWalletCurrency
 					).flatMapCompletable { conversionResult ->
-						val newTransactionCopy = if (newTransaction.category == null) {
-							newTransaction.copy(transferSum = conversionResult, sumInAccountCurrency = 0.0)
-						} else {
-							newTransaction.copy(sumInAccountCurrency = conversionResult, transferSum = null)
+						val newTransactionCopy = when(newTransaction.category?.categoryType) {
+							TransactionCategoryType.INCOME -> newTransaction.copy(
+								sumInAccountCurrency = conversionResult, transferSum = null,
+								fromWallet = null
+							)
+							TransactionCategoryType.CONSUMPTION -> newTransaction.copy(
+								sumInAccountCurrency = conversionResult, transferSum = null,
+								toWallet = null
+							)
+							else -> newTransaction.copy(
+								transferSum = conversionResult, category = null,
+								sumInAccountCurrency = 0.0
+							)
 						}
 
 						val newTransactionGroup = transactionMapper.mapModelToGroupEntity(newTransactionCopy)
