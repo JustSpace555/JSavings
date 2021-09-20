@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetCryptoCoinsUseCase(
 	private val repository: CryptoRepository,
 	private val cryptoCoinsMapper: CryptoCoinsMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Execute usecase

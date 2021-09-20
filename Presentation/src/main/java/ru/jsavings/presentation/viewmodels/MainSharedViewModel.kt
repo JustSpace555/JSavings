@@ -66,6 +66,8 @@ class MainSharedViewModel(
 			.executeUseCase(_requestAccountState) { currentAccount = it }
 	}
 
+	init { requestAccount() }
+
 	private val _requestWalletsState = MutableLiveData<RequestState>()
 	/**
 	 * Livedata for getting all wallets from database according to [CacheKeys.JS_CURRENT_ACCOUNT] account id request

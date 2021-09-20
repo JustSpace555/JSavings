@@ -80,7 +80,10 @@ class NewTransactionViewModel(
 
 		dataBaseInteractor.categoriesInteractor
 			.getTransactionCategoryByIdUseCase(categoryId)
-			.executeUseCase(_requestTransactionCategoryState) { transactionCategory = it }
+			.executeUseCase(
+				_requestTransactionCategoryState,
+				doOnSuccess = { transactionCategory = it }
+			)
 	}
 
 	private val _requestSaveTransactionState = MutableLiveData<RequestState>()
@@ -151,18 +154,21 @@ class NewTransactionViewModel(
 	 */
 	fun requestTransactionByIdState(transactionId: Long) = dataBaseInteractor.transactionInteractor
 		.getTransactionByIdUseCase(transactionId)
-		.executeUseCase(_requestTransactionByIdState) { transaction ->
-			transactionDate = transaction.dateDay.time
-			transactionTime = transaction.dateTime.time
-			fromWallet = transaction.fromWallet
-			toWallet = transaction.toWallet
-			transactionSum = transaction.sumInWalletCurrency.toUiView()
-			transactionDescription = transaction.description
-			if (transactionCategory == null && transactionType == TransactionCategoryType.INCOME) {
-				transactionCategory = transaction.category
-				transactionType = transaction.category?.categoryType ?: TransactionCategoryType.TRANSFER
+		.executeUseCase(
+			_requestTransactionByIdState,
+			doOnSuccess = { transaction ->
+				transactionDate = transaction.dateDay.time
+				transactionTime = transaction.dateTime.time
+				fromWallet = transaction.fromWallet
+				toWallet = transaction.toWallet
+				transactionSum = transaction.sumInWalletCurrency.toUiView()
+				transactionDescription = transaction.description
+				if (transactionCategory == null && transactionType == TransactionCategoryType.INCOME) {
+					transactionCategory = transaction.category
+					transactionType = transaction.category?.categoryType ?: TransactionCategoryType.TRANSFER
+				}
 			}
-		}
+		)
 
 	/**
 	 * Checks if all data inputted by user is valid

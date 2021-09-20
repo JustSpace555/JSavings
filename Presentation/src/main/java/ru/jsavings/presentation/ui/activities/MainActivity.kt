@@ -8,14 +8,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import ru.jsavings.R
 import ru.jsavings.databinding.ActivityMainBinding
-import ru.jsavings.presentation.di.presentationModule
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragment
 import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.TransactionsFragmentDirections
 import ru.jsavings.presentation.viewmodels.MainSharedViewModel
@@ -56,11 +51,6 @@ class MainActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		startKoin {
-			androidContext(this@MainActivity)
-			loadKoinModules(presentationModule)
-		}
-
 		bindingUtil = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(bindingUtil.root)
 
@@ -83,8 +73,6 @@ class MainActivity : AppCompatActivity() {
 
 		supportActionBar?.hide()
 
-
-		viewModel.requestAccount()
 		bindingUtil.addTransactionFab.setOnClickListener {
 			val fragment = navHostFragment.childFragmentManager.fragments.first()
 			if (fragment is TransactionsFragment && fragment.isVisible) {
@@ -105,11 +93,6 @@ class MainActivity : AppCompatActivity() {
 		navController.removeOnDestinationChangedListener(navigationListener)
 	}
 
-	override fun onDestroy() {
-		super.onDestroy()
-		stopKoin()
-	}
-
 	/**
 	 * Set account name to top bar
 	 * @param name Name of account
@@ -119,14 +102,4 @@ class MainActivity : AppCompatActivity() {
 	fun setAccountName(name: String) {
 		bindingUtil.materialTopBar.title = name
 	}
-
-//	/**
-//	 * Set visil
-//	 * @author Михаил Мошков
-//	 */
-//	fun setVisibilityToInterface(isVisible: Boolean) {
-//		bindingUtil.topBar.isVisible = isVisible
-//		bindingUtil.addTransactionFab.isVisible = isVisible
-//		bindingUtil.bottomAppBar.isVisible = isVisible
-//	}
 }

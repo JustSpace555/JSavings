@@ -1,7 +1,6 @@
 package ru.jsavings.domain.usecase.database.transaction
 
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 import ru.jsavings.data.entity.database.AccountEntity
 import ru.jsavings.data.entity.database.TransactionGroupEntity
 import ru.jsavings.data.entity.database.WalletEntity
@@ -27,18 +26,7 @@ class UpdateTransactionUseCase(
 	private val currencyRepository: CurrencyRepository,
 	private val walletRepository: WalletRepository,
 	private val accountRepository: AccountRepository,
-) : BaseUseCase {
-
-	private fun getConversion(fromCurrencyCode: String, toCurrencyCode: String, amount: Double) =
-		if (fromCurrencyCode != toCurrencyCode)
-			currencyRepository.getConversion(
-				from = fromCurrencyCode,
-				to = toCurrencyCode,
-				amount = amount,
-				precision = 2
-			).map { it.result }
-		else
-			Single.just(amount)
+) : BaseUseCase() {
 
 	private fun AccountEntity.updateCompletable(update: (AccountEntity) -> Double) = accountRepository.updateAccount(
 		copy(balanceInMainCurrency = update(this))
@@ -89,7 +77,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.INCOME] -> [TransactionCategoryType.INCOME]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
+		newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
 			firstWalletWithSameOrNotIdToUpdate = oldTransaction.toWalletEntity!!,
 			secondWalletWithSameOrNotIdToUpdate = newTransaction.toWalletEntity!!,
 			firstUpdateSum = oldTransaction.transactionEntity.sumInWalletCurrency,
@@ -107,7 +95,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.INCOME] -> [TransactionCategoryType.CONSUMPTION]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
+		newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
 			getUpdateDataCompletable(
 				firstWalletWithSameOrNotIdToUpdate = oldTransaction.toWalletEntity!!,
 				secondWalletWithSameOrNotIdToUpdate = newTransaction.fromWalletEntity!!,
@@ -126,7 +114,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.INCOME] -> [TransactionCategoryType.TRANSFER]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() &&
-				newTransaction.categoryEntity == null ->
+		newTransaction.categoryEntity == null ->
 			getUpdateDataCompletable(
 				firstWalletWithSameOrNotIdToUpdate = oldTransaction.toWalletEntity!!,
 				secondWalletWithSameOrNotIdToUpdate = newTransaction.toWalletEntity!!,
@@ -146,7 +134,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.CONSUMPTION] -> [TransactionCategoryType.INCOME]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
+		newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
 			firstWalletWithSameOrNotIdToUpdate = oldTransaction.fromWalletEntity!!,
 			secondWalletWithSameOrNotIdToUpdate = newTransaction.toWalletEntity!!,
 			firstUpdateSum = oldTransaction.transactionEntity.sumInWalletCurrency,
@@ -164,7 +152,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.CONSUMPTION] -> [TransactionCategoryType.CONSUMPTION]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
+		newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
 			getUpdateDataCompletable(
 				firstWalletWithSameOrNotIdToUpdate = oldTransaction.fromWalletEntity!!,
 				secondWalletWithSameOrNotIdToUpdate = newTransaction.fromWalletEntity!!,
@@ -183,7 +171,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.CONSUMPTION] -> [TransactionCategoryType.TRANSFER]
 		 */
 		oldTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() &&
-				newTransaction.categoryEntity == null -> getUpdateDataCompletable(
+		newTransaction.categoryEntity == null -> getUpdateDataCompletable(
 			firstWalletWithSameOrNotIdToUpdate = oldTransaction.fromWalletEntity!!,
 			secondWalletWithSameOrNotIdToUpdate = newTransaction.fromWalletEntity!!,
 			firstUpdateSum = oldTransaction.transactionEntity.sumInWalletCurrency,
@@ -202,7 +190,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.TRANSFER] -> [TransactionCategoryType.INCOME]
 		 */
 		oldTransaction.categoryEntity == null &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
+		newTransaction.categoryEntity?.type == TransactionCategoryType.INCOME.toString() -> getUpdateDataCompletable(
 			firstWalletWithSameOrNotIdToUpdate = oldTransaction.toWalletEntity!!,
 			secondWalletWithSameOrNotIdToUpdate = newTransaction.toWalletEntity!!,
 			firstUpdateSum = oldTransaction.transactionEntity.transferSum!!,
@@ -221,7 +209,7 @@ class UpdateTransactionUseCase(
 		 * [TransactionCategoryType.TRANSFER] -> [TransactionCategoryType.CONSUMPTION]
 		 */
 		oldTransaction.categoryEntity == null &&
-				newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
+		newTransaction.categoryEntity?.type == TransactionCategoryType.CONSUMPTION.toString() ->
 			getUpdateDataCompletable(
 				firstWalletWithSameOrNotIdToUpdate = oldTransaction.fromWalletEntity!!,
 				secondWalletWithSameOrNotIdToUpdate = newTransaction.fromWalletEntity!!,
@@ -277,24 +265,20 @@ class UpdateTransactionUseCase(
 		accountRepository.getAccountByIdSingle(newTransaction.accountId).flatMapCompletable { account ->
 			transactionRepository.getTransactionById(newTransaction.transactionId)
 				.flatMapCompletable { oldTransaction ->
-					val conversionSingle = when (newTransaction.category?.categoryType) {
-						TransactionCategoryType.INCOME -> getConversion(
-							fromCurrencyCode = newTransaction.toWallet!!.currency,
-							toCurrencyCode = account.mainCurrencyCode,
-							amount = newTransaction.sumInWalletCurrency
-						)
-						TransactionCategoryType.CONSUMPTION -> getConversion(
-							fromCurrencyCode = newTransaction.fromWallet!!.currency,
-							toCurrencyCode = account.mainCurrencyCode,
-							amount = newTransaction.sumInWalletCurrency
-						)
-						else -> getConversion(
-							fromCurrencyCode = newTransaction.fromWallet!!.currency,
-							toCurrencyCode = newTransaction.toWallet!!.currency,
-							amount = newTransaction.sumInWalletCurrency
-						)
+
+					val (fromCurrencyCode, toCurrencyCode) = when(newTransaction.category?.categoryType) {
+						TransactionCategoryType.INCOME -> newTransaction.toWallet!!.currency to account.mainCurrencyCode
+						TransactionCategoryType.CONSUMPTION ->
+							newTransaction.fromWallet!!.currency to account.mainCurrencyCode
+						else -> newTransaction.fromWallet!!.currency to newTransaction.toWallet!!.currency
 					}
-					conversionSingle.flatMapCompletable { conversionResult ->
+
+					getConversion(
+						currencyRepository,
+						fromCurrency = fromCurrencyCode,
+						toCurrency = toCurrencyCode,
+						amount = newTransaction.sumInWalletCurrency
+					).flatMapCompletable { conversionResult ->
 						val newTransactionCopy = if (newTransaction.category == null) {
 							newTransaction.copy(transferSum = conversionResult, sumInAccountCurrency = 0.0)
 						} else {

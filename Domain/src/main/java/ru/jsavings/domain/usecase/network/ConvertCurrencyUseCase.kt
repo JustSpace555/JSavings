@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class ConvertCurrencyUseCase(
 	private val repository: CurrencyRepository,
 	private val conversionMapper: ConversionMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Execute usecase
@@ -29,6 +29,5 @@ class ConvertCurrencyUseCase(
 	 * @author JustSpace
 	 */
 	operator fun invoke(from: String, to: String, amount: Double, precision: Int = 2): Single<ConversionInfo> =
-		repository.getConversion(from, to, amount, precision)
-			.map { conversionMapper.mapEntityToModel(it) }
+		repository.getConversion(from, to, amount, precision).map { conversionMapper.mapEntityToModel(it) }
 }

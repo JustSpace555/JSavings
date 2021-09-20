@@ -8,81 +8,25 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
-import ru.jsavings.data.entity.database.AccountEntity
-import ru.jsavings.data.entity.database.WalletEntity
 import ru.jsavings.data.entity.network.ConversionEntity
 import ru.jsavings.data.entity.network.QueryInfo
 import ru.jsavings.data.entity.network.RateInfo
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.data.repository.database.wallet.WalletRepository
 import ru.jsavings.data.repository.network.currency.CurrencyRepository
+import ru.jsavings.domain.common.BaseUnitTest
 import ru.jsavings.domain.mappers.database.WalletMapper
-import ru.jsavings.domain.model.database.wallet.Wallet
-import ru.jsavings.domain.model.database.wallet.WalletType
 
-class InsertNewWalletUseCaseTest {
+class InsertNewWalletUseCaseTest : BaseUnitTest() {
 
 	companion object {
-		private const val ACCOUNT_ID = 1L
-		private const val ACCOUNT_NAME = "some account name"
-		private const val ACCOUNT_CURRENCY = "EUR"
-		private const val ACCOUNT_BALANCE = 20.0
 
-		private const val BALANCE = 25.0
-		private val CATEGORY = WalletType.CASH
-		private const val COLOR = 0
-		private const val CREDIT_LIMIT = 0.0
-		private const val GRACE_PERIOD = 0
-		private const val CURRENCY_CODE = "USD"
-		private const val ICON_PATH = ""
-		private const val INTEREST_RATE = 0.0
-		private const val PAYMENT_DAY = 0
-		private const val NAME = "some name"
-		private const val ID = 1L
-
-		private const val FROM = CURRENCY_CODE
+		private const val FROM = WALLET_CURRENCY_CODE
 		private const val TO = ACCOUNT_CURRENCY
-		private const val AMOUNT = BALANCE
+		private const val AMOUNT = WALLET_BALANCE
 		private const val RESULT = 5.0
 		private const val PRECISION = 2
 	}
-
-	private val someAccountEntity = AccountEntity(
-		accountId = ACCOUNT_ID,
-		accountName = ACCOUNT_NAME,
-		mainCurrencyCode = ACCOUNT_CURRENCY,
-		balanceInMainCurrency = ACCOUNT_BALANCE
-	)
-
-	private val someWalletModel = Wallet(
-		accountId = ACCOUNT_ID,
-		balance = BALANCE,
-		type = CATEGORY,
-		color = COLOR,
-		creditLimit = CREDIT_LIMIT,
-		gracePeriod = GRACE_PERIOD,
-		currency = CURRENCY_CODE,
-		iconPath = ICON_PATH,
-		interestRate = INTEREST_RATE,
-		paymentDay = PAYMENT_DAY,
-		name = NAME,
-		walletId = ID
-	)
-
-	private val someWalletEntity = WalletEntity(
-		accountFkId = ACCOUNT_ID,
-		balance = BALANCE,
-		category = CATEGORY.toString(),
-		color = COLOR,
-		creditLimit = CREDIT_LIMIT,
-		gracePeriod = GRACE_PERIOD,
-		currencyCode = CURRENCY_CODE,
-		iconPath = ICON_PATH,
-		interestRate = INTEREST_RATE,
-		paymentDay = PAYMENT_DAY,
-		walletName = NAME,
-		walletId = ID
-	)
 
 	private val someConversionEntity = ConversionEntity(
 		query = QueryInfo(
@@ -109,25 +53,25 @@ class InsertNewWalletUseCaseTest {
 		mapper = mockk()
 		useCase = InsertNewWalletUseCase(walletRepository, accountRepository, currencyRepository, mapper)
 
-		every { mapper.mapModelToEntity(someWalletModel) } returns someWalletEntity
-		every { walletRepository.insertNewWallet(someWalletEntity) } returns Single.just(ID)
+		every { mapper.mapModelToEntity(walletModel) } returns walletEntity
+		every { walletRepository.insertNewWallet(walletEntity) } returns Single.just(WALLET_ID)
 	}
 
 	@Test
 	fun invokeWithConversionTest() {
 
 		//Arrange
-		val newAccount = someAccountEntity.copy(balanceInMainCurrency = someAccountEntity.balanceInMainCurrency + RESULT)
+		val newAccount = accountEntity.copy(balanceInMainCurrency = accountEntity.balanceInMainCurrency + RESULT)
 
 		//Act
 		every { accountRepository.updateAccount(newAccount) } returns Completable.complete()
 		every { currencyRepository.getConversion(FROM, TO, AMOUNT, PRECISION) } returns Single.just(someConversionEntity)
-		every { accountRepository.getAccountById(someWalletModel.accountId) } returns Single.just(someAccountEntity)
-		useCase(someWalletModel).blockingAwait()
+		every { accountRepository.getAccountByIdSingle(walletModel.accountId) } returns Single.just(accountEntity)
+		useCase(walletModel).blockingGet()
 
 		//Assert
 		verify(ordering = Ordering.ORDERED) {
-			walletRepository.insertNewWallet(someWalletEntity)
+			walletRepository.insertNewWallet(walletEntity)
 			currencyRepository.getConversion(FROM, TO, AMOUNT, PRECISION)
 			accountRepository.updateAccount(newAccount)
 		}
@@ -137,20 +81,20 @@ class InsertNewWalletUseCaseTest {
 	fun invokeWithoutConversion() {
 
 		//Arrange
-		val newAccount = someAccountEntity.copy(
-			mainCurrencyCode = CURRENCY_CODE,
-			balanceInMainCurrency = someAccountEntity.balanceInMainCurrency + BALANCE
+		val newAccount = accountEntity.copy(
+			mainCurrencyCode = WALLET_CURRENCY_CODE,
+			balanceInMainCurrency = accountEntity.balanceInMainCurrency + WALLET_BALANCE
 		)
 
 		//Act
 		every { accountRepository.updateAccount(newAccount) } returns Completable.complete()
-		every { accountRepository.getAccountById(someWalletModel.accountId) } returns
-				Single.just(someAccountEntity.copy(mainCurrencyCode = CURRENCY_CODE))
-		useCase(someWalletModel).blockingAwait()
+		every { accountRepository.getAccountByIdSingle(walletModel.accountId) } returns
+				Single.just(accountEntity.copy(mainCurrencyCode = WALLET_CURRENCY_CODE))
+		useCase(walletModel).blockingGet()
 
 		//Assert
 		verify(ordering = Ordering.ORDERED) {
-			walletRepository.insertNewWallet(someWalletEntity)
+			walletRepository.insertNewWallet(walletEntity)
 			accountRepository.updateAccount(newAccount)
 		}
 	}

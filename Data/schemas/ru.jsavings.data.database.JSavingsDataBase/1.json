@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f0bac084ccfbf1efed4df771e699fbab",
+    "identityHash": "2b0bb3ce3932d9acf3952a2c6cdd80c4",
     "entities": [
       {
         "tableName": "account_table",
@@ -151,7 +151,7 @@
       },
       {
         "tableName": "transaction_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `from_wallet_fk_id` INTEGER, `to_wallet_fk_id` INTEGER, `category_fk_id` INTEGER, `account_fk_id` INTEGER NOT NULL, `wallet_currency_su,` REAL NOT NULL, `transfer_sum` REAL, `main_currency_sum` REAL NOT NULL, `date_day` INTEGER NOT NULL, `date_time` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT NOT NULL, FOREIGN KEY(`from_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`to_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`transaction_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `from_wallet_fk_id` INTEGER, `to_wallet_fk_id` INTEGER, `category_fk_id` INTEGER, `account_fk_id` INTEGER NOT NULL, `wallet_currency_su,` REAL NOT NULL, `transfer_sum` REAL, `main_currency_sum` REAL NOT NULL, `date_day` INTEGER NOT NULL, `date_time` INTEGER NOT NULL, `description` TEXT NOT NULL, `describe_picture_path` TEXT NOT NULL, FOREIGN KEY(`from_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`to_wallet_fk_id`) REFERENCES `wallet_table`(`wallet_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`category_fk_id`) REFERENCES `transaction_category_table`(`category_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`account_fk_id`) REFERENCES `account_table`(`account_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "transactionId",
@@ -270,7 +270,7 @@
           {
             "table": "wallet_table",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "from_wallet_fk_id"
             ],
@@ -281,7 +281,7 @@
           {
             "table": "wallet_table",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "to_wallet_fk_id"
             ],
@@ -292,7 +292,7 @@
           {
             "table": "transaction_category_table",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
               "category_fk_id"
             ],
@@ -388,7 +388,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f0bac084ccfbf1efed4df771e699fbab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2b0bb3ce3932d9acf3952a2c6cdd80c4')"
     ]
   }
 }

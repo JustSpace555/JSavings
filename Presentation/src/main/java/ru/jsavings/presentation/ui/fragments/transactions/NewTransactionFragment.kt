@@ -24,7 +24,6 @@ import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.presentation.extension.getCurrencySymbol
 import ru.jsavings.presentation.extension.isNotEmptyAndNotBlank
-import ru.jsavings.presentation.extension.toUiView
 import ru.jsavings.presentation.ui.fragments.categories.categorieslist.CategoriesListFragment
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.viewmodels.transactions.NewTransactionViewModel

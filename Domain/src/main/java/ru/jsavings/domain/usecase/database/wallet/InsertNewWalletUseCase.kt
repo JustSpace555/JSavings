@@ -23,13 +23,7 @@ class InsertNewWalletUseCase(
 	private val accountRepository: AccountRepository,
 	private val currencyRepository: CurrencyRepository,
 	private val mapper: WalletMapper
-) : BaseUseCase {
-
-	private fun getConversion(from: String, to: String, amount: Double): Single<Double> =
-		if (from != to)
-			currencyRepository.getConversion(from, to, amount, 2).map { it.result }
-		else
-			Single.just(amount)
+) : BaseUseCase() {
 
 	/**
 	 * Executing usecase
@@ -44,7 +38,12 @@ class InsertNewWalletUseCase(
 		return accountRepository.getAccountByIdSingle(wallet.accountId)
 			.flatMap { account ->
 				accountEntity = account
-				getConversion(wallet.currency, account.mainCurrencyCode, wallet.balance)
+				getConversion(
+					currencyRepository,
+					fromCurrency = wallet.currency,
+					toCurrency = account.mainCurrencyCode,
+					amount = wallet.balance
+				)
 			}.flatMapCompletable { conversionResult ->
 				val oldBalance = accountEntity.balanceInMainCurrency
 				accountRepository.updateAccount(accountEntity.copy(balanceInMainCurrency = oldBalance + conversionResult))

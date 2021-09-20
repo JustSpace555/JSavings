@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.jsavings.R
 import ru.jsavings.databinding.FragmentNewAccountChooseCurrencyBinding
+import ru.jsavings.domain.model.database.Account
 import ru.jsavings.domain.model.network.currency.Currency
 import ru.jsavings.presentation.ui.fragments.common.BaseFragment
 import ru.jsavings.presentation.viewmodels.account.newaccount.ChooseCurrencyViewModel
@@ -58,11 +59,11 @@ class ChooseCurrencyFragment : BaseFragment() {
 			onSending = { showLoading(R.string.loading_getting_currencies) }
 		)
 
-		viewModel.saveAccountRequestState.subscribe<Long>(
+		viewModel.saveAccountRequestState.subscribe<Account>(
 			hideLoading = true,
 			onSuccess = {
 				hideKeyBoard()
-				navigateToNextFragment(args.isEducationNeeded, it)
+				navigateToNextFragment(args.isEducationNeeded, it.accountId)
 			},
 			onError = {
 				hideKeyBoard()

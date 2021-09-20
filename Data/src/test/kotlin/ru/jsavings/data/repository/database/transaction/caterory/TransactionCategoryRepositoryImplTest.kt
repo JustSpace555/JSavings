@@ -15,12 +15,22 @@ class TransactionCategoryRepositoryImplTest {
 	private lateinit var transactionCategoryDao: TransactionCategoryDao
 	private lateinit var transactionCategoryRepository: TransactionCategoryRepository
 
+	companion object {
+		private const val ACCOUNT_ID = 1L
+		private const val CATEGORY_NAME = "some name"
+		private const val COLOR = 0
+		private const val ICON_PATH = ""
+		private const val TYPE = "INCOME"
+		private const val CATEGORY_ID = 1L
+	}
+
 	private val someCategory = TransactionCategoryEntity(
-		accountFkId = 0,
-		categoryName = "some name",
-		color = 0,
-		iconPath = "",
-		type = "some type"
+		accountFkId = ACCOUNT_ID,
+		categoryName = CATEGORY_NAME,
+		color = COLOR,
+		iconPath = ICON_PATH,
+		type = TYPE,
+		categoryId = CATEGORY_ID
 	)
 
 	@Before
@@ -33,7 +43,7 @@ class TransactionCategoryRepositoryImplTest {
 	fun insertNewCategory() {
 
 		//Act
-		every { transactionCategoryDao.insertNewCategory(someCategory) } returns Single.just(0L)
+		every { transactionCategoryDao.insertNewCategory(someCategory) } returns Single.just(CATEGORY_ID)
 		transactionCategoryRepository.insertNewCategory(someCategory)
 
 		//Assert
@@ -41,13 +51,46 @@ class TransactionCategoryRepositoryImplTest {
 	}
 
 	@Test
+	fun getCategoryById() {
+
+		//Act
+		every { transactionCategoryDao.getCategoryById(someCategory.categoryId) } returns Single.just(someCategory)
+		transactionCategoryRepository.getCategoryById(someCategory.categoryId)
+
+		//Assert
+		verify { transactionCategoryDao.getCategoryById(someCategory.categoryId) }
+	}
+
+	@Test
+	fun getCategoriesByAccountId() {
+
+		//Act
+		every { transactionCategoryDao.getCategoriesByAccountId(ACCOUNT_ID) } returns Single.just(listOf(someCategory))
+		transactionCategoryRepository.getCategoriesByAccountId(someCategory.categoryId)
+
+		//Assert
+		verify { transactionCategoryDao.getCategoriesByAccountId(ACCOUNT_ID) }
+	}
+
+	@Test
+	fun updateCategory() {
+
+		//Act
+		every { transactionCategoryDao.updateCategory(someCategory) } returns Completable.complete()
+		transactionCategoryRepository.updateCategory(someCategory)
+
+		//Assert
+		verify { transactionCategoryDao.updateCategory(someCategory) }
+	}
+
+	@Test
 	fun deleteCategory() {
 
 		//Act
-		every { transactionCategoryDao.deleteCategory(someCategory) } returns Completable.complete()
-		transactionCategoryRepository.deleteCategory(someCategory)
+		every { transactionCategoryDao.deleteCategoryById(someCategory.categoryId) } returns Completable.complete()
+		transactionCategoryRepository.deleteCategoryById(someCategory.categoryId)
 
 		//Assert
-		verify { transactionCategoryDao.deleteCategory(someCategory) }
+		verify { transactionCategoryDao.deleteCategoryById(someCategory.categoryId) }
 	}
 }

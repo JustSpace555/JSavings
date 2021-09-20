@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetTransactionByIdUseCase(
 	private val transactionRepository: TransactionRepository,
 	private val transactionMapper: TransactionMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Invokes usecase

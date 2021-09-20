@@ -20,11 +20,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetAllTransactionsByAccountIdUseCase(
 	private val repository: TransactionRepository,
 	private val transactionMapper: TransactionMapper,
-) : BaseUseCase {
-
-	private fun MutableList<Transaction>.getSumOf(type: TransactionCategoryType): Double = sumOf {
-		if (it.category != null && it.category.categoryType == type) it.sumInAccountCurrency else 0.0
-	}
+) : BaseUseCase() {
 
 	/**
 	 * Invokes usecase
@@ -33,20 +29,12 @@ class GetAllTransactionsByAccountIdUseCase(
 	 *
 	 * @author JustSpace
 	 */
-	@SuppressLint("SimpleDateFormat")
-	operator fun invoke(accountId: Long): Flowable<List<BaseTransactionData>> = repository
+	operator fun invoke(accountId: Long): Flowable<List<TemporalTransactions>> = repository
 		.getAllTransactionsByAccountId(accountId)
-		.map { it.map { transactionEntity -> transactionMapper.mapEntityToModel(transactionEntity) } }
+		.map { it.map { transactionGroupEntity -> transactionMapper.mapEntityToModel(transactionGroupEntity) } }
 		.map {
-			val newList = mutableListOf<BaseTransactionData>()
-			it.groupByTo(LinkedHashMap()) { transaction -> transaction.dateDay }.forEach { entry ->
-				newList.add(TemporalTransactions(
-					dayOfTransactions = entry.key,
-					totalIncome = entry.value.getSumOf(TransactionCategoryType.INCOME),
-					totalConsumption = entry.value.getSumOf(TransactionCategoryType.CONSUMPTION)
-				))
-				newList.addAll(entry.value.sortedByDescending { it.dateTime })
+			it.groupByTo(LinkedHashMap()) { transaction -> transaction.dateDay }.map { entry ->
+				TemporalTransactions(entry.key, entry.value)
 			}
-			newList
 		}
 }

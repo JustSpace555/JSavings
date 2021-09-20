@@ -9,7 +9,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
  *
  * @author JustSpace
  */
-class CacheUseCase(private val repository: CacheRepository) : BaseUseCase {
+class CacheUseCase(private val repository: CacheRepository) : BaseUseCase() {
 
 	/**
 	 * Put value to cache

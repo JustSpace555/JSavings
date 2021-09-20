@@ -4,55 +4,11 @@ import com.google.common.truth.Truth
 import org.junit.Before
 import org.junit.Test
 import ru.jsavings.data.entity.database.WalletEntity
+import ru.jsavings.domain.common.BaseUnitTest
 import ru.jsavings.domain.model.database.wallet.Wallet
 import ru.jsavings.domain.model.database.wallet.WalletType
 
-class WalletMapperTest {
-
-	companion object {
-		private const val ACCOUNT_ID = 1L
-		private const val BALANCE = 25.0
-		private val CATEGORY = WalletType.CASH
-		private const val COLOR = 0
-		private const val CREDIT_LIMIT = 0.0
-		private const val GRACE_PERIOD = 0
-		private const val CURRENCY_CODE = "USD"
-		private const val ICON_PATH = ""
-		private const val INTEREST_RATE = 0.0
-		private const val PAYMENT_DAY = 0
-		private const val NAME = "some name"
-		private const val ID = 1L
-	}
-
-	private val someWalletModel = Wallet(
-		accountId = ACCOUNT_ID,
-		balance = BALANCE,
-		type = CATEGORY,
-		color = COLOR,
-		creditLimit = CREDIT_LIMIT,
-		gracePeriod = GRACE_PERIOD,
-		currency = CURRENCY_CODE,
-		iconPath = ICON_PATH,
-		interestRate = INTEREST_RATE,
-		paymentDay = PAYMENT_DAY,
-		name = NAME,
-		walletId = ID
-	)
-
-	private val someWalletEntity = WalletEntity(
-		accountFkId = ACCOUNT_ID,
-		balance = BALANCE,
-		category = CATEGORY.toString(),
-		color = COLOR,
-		creditLimit = CREDIT_LIMIT,
-		gracePeriod = GRACE_PERIOD,
-		currencyCode = CURRENCY_CODE,
-		iconPath = ICON_PATH,
-		interestRate = INTEREST_RATE,
-		paymentDay = PAYMENT_DAY,
-		walletName = NAME,
-		walletId = ID
-	)
+class WalletMapperTest : BaseUnitTest() {
 
 	private lateinit var mapper: WalletMapper
 
@@ -65,10 +21,10 @@ class WalletMapperTest {
 	fun mapEntityToModel() {
 
 		//Arrange
-		val expectedResult = someWalletModel
+		val expectedResult = walletModel
 
 		//Act
-		val actualResult = mapper.mapEntityToModel(someWalletEntity)
+		val actualResult = mapper.mapEntityToModel(walletEntity)
 
 		//Assert
 		Truth.assertThat(actualResult).isEqualTo(expectedResult)
@@ -78,10 +34,10 @@ class WalletMapperTest {
 	fun mapModelToEntity() {
 
 		//Arrange
-		val expectedResult = someWalletEntity
+		val expectedResult = walletEntity
 
 		//Act
-		val actualResult = mapper.mapModelToEntity(someWalletModel)
+		val actualResult = mapper.mapModelToEntity(walletModel)
 
 		//Assert
 		Truth.assertThat(actualResult).isEqualTo(expectedResult)

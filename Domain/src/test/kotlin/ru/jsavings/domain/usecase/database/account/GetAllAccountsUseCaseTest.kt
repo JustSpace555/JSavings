@@ -9,35 +9,15 @@ import org.junit.Before
 import org.junit.Test
 import ru.jsavings.data.entity.database.AccountEntity
 import ru.jsavings.data.repository.database.account.AccountRepository
+import ru.jsavings.domain.common.BaseUnitTest
 import ru.jsavings.domain.mappers.database.AccountMapper
 import ru.jsavings.domain.model.database.Account
 
-class GetAllAccountsUseCaseTest {
-
-	companion object {
-		private const val ID = 1L
-		private const val NAME = "some name"
-		private const val CURRENCY = "some currency"
-		private const val BALANCE = 25.0
-	}
+class GetAllAccountsUseCaseTest : BaseUnitTest() {
 
 	private lateinit var repository: AccountRepository
 	private lateinit var mapper: AccountMapper
 	private lateinit var useCase: GetAllAccountsUseCase
-
-	private val someAccountEntity = AccountEntity(
-		accountId = ID,
-		accountName = NAME,
-		mainCurrencyCode = CURRENCY,
-		balanceInMainCurrency = BALANCE
-	)
-
-	private val someAccountModel = Account(
-		accountId = ID,
-		name = NAME,
-		mainCurrencyCode = CURRENCY,
-		balanceInMainCurrency = BALANCE
-	)
 
 	@Before
 	fun setUp() {
@@ -50,14 +30,14 @@ class GetAllAccountsUseCaseTest {
 	operator fun invoke() {
 
 		//Act
-		every { repository.getAllAccounts() } returns Single.just(listOf(someAccountEntity))
-		every { mapper.mapEntityToModel(someAccountEntity) } returns someAccountModel
+		every { repository.getAllAccounts() } returns Single.just(listOf(accountEntity))
+		every { mapper.mapEntityToModel(accountEntity) } returns accountModel
 		useCase().blockingGet()
 
 		//Assert
 		verify(ordering = Ordering.SEQUENCE) {
 			repository.getAllAccounts()
-			mapper.mapEntityToModel(someAccountEntity)
+			mapper.mapEntityToModel(accountEntity)
 		}
 	}
 }

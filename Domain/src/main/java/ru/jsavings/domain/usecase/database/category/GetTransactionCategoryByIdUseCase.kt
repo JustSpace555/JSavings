@@ -14,7 +14,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetTransactionCategoryByIdUseCase(
 	private val transactionCategoryRepository: TransactionCategoryRepository,
 	private val transactionCategoryMapper: TransactionCategoryMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	operator fun invoke(transactionId: Long): Single<TransactionCategory> = transactionCategoryRepository
 		.getCategoryById(transactionId)

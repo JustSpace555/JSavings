@@ -35,14 +35,14 @@ internal val useCaseModule = module {
 	factory { SaveNewTransactionUseCase(get(), get(), get(), get(), get(), get()) }
 	factory { GetAllTransactionsByAccountIdUseCase(get(), get()) }
 	factory { GetTransactionByIdUseCase(get(), get()) }
-	factory { DeleteTransactionByIdUseCase(get(), get(), get(), get()) }
+	factory { DeleteTransactionByIdUseCase(get(), get(), get()) }
 	factory { UpdateTransactionUseCase(get(), get(), get(), get(), get()) }
 
 	//TransactionCategory
 	factory { GetAllCategoriesByAccountIdUseCase(get(), get()) }
 	factory { InsertNewCategoryUseCase(get(), get()) }
 	factory { GetTransactionCategoryByIdUseCase(get(), get()) }
-	factory { DeleteTransactionCategoryUseCase(get()) }
+	factory { DeleteTransactionCategoryByIdUseCase(get()) }
 	factory { UpdateTransactionCategoryUseCase(get(), get()) }
 
 	//Cache

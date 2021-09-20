@@ -52,12 +52,17 @@ class TransactionDaoTest {
 
 	private val someTransaction = TransactionEntity(
 		categoryFkId = 1,
-		date = 0,
+		dateDay = 0,
+		dateTime = 0,
 		describePicturePath = "",
 		description = "",
 		sumInWalletCurrency = 0.0,
 		transactionId = 1,
-		fromWalletFkId = 1
+		fromWalletFkId = 1,
+		accountFkId = 1,
+		sumInAccountCurrency = 0.0,
+		toWalletFkId = 0,
+		transferSum = null
 	)
 
 	@Before

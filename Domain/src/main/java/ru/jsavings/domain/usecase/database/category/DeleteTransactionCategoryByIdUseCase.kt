@@ -10,9 +10,9 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
  *
  * @author JustSpace
  */
-class DeleteTransactionCategoryUseCase(
+class DeleteTransactionCategoryByIdUseCase(
 	private val transactionCategoryRepository: TransactionCategoryRepository
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Invoke usecase

@@ -84,8 +84,12 @@ class ChooseCurrencyViewModel(
 			mainCurrencyCode = newAccountCurrencyCode,
 			balanceInMainCurrency = 0.0
 		)
-		insertAccountUseCase(newAccount).executeUseCase(_saveAccountRequestState) { newAccountId ->
-			cacheUseCase.put(CacheKeys.JS_CURRENT_ACCOUNT, newAccountId)
-		}
+		insertAccountUseCase(newAccount).executeUseCase(
+			liveData = _saveAccountRequestState,
+			doOnSuccess = { newAccountId ->
+				cacheUseCase.put(CacheKeys.JS_CURRENT_ACCOUNT, newAccountId)
+			},
+			transform = { newAccount.copy(accountId = it) }
+		)
 	}
 }

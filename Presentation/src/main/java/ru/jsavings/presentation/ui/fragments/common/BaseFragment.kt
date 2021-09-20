@@ -13,6 +13,7 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -165,21 +166,20 @@ abstract class BaseFragment : Fragment() {
 	protected fun Throwable.getErrorString(): String =
 		localizedMessage ?: getString(R.string.something_went_wrong)
 
-	protected val locale: Locale = if (Locale.getDefault() != Locale("ru", "RU"))
-		Locale.US
-	else
-		Locale("ru", "RU")
+	protected val locale: Locale
+		get() = if (Locale.getDefault() != Locale("ru", "RU")) Locale.US else Locale("ru", "RU")
 
 	/**
 	 *
 	 * @author JustSpace
 	 */
 	protected fun <T> LiveData<BaseViewModel.RequestState>.subscribe(
-		hideLoading: Boolean,
 		onSuccess: (T) -> Unit,
 		onError: (Throwable) -> Unit,
 		onSending: () -> Unit = {},
-	) = observe(viewLifecycleOwner) { state ->
+		hideLoading: Boolean = true,
+		lifeCycleOwner: LifecycleOwner = viewLifecycleOwner
+	) = observe(lifeCycleOwner) { state ->
 		when (state) {
 			is BaseViewModel.RequestState.SuccessState<*> -> {
 				try {
@@ -187,6 +187,7 @@ abstract class BaseFragment : Fragment() {
 					onSuccess(state.data as T)
 				} catch (e: ClassCastException) {
 					hideLoading()
+					Log.d("RequestError", e.stackTraceToString())
 					onError(e)
 				}
 			}

@@ -61,11 +61,22 @@ class AccountRepositoryImplTest {
 	fun getAccountById() {
 
 		//Act
-		every { accountDao.getAccountById(someAccount.accountId) } returns Single.just(someAccount)
-		accountRepository.getAccountById(someAccount.accountId)
+		every { accountDao.getAccountByIdSingle(someAccount.accountId) } returns Single.just(someAccount)
+		accountRepository.getAccountByIdSingle(someAccount.accountId)
 
 		//Assert
-		verify { accountDao.getAccountById(someAccount.accountId) }
+		verify { accountDao.getAccountByIdSingle(someAccount.accountId) }
+	}
+
+	@Test
+	fun insertAccount() {
+
+		//Act
+		every { accountDao.insertNewAccount(someAccount) } returns Single.just(someAccount.accountId)
+		accountRepository.insertNewAccount(someAccount)
+
+		//Assert
+		verify { accountDao.insertNewAccount(someAccount) }
 	}
 
 	@Test

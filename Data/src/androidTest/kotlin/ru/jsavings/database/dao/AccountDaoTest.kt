@@ -58,7 +58,7 @@ class AccountDaoTest {
 		val expectedResult = someAccount
 
 		//Act
-		val actualResult = accountDao.getAccountById(someAccount.accountId).blockingGet()
+		val actualResult = accountDao.getAccountByIdSingle(someAccount.accountId).blockingGet()
 
 		//Assert
 		Truth.assertThat(actualResult).isEqualTo(expectedResult)

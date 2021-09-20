@@ -30,18 +30,7 @@ class SaveNewTransactionUseCase(
 	private val currencyRepository: CurrencyRepository,
 	private val walletMapper: WalletMapper,
 	private val transactionMapper: TransactionMapper,
-) : BaseUseCase {
-
-	private fun getConversion(fromCurrencyCode: String, toCurrencyCode: String, amount: Double) =
-		if (fromCurrencyCode != toCurrencyCode)
-			currencyRepository.getConversion(
-				from = fromCurrencyCode,
-				to = toCurrencyCode,
-				amount = amount,
-				precision = 2
-			).map { it.result }
-		else
-			Single.just(amount)
+) : BaseUseCase() {
 
 	private fun Transaction.getWallet(type: TransactionCategoryType) = if (type == TransactionCategoryType.INCOME)
 		toWallet!!
@@ -70,8 +59,9 @@ class SaveNewTransactionUseCase(
 	 */
 	operator fun invoke(newTransaction: Transaction): Single<Long> = if (newTransaction.category == null) {
 		getConversion(
-			fromCurrencyCode = newTransaction.fromWallet!!.currency,
-			toCurrencyCode = newTransaction.toWallet!!.currency,
+			currencyRepository,
+			fromCurrency = newTransaction.fromWallet!!.currency,
+			toCurrency = newTransaction.toWallet!!.currency,
 			amount = newTransaction.sumInWalletCurrency
 		).flatMap { conversionResult ->
 			if (newTransaction.fromWallet.walletId == newTransaction.toWallet.walletId) {
@@ -97,9 +87,10 @@ class SaveNewTransactionUseCase(
 		accountRepository.getAccountByIdSingle(newTransaction.accountId)
 			.flatMap { accountEntity ->
 				getConversion(
-					newTransaction.getWallet(type).currency,
-					accountEntity.mainCurrencyCode,
-					newTransaction.sumInWalletCurrency
+					currencyRepository,
+					fromCurrency = newTransaction.getWallet(type).currency,
+					toCurrency = accountEntity.mainCurrencyCode,
+					amount = newTransaction.sumInWalletCurrency
 				).map { conversionResult ->
 					val newAccountBalance = accountEntity.balanceInMainCurrency +
 							if (type == TransactionCategoryType.INCOME) conversionResult else -conversionResult

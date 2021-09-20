@@ -6,9 +6,10 @@ import org.junit.Test
 import ru.jsavings.data.entity.network.ConversionEntity
 import ru.jsavings.data.entity.network.QueryInfo
 import ru.jsavings.data.entity.network.RateInfo
+import ru.jsavings.domain.common.BaseUnitTest
 import ru.jsavings.domain.model.network.ConversionInfo
 
-class ConversionMapperTest {
+class ConversionMapperTest : BaseUnitTest() {
 
 	companion object {
 		private const val FROM = "from"

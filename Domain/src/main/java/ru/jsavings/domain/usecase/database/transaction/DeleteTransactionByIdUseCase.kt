@@ -6,7 +6,6 @@ import ru.jsavings.data.entity.database.TransactionGroupEntity
 import ru.jsavings.data.repository.database.account.AccountRepository
 import ru.jsavings.data.repository.database.transaction.TransactionRepository
 import ru.jsavings.data.repository.database.wallet.WalletRepository
-import ru.jsavings.domain.mappers.database.AccountMapper
 import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import ru.jsavings.domain.model.database.transaction.Transaction
 import ru.jsavings.domain.usecase.common.BaseUseCase
@@ -14,6 +13,8 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 /**
  * Delete transaction from database by id usecase
  * @param transactionRepository [TransactionRepository] to interact with
+ * @param walletRepository [WalletRepository] to update wallets balance
+ * @param accountRepository [AccountRepository] to update account balance
  *
  * @author JustSpace
  */
@@ -21,8 +22,7 @@ class DeleteTransactionByIdUseCase(
 	private val transactionRepository: TransactionRepository,
 	private val walletRepository: WalletRepository,
 	private val accountRepository: AccountRepository,
-	private val accountMapper: AccountMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	private fun getUpdateCompletable(
 		accountEntity: AccountEntity,
@@ -33,13 +33,11 @@ class DeleteTransactionByIdUseCase(
 			val fromWalletEntity = transactionGroupEntity.fromWalletEntity!!
 			val toWalletEntity = transactionGroupEntity.toWalletEntity!!
 
-			if (fromWalletEntity.walletName == toWalletEntity.walletName) return Completable.complete()
-
-			val transferSum = transactionGroupEntity.transactionEntity.transferSum!!
+			if (fromWalletEntity.walletId == toWalletEntity.walletId) return Completable.complete()
 
 			val newFromWalletBalance = fromWalletEntity.balance +
 					transactionGroupEntity.transactionEntity.sumInWalletCurrency
-			val newToWalletBalance = toWalletEntity.balance - transferSum
+			val newToWalletBalance = toWalletEntity.balance - transactionGroupEntity.transactionEntity.transferSum!!
 
 			return Completable.mergeArray(
 				walletRepository.updateWallet(fromWalletEntity.copy(balance = newFromWalletBalance)),

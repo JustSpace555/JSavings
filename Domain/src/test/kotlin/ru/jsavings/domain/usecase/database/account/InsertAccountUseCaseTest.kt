@@ -9,31 +9,11 @@ import org.junit.Before
 import org.junit.Test
 import ru.jsavings.data.entity.database.AccountEntity
 import ru.jsavings.data.repository.database.account.AccountRepository
+import ru.jsavings.domain.common.BaseUnitTest
 import ru.jsavings.domain.mappers.database.AccountMapper
 import ru.jsavings.domain.model.database.Account
 
-class InsertAccountUseCaseTest {
-
-	companion object {
-		private const val ID = 1L
-		private const val NAME = "some name"
-		private const val CURRENCY = "some currency"
-		private const val BALANCE = 25.0
-	}
-
-	private val someAccountEntity = AccountEntity(
-		accountId = ID,
-		accountName = NAME,
-		mainCurrencyCode = CURRENCY,
-		balanceInMainCurrency = BALANCE
-	)
-
-	private val someAccountModel = Account(
-		accountId = ID,
-		name = NAME,
-		mainCurrencyCode = CURRENCY,
-		balanceInMainCurrency = BALANCE
-	)
+class InsertAccountUseCaseTest : BaseUnitTest() {
 
 	private lateinit var repository: AccountRepository
 	private lateinit var mapper: AccountMapper
@@ -50,14 +30,14 @@ class InsertAccountUseCaseTest {
 	operator fun invoke() {
 
 		//Act
-		every { repository.insertNewAccount(someAccountEntity) } returns Single.just(someAccountEntity.accountId)
-		every { mapper.mapModelToEntity(someAccountModel) } returns someAccountEntity
-		useCase(someAccountModel).blockingGet()
+		every { repository.insertNewAccount(accountEntity) } returns Single.just(accountEntity.accountId)
+		every { mapper.mapModelToEntity(accountModel) } returns accountEntity
+		useCase(accountModel).blockingGet()
 
 		//Assert
 		verify(ordering = Ordering.SEQUENCE) {
-			mapper.mapModelToEntity(someAccountModel)
-			repository.insertNewAccount(someAccountEntity)
+			mapper.mapModelToEntity(accountModel)
+			repository.insertNewAccount(accountEntity)
 		}
 	}
 }

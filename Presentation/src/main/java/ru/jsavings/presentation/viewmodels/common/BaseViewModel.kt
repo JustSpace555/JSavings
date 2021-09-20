@@ -54,19 +54,21 @@ abstract class BaseViewModel(
 	 * Execute usecase with return type [Single]
 	 * @param liveData [LiveData] where to post state
 	 * @param doOnSuccess Some lambda that will invoke only if request's response was successful
+	 * @param transform Lambda that will transform result of request
 	 *
 	 * @author JustSpace
 	 */
 	protected fun <T : Any> Single<T>.executeUseCase(
 		liveData: MutableLiveData<RequestState>,
-		doOnSuccess: (T) -> Unit = {}
+		doOnSuccess: (T) -> Unit = {},
+		transform: (T) -> Any = { it }
 	) {
 		liveData.postValue(RequestState.SendingState)
 		this.subscribeOn(threadProvider.backgroundThread)
 			.observeOn(threadProvider.uiThread)
 			.doOnSuccess { doOnSuccess(it) }
 			.subscribe(
-				{ successElement -> liveData.postValue(RequestState.SuccessState(successElement)) },
+				{ successElement -> liveData.postValue(RequestState.SuccessState(transform(successElement))) },
 				{ t -> liveData.postValue(RequestState.ErrorState(t)) }
 			)
 			.also { disposeBag.add(it) }
@@ -106,7 +108,6 @@ abstract class BaseViewModel(
 				{ t -> liveData.postValue(RequestState.ErrorState(t)) }
 			)
 			.also { disposeBag.add(it) }
-		//TODO Подумать над BackPressure
 	}
 
 	override fun onCleared() {

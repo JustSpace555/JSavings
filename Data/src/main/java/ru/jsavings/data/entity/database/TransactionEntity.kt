@@ -33,19 +33,22 @@ import ru.jsavings.data.entity.database.common.BaseDbEntity
 			entity = WalletEntity::class,
 			childColumns = ["from_wallet_fk_id"],
 			parentColumns = ["wallet_id"],
-			onDelete = ForeignKey.CASCADE
+			onDelete = ForeignKey.CASCADE,
+			onUpdate = ForeignKey.CASCADE
 		),
 		ForeignKey(
 			entity = WalletEntity::class,
 			childColumns = ["to_wallet_fk_id"],
 			parentColumns = ["wallet_id"],
-			onDelete = ForeignKey.CASCADE
+			onDelete = ForeignKey.CASCADE,
+			onUpdate = ForeignKey.CASCADE
 		),
 		ForeignKey(
 			entity = TransactionCategoryEntity::class,
 			childColumns = ["category_fk_id"],
 			parentColumns = ["category_id"],
-			onDelete = ForeignKey.CASCADE
+			onDelete = ForeignKey.CASCADE,
+			onUpdate = ForeignKey.CASCADE
 		),
 		ForeignKey(
 			entity = AccountEntity::class,

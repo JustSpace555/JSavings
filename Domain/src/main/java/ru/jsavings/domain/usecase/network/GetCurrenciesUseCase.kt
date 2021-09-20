@@ -11,7 +11,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
  *
  * @author JustSpace
  */
-class GetCurrenciesUseCase(private val repository: CurrencyRepository) : BaseUseCase {
+class GetCurrenciesUseCase(private val repository: CurrencyRepository) : BaseUseCase() {
 
 	private val availableCurrenciesCodes = java.util.Currency.getAvailableCurrencies().map { it.currencyCode }
 

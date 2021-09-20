@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class InsertNewCategoryUseCase(
 	private val transactionCategoryRepository: TransactionCategoryRepository,
 	private val transactionCategoryMapper: TransactionCategoryMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Invoke usecase

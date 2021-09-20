@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.jsavings.databinding.ItemTotalTransactionsPerDayBinding
 import ru.jsavings.domain.model.database.transaction.TemporalTransactions
 import ru.jsavings.presentation.extension.toUiView
+import ru.jsavings.presentation.ui.fragments.transactions.alltransactions.recycler.adapter.TransactionsAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,13 +18,8 @@ import java.util.*
  * @author JustSpace
  */
 class TransactionsPerDayViewHolder(
-	private val bindingUtil: ItemTotalTransactionsPerDayBinding,
-	private val locale: Locale
+	val bindingUtil: ItemTotalTransactionsPerDayBinding,
 ) : RecyclerView.ViewHolder(bindingUtil.root) {
-
-	private val calendar = Calendar.getInstance(locale)
-	private val weekDaySDF = SimpleDateFormat("EEEE", locale)
-	private val monthAndYearSDF = SimpleDateFormat("LLLL yyyy", locale)
 
 	/**
 	 * Set up view holder with information
@@ -32,7 +28,10 @@ class TransactionsPerDayViewHolder(
 	 * @author JustSpace
 	 */
 	@SuppressLint("SetTextI18n")
-	fun setUpViewHolder(temporalTransactions: TemporalTransactions) {
+	fun setUpViewHolder(temporalTransactions: TemporalTransactions, locale: Locale, onTransactionClick: (Long) -> Unit) {
+		val calendar = Calendar.getInstance(locale)
+		val weekDaySDF = SimpleDateFormat("EEEE", locale)
+		val monthAndYearSDF = SimpleDateFormat("LLLL yyyy", locale)
 		with(bindingUtil) {
 			textMonthDay.text = calendar
 				.apply { time = temporalTransactions.dayOfTransactions }
@@ -56,6 +55,11 @@ class TransactionsPerDayViewHolder(
 			}
 
 			textProfit.text = temporalTransactions.profit.toUiView()
+
+			val adapter = TransactionsAdapter(onTransactionClick).apply {
+				submitList(temporalTransactions.transactions)
+			}
+			rwTransaction.adapter = adapter
 		}
 	}
 }

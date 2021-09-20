@@ -1,5 +1,6 @@
 package ru.jsavings.domain.model.database.transaction
 
+import ru.jsavings.domain.model.database.category.TransactionCategoryType
 import java.util.Date
 
 
@@ -13,9 +14,23 @@ import java.util.Date
  */
 data class TemporalTransactions(
 	val dayOfTransactions: Date,
-	val totalIncome: Double,
-	val totalConsumption: Double
+	val transactions: List<Transaction>,
+//	val totalIncome: Double,
+//	val totalConsumption: Double
 ) : BaseTransactionData {
+
+	val totalIncome = transactions.sumOf {
+		if (it.category != null && it.category.categoryType == TransactionCategoryType.INCOME)
+			it.sumInAccountCurrency
+		else 0.0
+	}
+
+	val totalConsumption = transactions.sumOf {
+		if (it.category != null && it.category.categoryType == TransactionCategoryType.CONSUMPTION)
+			it.sumInAccountCurrency
+		else
+			0.0
+	}
 
 	/**
 	 * Total profit of day [dayOfTransactions]

@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetAllAccountsUseCase(
 	private val repository: AccountRepository,
 	private val mapper: AccountMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Executing usecase

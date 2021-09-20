@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetWalletsByAccountIdUseCase(
 	private val repository: WalletRepository,
 	private val mapper: WalletMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Invoke usecase

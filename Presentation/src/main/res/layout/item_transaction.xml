@@ -6,6 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
+	<!-- TODO Подумать над переделкой в CardView-->
 	<!--  TODO подумать еще над иконками  -->
 	<ImageView
 		android:id="@+id/iv_transaction_icon"

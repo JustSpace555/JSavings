@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class UpdateTransactionCategoryUseCase(
 	private val transactionCategoryRepository: TransactionCategoryRepository,
 	private val transactionCategoryMapper: TransactionCategoryMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	operator fun invoke(transactionCategory: TransactionCategory): Completable =
 		transactionCategoryRepository.updateCategory(transactionCategoryMapper.mapModelToEntity(transactionCategory))

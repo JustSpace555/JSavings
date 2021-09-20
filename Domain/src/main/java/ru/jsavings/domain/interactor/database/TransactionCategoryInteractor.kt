@@ -33,11 +33,11 @@ class TransactionCategoryInteractor : BaseInteractor {
 	val insertNewCategoryUseCase by inject(InsertNewCategoryUseCase::class.java)
 
 	/**
-	 * @see DeleteTransactionCategoryUseCase
+	 * @see DeleteTransactionCategoryByIdUseCase
 	 *
 	 * @author JustSpace
 	 */
-	val deleteTransactionCategoryUseCase by inject(DeleteTransactionCategoryUseCase::class.java)
+	val deleteTransactionCategoryUseCase by inject(DeleteTransactionCategoryByIdUseCase::class.java)
 
 	/**
 	 * @see UpdateTransactionCategoryUseCase

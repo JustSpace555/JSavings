@@ -16,7 +16,7 @@ import ru.jsavings.domain.usecase.common.BaseUseCase
 class GetAllCategoriesByAccountIdUseCase(
 	private val transactionCategoryRepository: TransactionCategoryRepository,
 	private val transactionCategoryMapper: TransactionCategoryMapper
-) : BaseUseCase {
+) : BaseUseCase() {
 
 	/**
 	 * Invoking usecase
