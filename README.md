@@ -40,6 +40,7 @@
  - Material components
  - LiveData
  - [Material color picker](https://github.com/Pes8/android-material-color-picker-dialog) для быстрого имплементирования функции выбора цвета
+ - Firebase (в будущем)
 
 5. Используемые библиотеки для тестирования
  - JUnit 4
