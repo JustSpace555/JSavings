@@ -39,6 +39,7 @@
  - RxJava3 для многопоточности
  - Material components
  - LiveData
+ - ViewBinding
  - [Material color picker](https://github.com/Pes8/android-material-color-picker-dialog) для быстрого имплементирования функции выбора цвета
  - Firebase (в будущем)
 
